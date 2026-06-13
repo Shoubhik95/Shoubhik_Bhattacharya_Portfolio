@@ -82,13 +82,16 @@
           </div>
 
           <!-- Primary CTAs -->
-          <div class="primary-ctas">
+          <div class="primary-ctas" style="display: flex; flex-wrap: wrap; gap: 12px;">
             <a href="#projects" class="cta-btn btn-blue">
               <span class="cta-icon">👤</span> PROJECTS
             </a>
             <a href="mailto:shoubhikbhattacharya06@gmail.com" class="cta-btn btn-dark">
               CONTACT
             </a>
+            <button id="hire-interest-btn" class="cta-btn btn-dark" style="border: 2px solid #22c55e !important; color: #22c55e !important; background: transparent; cursor: pointer; font-weight: 700; transition: all 0.3s ease;">
+              💼 HIRE INTEREST
+            </button>
           </div>
 
           <!-- Secondary Social Badges -->
@@ -360,8 +363,270 @@
     </div>
   </div>
 
+  <!-- Hidden Owner Button -->
+  <button id="owner-secret-btn" class="owner-secret-btn" aria-label="Owner Access">🔒</button>
+
+  <!-- Passcode Verification Modal -->
+  <div id="owner-passcode-modal" class="modal-overlay hidden">
+    <div class="gamer-hud-card passcode-card" onclick="event.stopPropagation()">
+      <div class="hud-header">
+        <div class="hud-header-left">
+          <span class="badge-emoji" style="margin-right: 10px;">🔒</span>
+          <h4 class="hud-title">SECURE OWNER ACCESS</h4>
+        </div>
+        <button id="passcode-close-btn" class="hud-close-btn">&times;</button>
+      </div>
+      <div class="hud-body passcode-body">
+        <p class="passcode-instruction">ENTER AUTHORIZATION CODE TO ACCESS DASHBOARD</p>
+        <div class="passcode-input-container">
+          <input type="password" id="owner-passcode-input" placeholder="••••••••" autocomplete="current-password">
+          <button id="owner-passcode-submit" class="hud-cta-btn launch-btn">DECRYPT</button>
+        </div>
+        <p id="passcode-error-msg" class="passcode-error hidden">ACCESS DENIED: INVALID KEY</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Owner Dashboard Modal -->
+  <div id="owner-dashboard-modal" class="modal-overlay hidden">
+    <div class="gamer-hud-card dashboard-card" onclick="event.stopPropagation()">
+      <div class="hud-header">
+        <div class="hud-header-left">
+          <span class="badge-emoji" style="margin-right: 10px;">🛡️</span>
+          <div class="hud-project-info">
+            <h4 class="hud-title">OWNER CONTROL CENTER</h4>
+            <span class="hud-subtitle">REAL-TIME PORTFOLIO TELEMETRY</span>
+          </div>
+        </div>
+        <div class="hud-header-right" style="display: flex; align-items: center;">
+          <button id="owner-export-btn" class="hud-cta-btn launch-btn" style="margin-right: 15px; padding: 6px 12px; font-size: 0.8rem; background-color: #2563eb; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);">EXPORT DATA</button>
+          <button id="owner-dashboard-close-btn" class="hud-close-btn">&times;</button>
+        </div>
+      </div>
+      <div class="hud-body dashboard-body">
+        <!-- Dashboard Top Row: Overview Stats -->
+        <div class="dashboard-stats-grid">
+          <div class="hud-stat-item">
+            <span class="hud-stat-label">SESSION TIME</span>
+            <span id="dash-session-time" class="hud-stat-value">00:00:00</span>
+          </div>
+          <div class="hud-stat-item">
+            <span class="hud-stat-label">TOTAL CLICKS</span>
+            <span id="dash-total-clicks" class="hud-stat-value">0</span>
+          </div>
+          <div class="hud-stat-item">
+            <span class="hud-stat-label">ACTIVE LEVEL</span>
+            <span id="dash-active-level" class="hud-stat-value">LVL 1</span>
+          </div>
+          <div class="hud-stat-item">
+            <span class="hud-stat-label">SCROLL DEPTH</span>
+            <span id="dash-scroll-depth" class="hud-stat-value">0%</span>
+          </div>
+        </div>
+
+        <!-- Dashboard Main Panel: Two Columns -->
+        <div class="dashboard-panels">
+          <!-- Left: User Metadata / Telemetry -->
+          <div class="dashboard-panel-col">
+            <h5 class="panel-section-title">👤 USER PROFILE & DATA</h5>
+            <div class="telemetry-table">
+              <div class="telemetry-row">
+                <span class="telemetry-label">IP Address</span>
+                <span id="dash-ip" class="telemetry-value">Retrieving...</span>
+              </div>
+              <div class="telemetry-row">
+                <span class="telemetry-label">Region/Country</span>
+                <span id="dash-region" class="telemetry-value">Retrieving...</span>
+              </div>
+              <div class="telemetry-row">
+                <span class="telemetry-label">Browser / Engine</span>
+                <span id="dash-browser" class="telemetry-value">Unknown</span>
+              </div>
+              <div class="telemetry-row">
+                <span class="telemetry-label">Operating System</span>
+                <span id="dash-os" class="telemetry-value">Unknown</span>
+              </div>
+              <div class="telemetry-row">
+                <span class="telemetry-label">Screen Resolution</span>
+                <span id="dash-resolution" class="telemetry-value">0x0</span>
+              </div>
+              <div class="telemetry-row">
+                <span class="telemetry-label">Language</span>
+                <span id="dash-language" class="telemetry-value">en-US</span>
+              </div>
+              <div class="telemetry-row">
+                <span class="telemetry-label">Network Type</span>
+                <span id="dash-network" class="telemetry-value">N/A</span>
+              </div>
+              <div class="telemetry-row">
+                <span class="telemetry-label">Referrer</span>
+                <span id="dash-referrer" class="telemetry-value">Direct Visit</span>
+              </div>
+              <div class="telemetry-row">
+                <span class="telemetry-label">Timezone</span>
+                <span id="dash-timezone" class="telemetry-value">N/A</span>
+              </div>
+              <div class="telemetry-row">
+                <span class="telemetry-label">Cookies Status</span>
+                <span id="dash-cookies" class="telemetry-value">N/A</span>
+              </div>
+              <div class="telemetry-row">
+                <span class="telemetry-label">Do Not Track</span>
+                <span id="dash-dnt" class="telemetry-value">N/A</span>
+              </div>
+              <div class="telemetry-row">
+                <span class="telemetry-label">Online Status</span>
+                <span id="dash-online" class="telemetry-value">N/A</span>
+              </div>
+            </div>
+
+            <h5 class="panel-section-title" style="margin-top: 20px;">📊 INTERACTION METRICS</h5>
+            <div class="telemetry-table">
+              <div class="telemetry-row">
+                <span class="telemetry-label">Projects Opened</span>
+                <span id="dash-projects-opened" class="telemetry-value">0</span>
+              </div>
+              <div class="telemetry-row">
+                <span class="telemetry-label">Skill Cards Flipped</span>
+                <span id="dash-skills-flipped" class="telemetry-value">0</span>
+              </div>
+              <div class="telemetry-row">
+                <span class="telemetry-label">Resume Downloads</span>
+                <span id="dash-resume-downloads" class="telemetry-value">0</span>
+              </div>
+              <div class="telemetry-row">
+                <span class="telemetry-label">External Clicks</span>
+                <span id="dash-external-clicks" class="telemetry-value">0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Middle: Traffic Graph & Hiring Leads -->
+          <div class="dashboard-panel-col">
+            <h5 class="panel-section-title" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span>📊 DYNAMIC TELEMETRY</span>
+              <select id="graph-time-filter" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(56, 189, 248, 0.3); color: #38bdf8; font-family: var(--font-mono); font-size: 10px; border-radius: 4px; padding: 2px 4px; cursor: pointer; outline: none;">
+                <option value="live" selected>LIVE SESSION</option>
+                <option value="weekly">WEEKLY</option>
+                <option value="monthly">MONTHLY</option>
+                <option value="yearly">YEARLY</option>
+              </select>
+            </h5>
+            
+            <!-- Donut Chart Container -->
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 160px; position: relative;">
+              <svg width="120" height="120" viewBox="0 0 140 140">
+                <circle cx="70" cy="70" r="50" fill="transparent" stroke="rgba(255, 255, 255, 0.05)" stroke-width="15"></circle>
+                <!-- Segment 1: Direct -->
+                <circle id="graph-seg-direct" cx="70" cy="70" r="50" fill="transparent" stroke="#38bdf8" stroke-width="15" stroke-dasharray="314.15" stroke-dashoffset="0" transform="rotate(-90 70 70)" style="transition: stroke-dashoffset 0.6s ease;"></circle>
+                <!-- Segment 2: Search -->
+                <circle id="graph-seg-search" cx="70" cy="70" r="50" fill="transparent" stroke="#22c55e" stroke-width="15" stroke-dasharray="314.15" stroke-dashoffset="0" transform="rotate(-90 70 70)" style="transition: stroke-dashoffset 0.6s ease;"></circle>
+                <!-- Segment 3: Referrals -->
+                <circle id="graph-seg-refer" cx="70" cy="70" r="50" fill="transparent" stroke="#ef4444" stroke-width="15" stroke-dasharray="314.15" stroke-dashoffset="0" transform="rotate(-90 70 70)" style="transition: stroke-dashoffset 0.6s ease;"></circle>
+              </svg>
+              <!-- Center Text inside Donut -->
+              <div style="position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: var(--font-mono); pointer-events: none; text-align: center;">
+                <span id="graph-total-views" style="font-size: 14px; font-weight: bold; color: #ffffff;">0</span>
+                <span id="graph-total-label" style="font-size: 7px; color: #94a3b8; text-transform: uppercase;">Actions</span>
+              </div>
+            </div>
+            
+            <!-- Graph Legend -->
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; font-family: var(--font-mono); font-size: 9px; text-align: center; margin-bottom: 15px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 10px;">
+              <div>
+                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #38bdf8; margin-right: 2px;"></span>
+                <span id="legend-lbl-direct" style="color: #38bdf8; display: block;">Clicks</span>
+                <span id="graph-val-direct" style="color: #ffffff; font-weight: bold;">0%</span>
+              </div>
+              <div>
+                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #22c55e; margin-right: 2px;"></span>
+                <span id="legend-lbl-search" style="color: #22c55e; display: block;">Skills</span>
+                <span id="graph-val-search" style="color: #ffffff; font-weight: bold;">0%</span>
+              </div>
+              <div>
+                <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #ef4444; margin-right: 2px;"></span>
+                <span id="legend-lbl-refer" style="color: #ef4444; display: block;">Projects</span>
+                <span id="graph-val-refer" style="color: #ffffff; font-weight: bold;">0%</span>
+              </div>
+            </div>
+
+            <!-- Hiring Leads List -->
+            <h5 class="panel-section-title" style="margin-bottom: 8px;">💼 HIRING LEADS (<span id="dash-hire-count">0</span>)</h5>
+            <div id="dash-hire-list" style="max-height: 100px; overflow-y: auto; font-family: var(--font-mono); font-size: 10px; display: flex; flex-direction: column; gap: 6px; scrollbar-width: thin; padding-right: 4px;">
+              <!-- Hiring list items injected -->
+            </div>
+          </div>
+
+          <!-- Right: Live Activity Logs -->
+          <div class="dashboard-panel-col">
+            <h5 class="panel-section-title" style="display: flex; justify-content: space-between; align-items: center;">
+              <span>⏱️ LIVE ACTIVITY FEED</span>
+              <span id="log-legend-trigger" class="log-legend-trigger" style="cursor: pointer; opacity: 0.7; font-size: 0.9rem;" title="Show Log Legend">ℹ️</span>
+            </h5>
+            
+            <!-- Log Legend Info Box -->
+            <div id="log-legend-box" class="log-legend-box hidden" style="background: rgba(15, 23, 42, 0.9); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 12px; font-family: var(--font-mono); font-size: 11px; line-height: 1.4;">
+              <div style="font-weight: bold; color: #38bdf8; margin-bottom: 6px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 4px;">TELEMETRY LEGEND</div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #38bdf8; box-shadow: 0 0 6px #38bdf8;"></span>
+                <span><strong style="color: #38bdf8;">BLUE (INFO):</strong> Normal user behavior (clicks, section transitions, scrolls)</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 6px #22c55e;"></span>
+                <span><strong style="color: #22c55e;">GREEN (HIGHLIGHT):</strong> Important user interactions (project opens, auth logs, resume downloads)</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 6px #ef4444;"></span>
+                <span><strong style="color: #ef4444;">RED (ALERT):</strong> Critical safety/hacker warnings (text copying, tab switching, wrong passwords, injection signatures)</span>
+              </div>
+            </div>
+            
+            <div id="dash-activity-log" class="hud-log-timeline dash-activity-log">
+              <!-- Logs dynamically generated -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Hire Interest Modal -->
+  <div id="hire-interest-modal" class="modal-overlay hidden">
+    <div class="gamer-hud-card passcode-card" style="border-color: #22c55e !important; box-shadow: 0 0 25px rgba(34, 197, 94, 0.2) !important; max-width: 440px !important;" onclick="event.stopPropagation()">
+      <div class="hud-header" style="border-bottom: 1px solid rgba(34, 197, 94, 0.2); display: flex; align-items: center; justify-content: space-between;">
+        <div class="hud-header-left" style="display: flex; align-items: center;">
+          <span class="badge-emoji" style="margin-right: 10px;">💼</span>
+          <h4 class="hud-title" style="color: #22c55e;">REGISTER HIRING INTEREST</h4>
+        </div>
+        <button id="hire-close-btn" class="hud-close-btn" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="hud-body passcode-body">
+        <p class="passcode-instruction" style="color: #a3a3a3; text-align: center; margin-bottom: 4px;">PLEASE ENTER YOUR NAME OR ORGANIZATION TO REGISTER YOUR HIRING PROFILE</p>
+        <p class="passcode-instruction" style="color: #94a3b8; font-size: 10px; text-align: center; margin-top: 0; font-style: italic; line-height: 1.3;">(Note: If you are unable to contact me via Gmail, please enter your name/username or organization name here so I can reach out)</p>
+        <div class="passcode-input-container" style="flex-direction: column; gap: 12px; width: 100%;">
+          <input type="text" id="hire-name-input" placeholder="e.g. Google HR" style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 6px; padding: 10px 14px; color: #ffffff; font-family: var(--font-mono); font-size: 14px; outline: none; transition: all 0.3s; width: 100%; box-sizing: border-box;" autocomplete="off">
+          <div style="display: flex; gap: 12px; width: 100%;">
+            <button id="hire-submit-btn" class="hud-cta-btn launch-btn" style="background-color: #22c55e; box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3); flex: 1; border: none; cursor: pointer; color: #ffffff;">SUBMIT</button>
+            <button id="hire-cancel-btn" class="hud-cta-btn trailer-btn" style="flex: 1; border: 1px solid rgba(255, 255, 255, 0.1); cursor: pointer; color: #ffffff;">CANCEL</button>
+          </div>
+        </div>
+        <p id="hire-error-msg" class="passcode-error hidden" style="color: #ef4444; font-size: 10px; margin-top: 4px;">PLEASE ENTER A VALID NAME</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cyber Security Toast Notification -->
+  <div id="cyber-security-toast" class="cyber-toast">
+    <div class="cyber-toast-icon">⚠️</div>
+    <div class="cyber-toast-content">
+      <div class="cyber-toast-title">SYSTEM SECURITY PROTOCOL</div>
+      <div class="cyber-toast-body">DO NOT COPY ANYTHING FROM HERE. This is Shoubhik Bhattacharya's official security notification. Please note that all content is original.</div>
+    </div>
+  </div>
+
   <!-- JS Scripts -->
   <script src="./data.js"></script>
+  <script src="./telemetry.js"></script>
   <script src="./script.js"></script>
 </body>
 

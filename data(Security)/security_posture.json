@@ -1,0 +1,53 @@
+{
+  "system_name": "Shoubhik Bhattacharya Portfolio Anti-Intrusion Telemetry",
+  "version": "1.2",
+  "threat_detection_rules": {
+    "xss_injection_attempts": {
+      "status": "active",
+      "action": "flag_and_log",
+      "trigger": "detection of html/script tags in input headers or URL search parameters"
+    },
+    "clickjacking_mitigation": {
+      "status": "active",
+      "action": "csp_headers",
+      "policy": "frame-ancestors 'none'"
+    },
+    "content_scraping_protection": {
+      "status": "active",
+      "action": "log_alert_on_copy",
+      "trigger": "triggering document copy event"
+    },
+    "unauthorized_admin_access": {
+      "status": "active",
+      "action": "log_failed_decrypt",
+      "trigger": "failed attempts to input passcode 'owner123'"
+    },
+    "bot_signature_analysis": {
+      "status": "active",
+      "action": "gather_hardware_fingerprint",
+      "metrics": ["user_agent", "screen_resolution", "navigator_language", "network_type"]
+    }
+  },
+  "protection_advice": [
+    "Ensure HTTP Response headers contain: Content-Security-Policy: default-src 'self'",
+    "Enable X-Frame-Options: DENY to prevent Clickjacking overlays",
+    "Inject sanitization routines on any contact form inputs to strip HTML characters"
+  ],
+  "dashboard_log_indicators": {
+    "blue_dot": {
+      "level": "INFO",
+      "description": "Normal user activity logs (scroll progress, section entry transitions, page element clicks)"
+    },
+    "green_dot": {
+      "level": "HIGHLIGHT",
+      "description": "Key interaction events (opening project details, successful owner auth logs, downloading resume)"
+    },
+    "red_dot": {
+      "level": "ALERT",
+      "description": "Critical security warnings (text copying, tab switching, failed login credentials, hacker script URL attempts)"
+    }
+  },
+  "export_destination": {
+    "instructions": "Place your downloaded telemetry reports ('telemetry_report_<timestamp>.json') in this 'data(Security)' folder to maintain a secure offline audit log of your portfolio activity."
+  }
+}
