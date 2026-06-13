@@ -1,5 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
   
+  // Increment Real Server-Based Daily Active User (DAU) Counter
+  try {
+    const todayStr = new Date().toISOString().split('T')[0];
+    const sessionKey = `portfolio_visited_${todayStr}`;
+    if (!sessionStorage.getItem(sessionKey)) {
+      fetch(`https://api.counterapi.dev/v1/shoubhik_portfolio/dau_${todayStr}/up`)
+        .then(res => res.json())
+        .then(() => {
+          sessionStorage.setItem(sessionKey, "true");
+        })
+        .catch(err => console.warn("Error incrementing DAU:", err));
+    }
+  } catch (e) {
+    console.warn("DAU tracking disabled or error:", e);
+  }
+
   // Render dynamic components from data.js
   const renderSkills = () => {
     const skillsGrid = document.getElementById("skills-grid");
@@ -708,288 +724,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initial check in case they load directly into a section without scrolling
   setTimeout(triggerRestAnimations, 1000);
 
-  // --- Owner Security Dashboard Logic ---
+  // --- Owner Security Dashboard Link Redirect ---
   const ownerSecretBtn = document.getElementById("owner-secret-btn");
-  const ownerPasscodeModal = document.getElementById("owner-passcode-modal");
-  const ownerDashboardModal = document.getElementById("owner-dashboard-modal");
-  
-  const passcodeCloseBtn = document.getElementById("passcode-close-btn");
-  const ownerDashboardCloseBtn = document.getElementById("owner-dashboard-close-btn");
-  
-  const ownerPasscodeInput = document.getElementById("owner-passcode-input");
-  const ownerPasscodeSubmit = document.getElementById("owner-passcode-submit");
-  const passcodeErrorMsg = document.getElementById("passcode-error-msg");
-  const ownerLogoutBtn = document.getElementById("owner-logout-btn");
-  const ownerExportBtn = document.getElementById("owner-export-btn");
-
-  const isOwnerAuthenticated = () => {
-    return sessionStorage.getItem("portfolio_owner_authenticated") === "true";
-  };
-
-  const showPasscodeModal = () => {
-    if (ownerPasscodeModal) {
-      ownerPasscodeModal.classList.remove("hidden");
-      if (ownerPasscodeInput) {
-        ownerPasscodeInput.value = "";
-        ownerPasscodeInput.focus();
-      }
-      if (passcodeErrorMsg) passcodeErrorMsg.classList.add("hidden");
-      document.body.style.overflow = "hidden";
-    }
-  };
-
-  const closePasscodeModal = () => {
-    if (ownerPasscodeModal) ownerPasscodeModal.classList.add("hidden");
-    document.body.style.overflow = "unset";
-  };
-
-  const showDashboardModal = () => {
-    if (ownerDashboardModal) {
-      ownerDashboardModal.classList.remove("hidden");
-      document.body.style.overflow = "hidden";
-      refreshDashboardTelemetry();
-      populateActivityFeed();
-      if (typeof updateTrafficChart === 'function') {
-        const timeFilter = document.getElementById("graph-time-filter");
-        updateTrafficChart(timeFilter ? timeFilter.value : "monthly");
-      }
-      if (typeof window.updateDashboardHiringUI === 'function') {
-        window.updateDashboardHiringUI();
-      }
-    }
-  };
-
-  const closeDashboardModal = () => {
-    if (ownerDashboardModal) ownerDashboardModal.classList.add("hidden");
-    document.body.style.overflow = "unset";
-    sessionStorage.removeItem("portfolio_owner_authenticated");
-    if (window.Telemetry) window.Telemetry.logEvent("Owner Dashboard Locked", "alert");
-  };
-
-  // Click Handler on Secret Button
   if (ownerSecretBtn) {
     ownerSecretBtn.addEventListener("click", () => {
-      if (isOwnerAuthenticated()) {
-        showDashboardModal();
-      } else {
-        showPasscodeModal();
-      }
-    });
-  }
-
-  // Close passcode modal
-  if (passcodeCloseBtn) {
-    passcodeCloseBtn.addEventListener("click", closePasscodeModal);
-  }
-
-  // Close dashboard modal
-  if (ownerDashboardCloseBtn) {
-    ownerDashboardCloseBtn.addEventListener("click", closeDashboardModal);
-  }
-
-  // Passcode Verification
-  const verifyPasscode = () => {
-    const code = ownerPasscodeInput ? ownerPasscodeInput.value : "";
-    if (code === "owner123") {
-      sessionStorage.setItem("portfolio_owner_authenticated", "true");
-      closePasscodeModal();
-      showDashboardModal();
-      if (window.Telemetry) window.Telemetry.logEvent("Owner Access Granted", "highlight");
-    } else {
-      if (passcodeErrorMsg) passcodeErrorMsg.classList.remove("hidden");
-      if (window.Telemetry) window.Telemetry.logEvent("Failed Security Authentication Attempt", "alert");
-    }
-  };
-
-  if (ownerPasscodeSubmit) {
-    ownerPasscodeSubmit.addEventListener("click", verifyPasscode);
-  }
-  if (ownerPasscodeInput) {
-    ownerPasscodeInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") verifyPasscode();
-    });
-  }
-
-  // Logout/Lock
-  if (ownerLogoutBtn) {
-    ownerLogoutBtn.addEventListener("click", () => {
-      sessionStorage.removeItem("portfolio_owner_authenticated");
-      closeDashboardModal();
-    });
-  }
-
-  // Export Data Action
-  if (ownerExportBtn) {
-    ownerExportBtn.addEventListener("click", () => {
-      if (window.Telemetry) {
-        window.Telemetry.exportData();
-      }
-    });
-  }
-
-  // Legend Box Toggle Action
-  const logLegendTrigger = document.getElementById("log-legend-trigger");
-  const logLegendBox = document.getElementById("log-legend-box");
-  if (logLegendTrigger && logLegendBox) {
-    logLegendTrigger.addEventListener("click", () => {
-      logLegendBox.classList.toggle("hidden");
-    });
-  }
-
-  // Browser Telemetry Retrieval
-  const populateStaticTelemetry = () => {
-    if (!window.Telemetry) return;
-    const device = window.Telemetry.state.deviceData;
-
-    document.getElementById("dash-browser").textContent = device.browser;
-    document.getElementById("dash-os").textContent = device.os;
-    document.getElementById("dash-resolution").textContent = device.resolution;
-    document.getElementById("dash-language").textContent = device.language;
-    document.getElementById("dash-network").textContent = device.network;
-    
-    // Security fields
-    document.getElementById("dash-referrer").textContent = device.referrer;
-    document.getElementById("dash-timezone").textContent = device.timezone;
-    document.getElementById("dash-cookies").textContent = device.cookiesEnabled;
-    document.getElementById("dash-dnt").textContent = device.doNotTrack;
-
-    // Refresh dynamic IP values periodically when available
-    const updateIPInfo = () => {
-      document.getElementById("dash-ip").textContent = device.ip;
-      document.getElementById("dash-region").textContent = device.region;
-      document.getElementById("dash-online").textContent = device.onlineStatus;
-    };
-    updateIPInfo();
-    setTimeout(updateIPInfo, 1000);
-    setTimeout(updateIPInfo, 3000);
-  };
-
-  populateStaticTelemetry();
-
-  // Populate activity feed inside dashboard
-  const populateActivityFeed = () => {
-    const dashLogContainer = document.getElementById("dash-activity-log");
-    if (!dashLogContainer || !window.Telemetry) return;
-    
-    dashLogContainer.innerHTML = window.Telemetry.state.activityLogs.map(log => {
-      const logClass = log.type === 'alert' ? 'alert-event' : (log.type === 'highlight' ? 'highlight-event' : '');
-      return `<div class="hud-log-item ${logClass}">
-        <div class="hud-log-dot"></div>
-        <div class="hud-log-text">[${log.time}] ${log.message}</div>
-      </div>`;
-    }).join("");
-  };
-
-  // Refresh Telemetry Values
-  const refreshDashboardTelemetry = () => {
-    if (!window.Telemetry) return;
-    const tState = window.Telemetry.state;
-    const duration = Math.floor((Date.now() - tState.sessionStartTime) / 1000);
-    const hrs = String(Math.floor(duration / 3600)).padStart(2, '0');
-    const mins = String(Math.floor((duration % 3600) / 60)).padStart(2, '0');
-    const secs = String(duration % 60).padStart(2, '0');
-    
-    document.getElementById("dash-session-time").textContent = `${hrs}:${mins}:${secs}`;
-    document.getElementById("dash-total-clicks").textContent = tState.totalClicks;
-    document.getElementById("dash-active-level").textContent = tState.currentLevel;
-    
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const depth = docHeight > 0 ? Math.round((window.scrollY / docHeight) * 100) : 0;
-    document.getElementById("dash-scroll-depth").textContent = `${depth}%`;
-
-    document.getElementById("dash-projects-opened").textContent = tState.projectsOpened;
-    document.getElementById("dash-skills-flipped").textContent = tState.skillsFlipped;
-    document.getElementById("dash-resume-downloads").textContent = tState.resumeDownloads;
-    document.getElementById("dash-external-clicks").textContent = tState.externalClicks;
-    document.getElementById("dash-online").textContent = tState.deviceData.onlineStatus;
-  };
-
-  // --- Traffic Chart Logic ---
-  const updateTrafficChart = (filterKey) => {
-    let data;
-    const isLive = filterKey === "live";
-
-    // Legend elements
-    const lblDirect = document.getElementById("legend-lbl-direct");
-    const lblSearch = document.getElementById("legend-lbl-search");
-    const lblRefer = document.getElementById("legend-lbl-refer");
-    const lblTotal = document.getElementById("graph-total-label");
-
-    if (isLive) {
-      if (lblDirect) lblDirect.textContent = "Clicks";
-      if (lblSearch) lblSearch.textContent = "Skills";
-      if (lblRefer) lblRefer.textContent = "Projects";
-      if (lblTotal) lblTotal.textContent = "Actions";
-
-      const tState = window.Telemetry ? window.Telemetry.state : null;
-      const clicks = tState ? tState.totalClicks : 0;
-      const skills = tState ? tState.skillsFlipped : 0;
-      const projects = tState ? tState.projectsOpened : 0;
-      const total = clicks + skills + projects;
-
-      if (total === 0) {
-        data = { total: 0, direct: 0, search: 0, refer: 0 };
-      } else {
-        data = {
-          total: total,
-          direct: Math.round((clicks / total) * 100),
-          search: Math.round((skills / total) * 100),
-          refer: Math.round((projects / total) * 100)
-        };
-      }
-    } else {
-      if (lblDirect) lblDirect.textContent = "Direct";
-      if (lblSearch) lblSearch.textContent = "Search";
-      if (lblRefer) lblRefer.textContent = "Referral";
-      if (lblTotal) lblTotal.textContent = "Visits";
-
-      if (window.Telemetry) {
-        data = window.Telemetry.getHistoricalStats(filterKey);
-      } else {
-        data = { total: 0, direct: 0, search: 0, refer: 0 };
-      }
-    }
-
-    document.getElementById("graph-total-views").textContent = data.total;
-    document.getElementById("graph-val-direct").textContent = `${data.direct}%`;
-    document.getElementById("graph-val-search").textContent = `${data.search}%`;
-    document.getElementById("graph-val-refer").textContent = `${data.refer}%`;
-    
-    const c = 314.15; // Circumference (2 * pi * r) for R=50
-    const segDirect = document.getElementById("graph-seg-direct");
-    const segSearch = document.getElementById("graph-seg-search");
-    const segRefer = document.getElementById("graph-seg-refer");
-    
-    if (segDirect && segSearch && segRefer) {
-      if (data.total === 0) {
-        segDirect.style.strokeDashoffset = `${c}`;
-        segSearch.style.strokeDashoffset = `${c}`;
-        segRefer.style.strokeDashoffset = `${c}`;
-      } else {
-        // Direct Slice
-        segDirect.style.strokeDasharray = `${c}`;
-        segDirect.style.strokeDashoffset = `${c * (1 - data.direct / 100)}`;
-        
-        // Search Slice
-        segSearch.style.strokeDasharray = `${c}`;
-        segSearch.style.strokeDashoffset = `${c * (1 - data.search / 100)}`;
-        const rotSearch = -90 + (360 * data.direct / 100);
-        segSearch.setAttribute("transform", `rotate(${rotSearch} 70 70)`);
-        
-        // Referral Slice
-        segRefer.style.strokeDasharray = `${c}`;
-        segRefer.style.strokeDashoffset = `${c * (1 - data.refer / 100)}`;
-        const rotRefer = -90 + (360 * (data.direct + data.search) / 100);
-        segRefer.setAttribute("transform", `rotate(${rotRefer} 70 70)`);
-      }
-    }
-  };
-
-  // Dropdown Filter Listener
-  const graphTimeFilter = document.getElementById("graph-time-filter");
-  if (graphTimeFilter) {
-    graphTimeFilter.addEventListener("change", (e) => {
-      updateTrafficChart(e.target.value);
+      window.location.href = "security.html";
     });
   }
 
@@ -1009,6 +748,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); border-radius:6px; padding:6px 8px; display:flex; justify-content:space-between; align-items:center; gap:6px;">
           <div style="display:flex; flex-direction:column; gap:2px; max-width:85%;">
             <div style="font-weight:bold; color:#22c55e; word-break:break-all;">${lead.name}</div>
+            ${lead.email ? `<div style="font-size:9px; color:#38bdf8; word-break:break-all;">📧 ${lead.email}</div>` : ''}
+            ${lead.companyLink ? `<div style="font-size:9px; color:#fbbf24; word-break:break-all;">🔗 <a href="${lead.companyLink.startsWith('http') ? lead.companyLink : 'https://' + lead.companyLink}" target="_blank" rel="noopener noreferrer" style="color:#fbbf24; text-decoration:underline;">${lead.companyLink}</a></div>` : ''}
             <div style="font-size:8px; color:#94a3b8;">${lead.timestamp}</div>
           </div>
           <button onclick="window.Telemetry.deleteHiringLead(${idx})" style="background:transparent; border:none; color:#ef4444; font-size:11px; cursor:pointer; padding:4px;" title="Delete Lead">🗑️</button>
@@ -1024,6 +765,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const hireCancelBtn = document.getElementById("hire-cancel-btn");
   const hireSubmitBtn = document.getElementById("hire-submit-btn");
   const hireNameInput = document.getElementById("hire-name-input");
+  const hireEmailInput = document.getElementById("hire-email-input");
+  const hireLinkInput = document.getElementById("hire-link-input");
   const hireErrorMsg = document.getElementById("hire-error-msg");
 
   const openHireModal = () => {
@@ -1034,6 +777,8 @@ document.addEventListener("DOMContentLoaded", () => {
         hireNameInput.value = "";
         hireNameInput.focus();
       }
+      if (hireEmailInput) hireEmailInput.value = "";
+      if (hireLinkInput) hireLinkInput.value = "";
       if (hireErrorMsg) hireErrorMsg.classList.add("hidden");
     }
   };
@@ -1045,17 +790,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const submitHiringLead = () => {
     const val = hireNameInput ? hireNameInput.value.trim() : "";
+    const emailVal = hireEmailInput ? hireEmailInput.value.trim() : "";
+    const linkVal = hireLinkInput ? hireLinkInput.value.trim() : "";
     if (!val) {
       if (hireErrorMsg) hireErrorMsg.classList.remove("hidden");
       return;
     }
 
     if (window.Telemetry && typeof window.Telemetry.addHiringLead === 'function') {
-      window.Telemetry.addHiringLead(val);
+      window.Telemetry.addHiringLead(val, emailVal, linkVal);
       window.updateDashboardHiringUI();
     }
     
     closeHireModal();
+
+    // Trigger Success Toast
+    const successToast = document.getElementById("success-toast");
+    if (successToast) {
+      successToast.classList.add("show");
+      if (window.successToastTimeout) clearTimeout(window.successToastTimeout);
+      window.successToastTimeout = setTimeout(() => {
+        successToast.classList.remove("show");
+      }, 5000);
+    }
   };
 
   if (hireInterestBtn) {
@@ -1072,6 +829,16 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   if (hireNameInput) {
     hireNameInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") submitHiringLead();
+    });
+  }
+  if (hireEmailInput) {
+    hireEmailInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") submitHiringLead();
+    });
+  }
+  if (hireLinkInput) {
+    hireLinkInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") submitHiringLead();
     });
   }

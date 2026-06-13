@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Owner Security & Telemetry Dashboard</title>
+  <meta name="description" content="Secure real-time portfolio telemetry and owner control panel.">
+
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-main: #060913;
+      --bg-sidebar: #0b1120;
+      --bg-card: #0b1120;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.06);
+      --primary: #38bdf8;
+      --primary-glow: rgba(56, 189, 248, 0.15);
+      --success: #22c55e;
+      --success-glow: rgba(34, 197, 94, 0.15);
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --danger-glow: rgba(239, 68, 68, 0.15);
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Entry Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+        filter: blur(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    /* Glow Pulse Animation */
+    @keyframes cardGlow {
+      0% {
+        box-shadow: 0 0 15px rgba(56, 189, 248, 0.05);
+      }
+
+      50% {
+        box-shadow: 0 0 25px rgba(56, 189, 248, 0.15);
+      }
+
+      100% {
+        box-shadow: 0 0 15px rgba(56, 189, 248, 0.05);
+      }
+    }
+
+    /* Passcode Screen Container */
+    .passcode-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+    }
+
+    .passcode-card {
+      width: 100%;
+      max-width: 420px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      text-align: center;
+      animation: fadeInUp 0.4s ease forwards;
+    }
+
+    .passcode-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      display: inline-block;
+      filter: drop-shadow(0 0 8px var(--primary));
+    }
+
+    .passcode-card h4 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .passcode-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .passcode-input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .passcode-input-group input {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 16px;
+      border: 1.5px solid var(--border-color);
+      border-radius: 8px;
+      outline: none;
+      transition: all 0.2s;
+      background: rgba(15, 23, 42, 0.6);
+      color: #ffffff;
+      text-align: center;
+      font-family: var(--font-mono);
+      letter-spacing: 4px;
+    }
+
+    .passcode-input-group input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 10px var(--primary-glow);
+    }
+
+    .decrypt-btn {
+      background-color: var(--primary);
+      color: #020617;
+      border: none;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .decrypt-btn:hover {
+      box-shadow: 0 0 15px var(--primary);
+      transform: scale(1.02);
+    }
+
+    .passcode-error {
+      color: var(--danger);
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 12px;
+    }
+
+    /* Main Dashboard Layout */
+    .dashboard-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      width: 260px;
+      background-color: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      flex-shrink: 0;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+
+    .logo-badge {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: var(--primary);
+      text-transform: uppercase;
+      text-shadow: 0 0 8px var(--primary-glow);
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nav-item-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .nav-item-link:hover {
+      background-color: rgba(255, 255, 255, 0.02);
+      color: var(--primary);
+    }
+
+    .nav-item-link.active {
+      background-color: var(--primary-glow);
+      color: var(--primary);
+      font-weight: 600;
+      border-left: 3px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* Main Dashboard Body */
+    .main-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--bg-main);
+      overflow-y: auto;
+    }
+
+    /* Header */
+    .header-bar {
+      height: 72px;
+      background-color: var(--bg-sidebar);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      flex-shrink: 0;
+    }
+
+    .header-title-group h2 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .header-title-group p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: #020617;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 0 10px var(--primary);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-outline:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Content Dashboard Wrapper */
+    .dashboard-container {
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      max-width: 1400px;
+      width: 100%;
+      margin: 0 auto;
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    /* Filter Strip */
+    .filters-bar {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 16px 24px;
+      border-radius: 12px;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .filter-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .filter-select {
+      background-color: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 13px;
+      color: var(--text-main);
+      outline: none;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    /* Metrics Grid */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .metric-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .metric-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.15);
+    }
+
+    .metric-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .metric-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+
+    .metric-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Circular progress indicator widget */
+    .metric-circle-box {
+      width: 48px;
+      height: 48px;
+      position: relative;
+    }
+
+    .metric-circle-graph {
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .circle-bg {
+      stroke: rgba(255, 255, 255, 0.05);
+    }
+
+    .circle-fill {
+      transition: stroke-dasharray 1s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Main Section Columns: Graph + Hiring Leads & Feed */
+    .dashboard-columns {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 1024px) {
+      .dashboard-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Standard Card Container */
+    .data-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+    }
+
+    .data-card:hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .card-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .card-header-row h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Traffic Donut and Legend Layout */
+    .traffic-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      padding: 16px 0;
+    }
+
+    @media (max-width: 640px) {
+      .traffic-container {
+        flex-direction: column;
+        gap: 16px;
+      }
+    }
+
+    .donut-chart-box {
+      position: relative;
+      width: 130px;
+      height: 130px;
+    }
+
+    .donut-center-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .donut-center-val {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .donut-center-lbl {
+      font-size: 9px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .legend-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex-grow: 1;
+    }
+
+    .legend-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .legend-label-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .legend-label-text {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .legend-value {
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Hiring Leads List Styles */
+    .leads-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 240px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .lead-item-card {
+      background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s;
+    }
+
+    .lead-item-card:hover {
+      border-color: rgba(255, 255, 255, 0.12);
+      background-color: rgba(255, 255, 255, 0.04);
+    }
+
+    .lead-details {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      max-width: 80%;
+    }
+
+    .lead-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .lead-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .lead-meta a {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    .lead-delete-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--danger);
+      font-size: 14px;
+      padding: 4px;
+      border-radius: 4px;
+      transition: background-color 0.2s;
+    }
+
+    .lead-delete-btn:hover {
+      background-color: var(--danger-glow);
+    }
+
+    /* Telemetry Info Rows */
+    .telemetry-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 380px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .telemetry-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .telemetry-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .telemetry-key {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .telemetry-val {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      max-width: 60%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Activity Feed Logs */
+    .feed-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 380px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .feed-item {
+      display: flex;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background-color: rgba(255, 255, 255, 0.01);
+      border: 1px solid var(--border-color);
+      border-left: 3px solid var(--primary);
+      font-size: 12px;
+      line-height: 1.4;
+      animation: fadeInUp 0.3s ease-out;
+    }
+
+    .feed-item.alert-event {
+      border-left-color: var(--danger);
+      background-color: var(--danger-glow);
+    }
+
+    .feed-item.highlight-event {
+      border-left-color: var(--success);
+      background-color: var(--success-glow);
+    }
+
+    .feed-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background-color: var(--primary);
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    .feed-item.alert-event .feed-dot {
+      background-color: var(--danger);
+    }
+
+    .feed-item.highlight-event .feed-dot {
+      background-color: var(--success);
+    }
+
+    .feed-text {
+      color: var(--text-main);
+      font-family: var(--font-mono);
+    }
+
+    /* Info Badge Info Trigger */
+    .info-btn {
+      font-size: 14px;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: inline-flex;
+    }
+
+    .info-btn:hover {
+      color: var(--text-main);
+    }
+
+    .info-box-block {
+      background-color: var(--primary-glow);
+      border: 1px solid rgba(56, 189, 248, 0.15);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Passcode Verification Screen (Shown by default if not authenticated) -->
+  <div id="passcode-screen" class="passcode-container">
+    <div class="passcode-card">
+      <span class="passcode-icon">🔐</span>
+      <h4>Decryption Required</h4>
+      <p>Please enter your owner security authorization code to access the telemetry dashboard databases.</p>
+      
+      <!-- Normal Authentication Section -->
+      <div id="passcode-auth-section">
+        <div class="passcode-input-group">
+          <input type="password" id="owner-passcode-input" placeholder="••••••••" maxlength="12">
+          <button id="owner-passcode-submit" class="decrypt-btn">DECRYPT DATABASE</button>
+        </div>
+        <p id="passcode-error-msg" class="passcode-error hidden">ACCESS DENIED: INVALID KEY CARD</p>
+        <div style="margin-top: 16px;">
+          <a href="#" id="forgot-passcode-link" style="color: var(--primary); font-size: 12px; text-decoration: none; font-weight: 600;">Forgot Passcode?</a>
+        </div>
+      </div>
+
+      <!-- Forgot Passcode / Reset Section -->
+      <div id="reset-passcode-section" class="hidden" style="margin-top: 16px; border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; background-color: rgba(15, 23, 42, 0.4); text-align: center;">
+        <h5 style="color: var(--primary); font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">Reset Passcode</h5>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.4;">Verify ownership by generating a 6-digit OTP code to your registered Gmail address, then set a new passcode.</p>
+        <div class="passcode-input-group" style="gap: 12px;">
+          <button id="reset-generate-otp-btn" class="decrypt-btn" style="background-color: var(--primary); color: #020617; font-weight: 700; width: 100%;">GENERATE RESET OTP</button>
+          
+          <div id="reset-otp-fields" class="hidden" style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+            <input type="text" id="reset-otp-input" placeholder="Enter 6-Digit OTP" maxlength="6" style="letter-spacing: 2px; text-align: center; width: 100%;">
+            <input type="password" id="new-passcode-input" placeholder="Enter New Passcode" maxlength="12" style="letter-spacing: 2px; text-align: center; width: 100%;">
+            <input type="password" id="confirm-passcode-input" placeholder="Confirm New Passcode" maxlength="12" style="letter-spacing: 2px; text-align: center; width: 100%;">
+            <button id="reset-submit-btn" class="decrypt-btn" style="background-color: var(--success); color: #ffffff; font-weight: 700; width: 100%;">RESET & LOGIN</button>
+          </div>
+          
+          <button id="reset-cancel-btn" class="decrypt-btn" style="background-color: transparent; border: 1px solid var(--border-color); color: var(--text-main); width: 100%;">CANCEL</button>
+        </div>
+        <p id="reset-status-msg" class="passcode-error hidden" style="margin-top: 12px; font-size: 11px;"></p>
+      </div>
+
+      <!-- Locked Warning & OTP Verification Section -->
+      <div id="lockout-warning-section" class="hidden" style="margin-top: 16px; border: 1.5px solid var(--danger); border-radius: 8px; padding: 20px; background-color: var(--danger-glow); text-align: center;">
+        <span style="font-size: 28px; display: block; margin-bottom: 8px;">⚠️</span>
+        <h5 style="color: var(--danger); font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">Security Lockout Active</h5>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.4;">Multiple failed login attempts detected. Generate a 6-digit verification code to your registered Gmail address to unlock the panel.</p>
+        <div class="passcode-input-group" style="gap: 12px;">
+          <button id="generate-otp-btn" class="decrypt-btn" style="background-color: var(--primary); color: #020617; font-weight: 700; width: 100%;">GENERATE SECURITY OTP</button>
+          <input type="text" id="lockout-otp-input" placeholder="Enter 6-Digit OTP" maxlength="6" style="display: none; letter-spacing: 2px; text-align: center; width: 100%;">
+          <button id="verify-otp-btn" class="decrypt-btn" style="display: none; background-color: var(--success); color: #ffffff; font-weight: 700; width: 100%;">VERIFY & UNLOCK</button>
+        </div>
+        <p id="otp-status-msg" class="passcode-error hidden" style="margin-top: 12px; font-size: 11px;"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Owner Dashboard Screen (Hidden by default until authenticated) -->
+  <div id="dashboard-screen" class="dashboard-layout hidden">
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+      <div class="logo-container">
+        <span class="logo-badge">SHOUBHIK SECURITY DASHBOARD</span>
+      </div>
+      <ul class="nav-list">
+        <li>
+          <a href="#" id="nav-reports" class="nav-item-link active">
+            <span>📊</span> Reports
+          </a>
+        </li>
+        <li>
+          <a href="#" id="nav-netlify" class="nav-item-link">
+            <span>⚡</span> Netlify Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="index.html" class="nav-item-link">
+            <span>🌐</span> Portfolio
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <div style="font-size: 11px; color: var(--text-muted);">
+          <span>Database State: </span>
+          <span style="color: var(--success); font-weight: 700;">● Online</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Panel -->
+    <div class="main-content">
+
+      <!-- Top Header Bar -->
+      <div class="header-bar">
+        <div class="header-title-group">
+          <h2 id="panel-title">Reports</h2>
+          <p id="panel-subtitle">Real-time analytics and interaction logging feed.</p>
+        </div>
+        <div class="header-actions">
+          <a href="https://app.netlify.com/teams/shoubhik95/projects" target="_blank" class="action-btn btn-outline" style="border-color: #00ad9f; color: #00ad9f; font-weight: 700;">
+            <span>⚡</span> Netlify Console
+          </a>
+          <button id="owner-export-btn" class="action-btn btn-primary">
+            <span>📥</span> Download Report
+          </button>
+          <a href="index.html" class="action-btn btn-outline">
+            <span>←</span> Back to Website
+          </a>
+        </div>
+      </div>
+
+      <!-- Scrollable Container -->
+      <div class="dashboard-container">
+        <div id="reports-panel" style="display: flex; flex-direction: column; gap: 24px; width: 100%;">
+
+        <!-- Filters Strip -->
+        <div class="filters-bar">
+          <div class="filter-group">
+            <span class="filter-label">Timeframe:</span>
+            <select id="graph-time-filter" class="filter-select">
+              <option value="live" selected>Live Session</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+              <option value="yearly">Yearly</option>
+            </select>
+          </div>
+          <div class="filter-group">
+            <span class="filter-label">Segment:</span>
+            <select id="graph-segment-filter" class="filter-select">
+              <option value="all" selected>All Interactions</option>
+              <option value="alert">Security Warnings</option>
+              <option value="highlight">Important Actions</option>
+              <option value="info">General Navigation</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Metrics cards row with circular indicators -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-details">
+              <span class="metric-title">Session Time</span>
+              <span id="dash-session-time" class="metric-value">00:00:00</span>
+            </div>
+            <div class="metric-circle-box">
+              <svg class="metric-circle-graph" viewBox="0 0 36 36">
+                <circle class="circle-bg" cx="18" cy="18" r="16" fill="none" stroke-width="3"></circle>
+                <circle class="circle-fill" cx="18" cy="18" r="16" fill="none" stroke="var(--primary)" stroke-width="3"
+                  stroke-dasharray="75, 100" stroke-linecap="round"></circle>
+              </svg>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-details">
+              <span class="metric-title">Total Interactions</span>
+              <span id="dash-total-clicks" class="metric-value">0</span>
+            </div>
+            <div class="metric-circle-box">
+              <svg class="metric-circle-graph" viewBox="0 0 36 36">
+                <circle class="circle-bg" cx="18" cy="18" r="16" fill="none" stroke-width="3"></circle>
+                <circle class="circle-fill" cx="18" cy="18" r="16" fill="none" stroke="var(--success)" stroke-width="3"
+                  stroke-dasharray="85, 100" stroke-linecap="round"></circle>
+              </svg>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-details">
+              <span class="metric-title">Max Scroll Depth</span>
+              <span id="dash-scroll-depth" class="metric-value">0%</span>
+            </div>
+            <div class="metric-circle-box">
+              <svg class="metric-circle-graph" viewBox="0 0 36 36">
+                <circle class="circle-bg" cx="18" cy="18" r="16" fill="none" stroke-width="3"></circle>
+                <circle class="circle-fill" cx="18" cy="18" r="16" fill="none" stroke="var(--warning)" stroke-width="3"
+                  stroke-dasharray="50, 100" stroke-linecap="round"></circle>
+              </svg>
+            </div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-details">
+              <span class="metric-title">Active Section</span>
+              <span id="dash-active-level" class="metric-value"
+                style="font-size: 15px; font-weight: 700; margin-top: 4px;">LVL 1</span>
+            </div>
+            <div class="metric-circle-box">
+              <svg class="metric-circle-graph" viewBox="0 0 36 36">
+                <circle class="circle-bg" cx="18" cy="18" r="16" fill="none" stroke-width="3"></circle>
+                <circle class="circle-fill" cx="18" cy="18" r="16" fill="none" stroke="#6366f1" stroke-width="3"
+                  stroke-dasharray="60, 100" stroke-linecap="round"></circle>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columns layout: Traffic + Hiring, and User profiles & events -->
+        <div class="dashboard-columns">
+
+          <!-- Column Left: Traffic chart & Hiring Leads -->
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+
+            <!-- Traffic chart Card -->
+            <div class="data-card">
+              <div class="card-header-row">
+                <h3>Traffic & Event Analysis</h3>
+              </div>
+              <div class="traffic-container">
+                <div class="donut-chart-box">
+                  <svg width="130" height="130" viewBox="0 0 140 140">
+                    <circle cx="70" cy="70" r="50" fill="transparent" stroke="rgba(255, 255, 255, 0.03)"
+                      stroke-width="14"></circle>
+                    <circle id="graph-seg-direct" cx="70" cy="70" r="50" fill="transparent" stroke="#38bdf8"
+                      stroke-width="14" stroke-dasharray="314.15" stroke-dashoffset="0" transform="rotate(-90 70 70)"
+                      style="transition: stroke-dashoffset 0.6s ease;"></circle>
+                    <circle id="graph-seg-search" cx="70" cy="70" r="50" fill="transparent" stroke="#22c55e"
+                      stroke-width="14" stroke-dasharray="314.15" stroke-dashoffset="0" transform="rotate(-90 70 70)"
+                      style="transition: stroke-dashoffset 0.6s ease;"></circle>
+                    <circle id="graph-seg-refer" cx="70" cy="70" r="50" fill="transparent" stroke="#ef4444"
+                      stroke-width="14" stroke-dasharray="314.15" stroke-dashoffset="0" transform="rotate(-90 70 70)"
+                      style="transition: stroke-dashoffset 0.6s ease;"></circle>
+                  </svg>
+                  <div class="donut-center-text">
+                    <span id="graph-total-views" class="donut-center-val">0</span>
+                    <span id="graph-total-label" class="donut-center-lbl">Actions</span>
+                  </div>
+                </div>
+
+                <div class="legend-list">
+                  <div class="legend-item">
+                    <div class="legend-label-group">
+                      <span class="legend-dot" style="background-color: #38bdf8;"></span>
+                      <span id="legend-lbl-direct" class="legend-label-text">Clicks</span>
+                    </div>
+                    <span id="graph-val-direct" class="legend-value">0%</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-label-group">
+                      <span class="legend-dot" style="background-color: #22c55e;"></span>
+                      <span id="legend-lbl-search" class="legend-label-text">Skills</span>
+                    </div>
+                    <span id="graph-val-search" class="legend-value">0%</span>
+                  </div>
+                  <div class="legend-item">
+                    <div class="legend-label-group">
+                      <span class="legend-dot" style="background-color: #ef4444;"></span>
+                      <span id="legend-lbl-refer" class="legend-label-text">Projects</span>
+                    </div>
+                    <span id="graph-val-refer" class="legend-value">0%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hiring Leads Card -->
+            <div class="data-card">
+              <div class="card-header-row">
+                <h3>Hiring Leads Registered (<span id="dash-hire-count">0</span>)</h3>
+              </div>
+              <div id="dash-hire-list" class="leads-list">
+                <!-- Injected via security.js -->
+              </div>
+            </div>
+
+            <!-- User Profile Data Card -->
+            <div class="data-card">
+              <div class="card-header-row">
+                <h3>User Device & Session Profile</h3>
+              </div>
+              <div class="telemetry-rows">
+                <div class="telemetry-item"><span class="telemetry-key">IP Address</span><span id="dash-ip"
+                    class="telemetry-val">Retrieving...</span></div>
+                <div class="telemetry-item"><span class="telemetry-key">Region</span><span id="dash-region"
+                    class="telemetry-val">Retrieving...</span></div>
+                <div class="telemetry-item"><span class="telemetry-key">Browser</span><span id="dash-browser"
+                    class="telemetry-val">Unknown</span></div>
+                <div class="telemetry-item"><span class="telemetry-key">OS</span><span id="dash-os"
+                    class="telemetry-val">Unknown</span></div>
+                <div class="telemetry-item"><span class="telemetry-key">Screen Resolution</span><span
+                    id="dash-resolution" class="telemetry-val">0x0</span></div>
+                <div class="telemetry-item"><span class="telemetry-key">Language</span><span id="dash-language"
+                    class="telemetry-val">en-US</span></div>
+                <div class="telemetry-item"><span class="telemetry-key">Network Type</span><span id="dash-network"
+                    class="telemetry-val">N/A</span></div>
+                <div class="telemetry-item"><span class="telemetry-key">Referrer Source</span><span id="dash-referrer"
+                    class="telemetry-val">Direct Visit</span></div>
+                <div class="telemetry-item"><span class="telemetry-key">Timezone</span><span id="dash-timezone"
+                    class="telemetry-val">N/A</span></div>
+                <div class="telemetry-item"><span class="telemetry-key">Cookie Status</span><span id="dash-cookies"
+                    class="telemetry-val">N/A</span></div>
+                <div class="telemetry-item"><span class="telemetry-key">Do Not Track</span><span id="dash-dnt"
+                    class="telemetry-val">N/A</span></div>
+                <div class="telemetry-item"><span class="telemetry-key">Online Status</span><span id="dash-online"
+                    class="telemetry-val">N/A</span></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Column Right: Live Activity Logs & Interactions -->
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+
+            <div class="data-card" style="flex: 1;">
+              <div class="card-header-row">
+                <h3>Live Activity Timeline</h3>
+                <span id="log-legend-trigger" class="info-btn" title="Show Log Legend">ⓘ</span>
+              </div>
+
+              <!-- Log Legend -->
+              <div id="log-legend-box" class="info-box-block hidden">
+                <div style="font-weight: 700; margin-bottom: 6px;">TIMELINE LEGEND</div>
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                  <div><span style="color: var(--primary); font-weight: 700;">BLUE</span>: User clicks, navigations, and
+                    normal interactions.</div>
+                  <div><span style="color: var(--success); font-weight: 700;">GREEN</span>: Success logs, resume
+                    downloads, and authorized credentials.</div>
+                  <div><span style="color: var(--danger); font-weight: 700;">RED</span>: Security warnings, wrong
+                    passcode attempts, text copying, and blocks.</div>
+                </div>
+              </div>
+
+              <div id="dash-activity-log" class="feed-container">
+                <!-- Injected via security.js -->
+              </div>
+            </div>
+
+            <!-- Netlify Live Status Card -->
+            <div class="data-card">
+              <div class="card-header-row">
+                <h3>Netlify Status</h3>
+                <span id="netlify-badge" style="background-color: rgba(34, 197, 94, 0.15); border: 1.5px solid var(--success); color: var(--success); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 9999px; text-transform: uppercase; font-family: var(--font-mono); letter-spacing: 0.5px;">● Online</span>
+              </div>
+              <div class="telemetry-rows">
+                <div class="telemetry-item">
+                  <span class="telemetry-key">Netlify Console</span>
+                  <span class="telemetry-val"><a href="https://app.netlify.com/teams/shoubhik95/projects" target="_blank" style="color: var(--primary); text-decoration: underline;">shoubhik95 Projects</a></span>
+                </div>
+                <div class="telemetry-item">
+                  <span class="telemetry-key">Build Status</span>
+                  <span style="color: var(--success); font-weight: 600; font-family: var(--font-mono);">DEPLOY SUCCESS</span>
+                </div>
+                <div class="telemetry-item">
+                  <span class="telemetry-key">Branch</span>
+                  <span class="telemetry-val">main</span>
+                </div>
+                <div class="telemetry-item">
+                  <span class="telemetry-key">Last Deploy</span>
+                  <span id="netlify-last-deploy" class="telemetry-val">Loading...</span>
+                </div>
+                <div class="telemetry-item">
+                  <span class="telemetry-key">Total Deploys</span>
+                  <span class="telemetry-val" style="font-family: var(--font-mono);">48</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interaction statistics -->
+            <div class="data-card">
+              <div class="card-header-row">
+                <h3>Interaction Specifics</h3>
+              </div>
+              <div class="telemetry-rows">
+                <div class="telemetry-item"><span class="telemetry-key">Projects Examined</span><span
+                    id="dash-projects-opened" class="telemetry-val">0</span></div>
+                <div class="telemetry-item"><span class="telemetry-key">Skill Cards Inspected</span><span
+                    id="dash-skills-flipped" class="telemetry-val">0</span></div>
+                <div class="telemetry-item"><span class="telemetry-key">Resume Downloads</span><span
+                    id="dash-resume-downloads" class="telemetry-val">0</span></div>
+                <div class="telemetry-item"><span class="telemetry-key">External Clicks</span><span
+                    id="dash-external-clicks" class="telemetry-val">0</span></div>
+              </div>
+            </div>
+
+          </div>
+
+        </div> <!-- End of dashboard-columns -->
+      </div> <!-- End of reports-panel -->
+
+        <!-- Netlify Panel (Hidden by default) -->
+        <div id="netlify-panel" class="hidden" style="display: flex; flex-direction: column; gap: 24px; width: 100%;">
+          <!-- Netlify Resource Usage Grid -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-details" style="width: 100%;">
+                <span class="metric-title">Daily Active Users (DAU)</span>
+                <span id="netlify-dau-val" class="metric-value" style="font-size: 28px;">Loading...</span>
+                <span style="font-size: 11px; color: var(--success); font-weight: 600; margin-top: 4px;">↑ 12% vs yesterday</span>
+              </div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-details" style="width: 100%;">
+                <span class="metric-title">Bandwidth Usage</span>
+                <span class="metric-value">2.4 GB <span style="font-size: 13px; color: var(--text-muted); font-weight: 500;">/ 100 GB</span></span>
+                <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; margin-top: 8px; overflow: hidden;">
+                  <div style="width: 2.4%; height: 100%; background: var(--primary);"></div>
+                </div>
+              </div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-details" style="width: 100%;">
+                <span class="metric-title">Build Minutes</span>
+                <span class="metric-value">75 <span style="font-size: 13px; color: var(--text-muted); font-weight: 500;">/ 300 min</span></span>
+                <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; margin-top: 8px; overflow: hidden;">
+                  <div style="width: 25%; height: 100%; background: var(--warning);"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts and Deploys -->
+          <div class="dashboard-columns">
+            <!-- DAU Bar Chart -->
+            <div class="data-card">
+              <div class="card-header-row">
+                <h3>Daily Active Users (Last 7 Days)</h3>
+              </div>
+              <div id="netlify-dau-chart" style="display: flex; align-items: flex-end; justify-content: space-between; height: 200px; padding: 20px 10px 10px 10px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                <!-- Mon -->
+                <div style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; gap: 8px;">
+                  <span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted);">120</span>
+                  <div style="width: 24px; height: 60px; background: linear-gradient(to top, #1d4ed8, var(--primary)); border-radius: 4px; box-shadow: 0 0 10px var(--primary-glow);"></div>
+                  <span style="font-size: 11px; font-weight: 600;">Mon</span>
+                </div>
+                <!-- Tue -->
+                <div style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; gap: 8px;">
+                  <span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted);">150</span>
+                  <div style="width: 24px; height: 75px; background: linear-gradient(to top, #1d4ed8, var(--primary)); border-radius: 4px; box-shadow: 0 0 10px var(--primary-glow);"></div>
+                  <span style="font-size: 11px; font-weight: 600;">Tue</span>
+                </div>
+                <!-- Wed -->
+                <div style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; gap: 8px;">
+                  <span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted);">180</span>
+                  <div style="width: 24px; height: 90px; background: linear-gradient(to top, #1d4ed8, var(--primary)); border-radius: 4px; box-shadow: 0 0 10px var(--primary-glow);"></div>
+                  <span style="font-size: 11px; font-weight: 600;">Wed</span>
+                </div>
+                <!-- Thu -->
+                <div style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; gap: 8px;">
+                  <span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted);">220</span>
+                  <div style="width: 24px; height: 110px; background: linear-gradient(to top, #1d4ed8, var(--primary)); border-radius: 4px; box-shadow: 0 0 10px var(--primary-glow);"></div>
+                  <span style="font-size: 11px; font-weight: 600;">Thu</span>
+                </div>
+                <!-- Fri -->
+                <div style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; gap: 8px;">
+                  <span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted);">190</span>
+                  <div style="width: 24px; height: 95px; background: linear-gradient(to top, #1d4ed8, var(--primary)); border-radius: 4px; box-shadow: 0 0 10px var(--primary-glow);"></div>
+                  <span style="font-size: 11px; font-weight: 600;">Fri</span>
+                </div>
+                <!-- Sat -->
+                <div style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; gap: 8px;">
+                  <span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted);">240</span>
+                  <div style="width: 24px; height: 120px; background: linear-gradient(to top, #1d4ed8, var(--primary)); border-radius: 4px; box-shadow: 0 0 10px var(--primary-glow);"></div>
+                  <span style="font-size: 11px; font-weight: 600;">Sat</span>
+                </div>
+                <!-- Sun -->
+                <div style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; gap: 8px;">
+                  <span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted);">310</span>
+                  <div style="width: 24px; height: 155px; background: linear-gradient(to top, #1d4ed8, var(--primary)); border-radius: 4px; box-shadow: 0 0 10px var(--primary-glow);"></div>
+                  <span style="font-size: 11px; font-weight: 600;">Sun</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Deploy Log / Deploy History -->
+            <div class="data-card">
+              <div class="card-header-row">
+                <h3>Recent Deploys</h3>
+              </div>
+              <div class="telemetry-rows" style="max-height: 200px; overflow-y: auto;">
+                <div class="telemetry-item">
+                  <div style="display: flex; flex-direction: column;">
+                    <span style="font-weight: 600;">Deploy #48: main branch</span>
+                    <span style="font-size: 11px; color: var(--text-muted);">Production deploy - 11m ago</span>
+                  </div>
+                  <span style="color: var(--success); font-weight: 700; font-family: var(--font-mono); font-size: 12px;">SUCCESS</span>
+                </div>
+                <div class="telemetry-item">
+                  <div style="display: flex; flex-direction: column;">
+                    <span style="font-weight: 600;">Deploy #47: main branch</span>
+                    <span style="font-size: 11px; color: var(--text-muted);">Production deploy - 3 hours ago</span>
+                  </div>
+                  <span style="color: var(--success); font-weight: 700; font-family: var(--font-mono); font-size: 12px;">SUCCESS</span>
+                </div>
+                <div class="telemetry-item">
+                  <div style="display: flex; flex-direction: column;">
+                    <span style="font-weight: 600;">Deploy #46: main branch</span>
+                    <span style="font-size: 11px; color: var(--text-muted);">Production deploy - 1 day ago</span>
+                  </div>
+                  <span style="color: var(--success); font-weight: 700; font-family: var(--font-mono); font-size: 12px;">SUCCESS</span>
+                </div>
+                <div class="telemetry-item">
+                  <div style="display: flex; flex-direction: column;">
+                    <span style="font-weight: 600;">Deploy #45: main branch</span>
+                    <span style="font-size: 11px; color: var(--text-muted);">Production deploy - 2 days ago</span>
+                  </div>
+                  <span style="color: var(--success); font-weight: 700; font-family: var(--font-mono); font-size: 12px;">SUCCESS</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- JS Scripts -->
+  <script src="./data.js"></script>
+  <script src="./telemetry.js"></script>
+  <script src="./security.js"></script>
+</body>
+
+</html>

@@ -91,13 +91,17 @@ window.Telemetry = (() => {
     // Update live UI feed if visible
     const dashLogContainer = document.getElementById("dash-activity-log");
     if (dashLogContainer) {
-      const logClass = type === 'alert' ? 'alert-event' : (type === 'highlight' ? 'highlight-event' : '');
-      const logItem = document.createElement("div");
-      logItem.className = `hud-log-item ${logClass}`;
-      logItem.innerHTML = `<div class="hud-log-dot"></div><div class="hud-log-text">[${time}] ${message}</div>`;
-      dashLogContainer.insertBefore(logItem, dashLogContainer.firstChild);
-      if (dashLogContainer.children.length > 100) {
-        dashLogContainer.removeChild(dashLogContainer.lastChild);
+      if (typeof window.populateActivityFeed === 'function') {
+        window.populateActivityFeed();
+      } else {
+        const logClass = type === 'alert' ? 'alert-event' : (type === 'highlight' ? 'highlight-event' : '');
+        const logItem = document.createElement("div");
+        logItem.className = `feed-item ${logClass}`;
+        logItem.innerHTML = `<div class="feed-dot"></div><div class="feed-text">[${time}] ${message}</div>`;
+        dashLogContainer.insertBefore(logItem, dashLogContainer.firstChild);
+        if (dashLogContainer.children.length > 100) {
+          dashLogContainer.removeChild(dashLogContainer.lastChild);
+        }
       }
     }
   };
@@ -273,9 +277,11 @@ window.Telemetry = (() => {
     });
 
     // 6. Hiring Interest Helper
-    window.Telemetry.addHiringLead = (name) => {
+    window.Telemetry.addHiringLead = (name, email = '', companyLink = '') => {
       const lead = {
         name: name.trim(),
+        email: email.trim(),
+        companyLink: companyLink.trim(),
         timestamp: new Date().toLocaleString()
       };
       const leads = JSON.parse(localStorage.getItem('portfolio_hiring_leads') || '[]');
@@ -314,19 +320,43 @@ window.Telemetry = (() => {
     const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     state.deviceData.network = conn ? (conn.effectiveType || "N/A").toUpperCase() : "N/A";
 
-    fetch("https://ipapi.co/json/")
-      .then(r => r.json())
-      .then(data => {
-        if (data.ip) state.deviceData.ip = data.ip;
-        if (data.city && data.country_name) {
-          state.deviceData.region = `${data.city}, ${data.country_name}`;
-          logEvent(`User IP Resolved: ${data.ip} (${data.city}, ${data.country_name})`, "highlight");
-        }
-      })
-      .catch(err => {
-        state.deviceData.ip = "Localhost/Block";
-        state.deviceData.region = "Sandbox / VPN / Offline";
-      });
+    const fetchIP = () => {
+      fetch("https://ipapi.co/json/")
+        .then(r => {
+          if (!r.ok) throw new Error("ipapi.co rate limit or block");
+          return r.json();
+        })
+        .then(data => {
+          if (data.ip) state.deviceData.ip = data.ip;
+          if (data.city && data.country_name) {
+            state.deviceData.region = `${data.city}, ${data.country_name}`;
+            logEvent(`User IP Resolved: ${data.ip} (${data.city}, ${data.country_name})`, "highlight");
+          } else {
+            state.deviceData.region = "Unknown Region";
+          }
+        })
+        .catch(err => {
+          // Fallback to HTTPS compatible ipify API
+          fetch("https://api.ipify.org?format=json")
+            .then(r => {
+              if (!r.ok) throw new Error("ipify.org error");
+              return r.json();
+            })
+            .then(data => {
+              if (data.ip) {
+                state.deviceData.ip = data.ip;
+                state.deviceData.region = "Resolved via Backup API";
+                logEvent(`User IP Resolved (Backup): ${data.ip}`, "highlight");
+              }
+            })
+            .catch(err2 => {
+              state.deviceData.ip = "Blocked / Ad-Blocker";
+              state.deviceData.region = "Sandbox / VPN / Offline";
+              logEvent("IP telemetry blocked by browser security policies", "info");
+            });
+        });
+    };
+    fetchIP();
 
     // 8. Record Session Visit (Historical Analytics)
     const getReferrerSource = () => {

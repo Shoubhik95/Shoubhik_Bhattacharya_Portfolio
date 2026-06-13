@@ -269,6 +269,20 @@
   border-color: rgba(245, 158, 11, 0.3);
 }
 
+.quest-float-wrapper {
+  animation: quest-card-float 8s ease-in-out infinite;
+  width: 100%;
+}
+
+@keyframes quest-card-float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(0.15deg);
+  }
+}
+
 .quest-layout {
   display: flex;
   flex-direction: column;
