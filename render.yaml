@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: shoubhik-portfolio-api
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server/index.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SERVE_STATIC
+        value: "false"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DEFAULT_PASSCODE
+        value: owner123
+      - key: OWNER_EMAIL
+        value: shoubhikbhattacharya06@gmail.com
+      - key: GMAIL_USER
+        value: shoubhikbhattacharya06@gmail.com
+      # Add these manually in Render dashboard after deploy:
+      # MONGODB_URI, GMAIL_APP_PASSWORD, ALLOWED_ORIGINS

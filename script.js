@@ -752,7 +752,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ${lead.companyLink ? `<div style="font-size:9px; color:#fbbf24; word-break:break-all;">🔗 <a href="${lead.companyLink.startsWith('http') ? lead.companyLink : 'https://' + lead.companyLink}" target="_blank" rel="noopener noreferrer" style="color:#fbbf24; text-decoration:underline;">${lead.companyLink}</a></div>` : ''}
             <div style="font-size:8px; color:#94a3b8;">${lead.timestamp}</div>
           </div>
-          <button onclick="window.Telemetry.deleteHiringLead(${idx})" style="background:transparent; border:none; color:#ef4444; font-size:11px; cursor:pointer; padding:4px;" title="Delete Lead">🗑️</button>
+          <button onclick="window.Telemetry.deleteHiringLead('${lead.id || idx}')" style="background:transparent; border:none; color:#ef4444; font-size:11px; cursor:pointer; padding:4px;" title="Delete Lead">🗑️</button>
         </div>
       `).join("");
     }
@@ -788,7 +788,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.style.overflow = "unset";
   };
 
-  const submitHiringLead = () => {
+  const submitHiringLead = async () => {
     const val = hireNameInput ? hireNameInput.value.trim() : "";
     const emailVal = hireEmailInput ? hireEmailInput.value.trim() : "";
     const linkVal = hireLinkInput ? hireLinkInput.value.trim() : "";
@@ -797,21 +797,38 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    if (window.Telemetry && typeof window.Telemetry.addHiringLead === 'function') {
-      window.Telemetry.addHiringLead(val, emailVal, linkVal);
-      window.updateDashboardHiringUI();
+    if (hireSubmitBtn) {
+      hireSubmitBtn.disabled = true;
+      hireSubmitBtn.textContent = "SUBMITTING...";
     }
-    
-    closeHireModal();
 
-    // Trigger Success Toast
-    const successToast = document.getElementById("success-toast");
-    if (successToast) {
-      successToast.classList.add("show");
-      if (window.successToastTimeout) clearTimeout(window.successToastTimeout);
-      window.successToastTimeout = setTimeout(() => {
-        successToast.classList.remove("show");
-      }, 5000);
+    try {
+      if (window.Telemetry && typeof window.Telemetry.addHiringLead === 'function') {
+        await window.Telemetry.addHiringLead(val, emailVal, linkVal);
+        if (typeof window.updateDashboardHiringUI === 'function') {
+          window.updateDashboardHiringUI();
+        }
+      }
+      closeHireModal();
+
+      const successToast = document.getElementById("success-toast");
+      if (successToast) {
+        successToast.classList.add("show");
+        if (window.successToastTimeout) clearTimeout(window.successToastTimeout);
+        window.successToastTimeout = setTimeout(() => {
+          successToast.classList.remove("show");
+        }, 5000);
+      }
+    } catch (err) {
+      if (hireErrorMsg) {
+        hireErrorMsg.textContent = "SUBMISSION FAILED. PLEASE TRY AGAIN.";
+        hireErrorMsg.classList.remove("hidden");
+      }
+    } finally {
+      if (hireSubmitBtn) {
+        hireSubmitBtn.disabled = false;
+        hireSubmitBtn.textContent = "SUBMIT";
+      }
     }
   };
 

@@ -88,6 +88,11 @@ window.Telemetry = (() => {
     // Save to historical counts
     incrementActionCount();
 
+    // Sync to backend for real-time dashboard
+    if (window.PortfolioAPI) {
+      window.PortfolioAPI.postTelemetryEvent(message, type);
+    }
+
     // Update live UI feed if visible
     const dashLogContainer = document.getElementById("dash-activity-log");
     if (dashLogContainer) {
@@ -276,9 +281,24 @@ window.Telemetry = (() => {
       logEvent("Network connection lost: Offline", "alert");
     });
 
-    // 6. Hiring Interest Helper
-    window.Telemetry.addHiringLead = (name, email = '', companyLink = '') => {
+    // 6. Hiring Interest Helper (backend + local fallback)
+    window.Telemetry.addHiringLead = async (name, email = '', companyLink = '') => {
+      if (window.PortfolioAPI) {
+        try {
+          const lead = await window.PortfolioAPI.submitHiringLead(name, email, companyLink);
+          state.hiringLeads.unshift(lead);
+          localStorage.setItem('portfolio_hiring_leads', JSON.stringify(state.hiringLeads));
+          if (typeof window.updateDashboardHiringUI === 'function') {
+            window.updateDashboardHiringUI();
+          }
+          return lead;
+        } catch (err) {
+          console.warn("Backend hiring submit failed, using local fallback:", err);
+        }
+      }
+
       const lead = {
+        id: `local-${Date.now()}`,
         name: name.trim(),
         email: email.trim(),
         companyLink: companyLink.trim(),
@@ -289,16 +309,65 @@ window.Telemetry = (() => {
       localStorage.setItem('portfolio_hiring_leads', JSON.stringify(leads));
       state.hiringLeads = leads;
       logEvent(`Hiring Lead Added: ${lead.name}`, 'highlight');
+      return lead;
     };
 
-    window.Telemetry.deleteHiringLead = (idx) => {
-      const leads = JSON.parse(localStorage.getItem('portfolio_hiring_leads') || '[]');
-      const removed = leads.splice(idx, 1);
+    window.Telemetry.deleteHiringLead = async (idxOrId) => {
+      const leads = state.hiringLeads.length
+        ? state.hiringLeads
+        : JSON.parse(localStorage.getItem('portfolio_hiring_leads') || '[]');
+
+      let removed;
+      let idToDelete;
+
+      if (typeof idxOrId === "string") {
+        idToDelete = idxOrId;
+        const idx = leads.findIndex((l) => l.id === idxOrId);
+        if (idx === -1) return;
+        removed = leads.splice(idx, 1)[0];
+      } else {
+        removed = leads.splice(idxOrId, 1)[0];
+        idToDelete = removed && removed.id;
+      }
+
+      if (window.PortfolioAPI && idToDelete && !String(idToDelete).startsWith("local-")) {
+        try {
+          await window.PortfolioAPI.deleteHiringLead(idToDelete);
+        } catch (err) {
+          console.warn("Backend delete failed:", err);
+        }
+      }
+
       localStorage.setItem('portfolio_hiring_leads', JSON.stringify(leads));
       state.hiringLeads = leads;
-      logEvent(`Hiring Lead Deleted: ${removed[0] ? removed[0].name : ''}`, 'alert');
+      logEvent(`Hiring Lead Deleted: ${removed ? removed.name : ''}`, 'alert');
       if (typeof window.updateDashboardHiringUI === 'function') {
         window.updateDashboardHiringUI();
+      }
+    };
+
+    window.Telemetry.syncHiringFromBackend = async () => {
+      if (!window.PortfolioAPI) return;
+      try {
+        const leads = await window.PortfolioAPI.fetchHiringLeads();
+        if (leads.length) {
+          state.hiringLeads = leads;
+          localStorage.setItem('portfolio_hiring_leads', JSON.stringify(leads));
+        }
+      } catch (err) {
+        console.warn("Could not sync hiring leads:", err);
+      }
+    };
+
+    window.Telemetry.mergeRemoteEvent = (event) => {
+      const exists = state.activityLogs.some(
+        (l) => l.time === event.time && l.message === event.message
+      );
+      if (exists) return;
+      state.activityLogs.unshift(event);
+      if (state.activityLogs.length > 100) state.activityLogs.pop();
+      if (typeof window.populateActivityFeed === 'function') {
+        window.populateActivityFeed();
       }
     };
 

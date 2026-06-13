@@ -1,0 +1,16 @@
+[build]
+  command = "node scripts/netlify-build.js"
+  publish = "."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# security dashboard route
+[[redirects]]
+  from = "/dashboard"
+  to = "/security.html"
+  status = 200
