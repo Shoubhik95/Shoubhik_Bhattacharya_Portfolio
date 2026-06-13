@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shoubhik Bhattacharya | Game Designer & Artist</title>
+  <meta name="description"
+    content="Technical Game Designer & Game Artist combining a strong artistic eye with hands-on technical skills in UE5, Unity, Blender, and MetaHuman.">
+
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Modular CSS Stylesheets -->
+  <link rel="stylesheet" href="./globals.css">
+  <link rel="stylesheet" href="./layout.css">
+  <link rel="stylesheet" href="./components.css">
+  <link rel="stylesheet" href="./sections.css">
+  <link rel="stylesheet" href="./hud-animations.css">
+  <link rel="stylesheet" href="./core-animations.css">
+</head>
+
+<body>
+
+  <!-- Gamified Emoji Background -->
+  <div class="emoji-bg-container">
+    <span class="bg-emoji" style="--delay: 0s; --left: 10%; --size: 32px;">👾</span>
+    <span class="bg-emoji" style="--delay: 2s; --left: 30%; --size: 48px;">🎮</span>
+    <span class="bg-emoji" style="--delay: 4s; --left: 70%; --size: 40px;">⚔️</span>
+    <span class="bg-emoji" style="--delay: 1s; --left: 85%; --size: 24px;">🎯</span>
+    <span class="bg-emoji" style="--delay: 3s; --left: 50%; --size: 36px;">⚡</span>
+    <span class="bg-emoji" style="--delay: 5s; --left: 20%; --size: 28px;">🏆</span>
+    <span class="bg-emoji" style="--delay: 6s; --left: 90%; --size: 52px;">👾</span>
+    <span class="bg-emoji" style="--delay: 7s; --left: 40%; --size: 30px;">🎮</span>
+  </div>
+
+  <!-- Floating Level Tracker -->
+  <div id="floating-tracker" class="floating-tracker">
+    <div class="tracker-text">
+      <span class="pulse-indicator">
+        <span class="ping-circle"></span>
+        <span class="solid-circle"></span>
+      </span>
+      <span id="tracker-level-name">LVL 1: About</span>
+    </div>
+    <div class="tracker-xp-bg">
+      <div id="tracker-xp-fill" class="tracker-xp-fill"></div>
+    </div>
+  </div>
+
+  <!-- Main Content Layout -->
+  <main class="main-content">
+
+    <!-- About Section -->
+    <section id="about" class="scroll-mt">
+      <h3 class="section-title">About</h3>
+      <div class="about-grid">
+        <div class="about-info">
+          <div class="about-header-group">
+            <img src="public/my photos/pixel_avatar.png" alt="Pixel Avatar" class="pixel-avatar-img">
+            <div class="about-header-text">
+              <h4 class="hi-heading">Hi this is,</h4>
+              <div class="name-badge">SHOUBHIK</div>
+            </div>
+          </div>
+
+          <div class="about-tagline">Technical Game Designer & Game Artist</div>
+
+          <div class="profile-details-new">
+            <p class="about-desc">
+              Designing gameplay, building worlds, and staging cinematics.
+              B.Tech CSE (Gaming Tech) student combining a strong artistic eye with hands-on technical skills.
+            </p>
+            <p class="about-desc">
+              Expertly leveraging UE5, Unity, Blender, MetaHuman, and Sequencer to design cohesive, atmospheric, and
+              player-focused interactive experiences.
+            </p>
+          </div>
+
+          <!-- Primary CTAs -->
+          <div class="primary-ctas">
+            <a href="#projects" class="cta-btn btn-blue">
+              <span class="cta-icon">👤</span> PROJECTS
+            </a>
+            <a href="mailto:shoubhikbhattacharya06@gmail.com" class="cta-btn btn-dark">
+              CONTACT
+            </a>
+          </div>
+
+          <!-- Secondary Social Badges -->
+          <div class="secondary-socials">
+            <a href="public/Shoubhik%20_Bhattacharya_Resume.docx" target="_blank" download class="social-badge"
+              title="Download Resume">
+              📄 Resume
+            </a>
+            <a href="https://www.artstation.com/gamedev_shoubhik2" target="_blank" rel="noopener noreferrer"
+              class="social-badge" title="ArtStation">
+              🎨 ArtStation
+            </a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-badge" title="GitHub">
+              💻 GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/shoubhik-bhattacharya-8b4099324" target="_blank"
+              rel="noopener noreferrer" class="social-badge" title="LinkedIn">
+              🔗 LinkedIn
+            </a>
+          </div>
+        </div>
+
+        <!-- Canvas Spotlight / 3D Card Deck -->
+        <div class="about-profile">
+          <div class="card-deck-wrapper">
+            <!-- Card 3 (Backmost) -->
+            <div class="deck-card card-back-2"></div>
+            <!-- Card 2 (Middle) -->
+            <div class="deck-card card-back-1"></div>
+            <!-- Card 1 (Front / Main) -->
+            <div class="deck-card card-front">
+              <div class="card-image-wrapper">
+                <canvas id="profile-canvas" class="profile-canvas"></canvas>
+                <!-- Gamer Icons Overlay to mimic screenshot details -->
+                <div class="gamer-icons-overlay">
+                  <span class="gamer-icon icon-play">▶</span>
+                  <span class="gamer-icon icon-gamepad">🎮</span>
+                  <span class="gamer-icon icon-trophy">🏆</span>
+                  <span class="gamer-icon icon-heart">❤</span>
+                </div>
+              </div>
+              <div class="card-footer-label">
+                <span class="label-name">SHOUBHIK BHATTACHARYA</span>
+                <span class="label-role">Technical Game Designer & Game Artist</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Core Skills Section -->
+    <section id="skills" class="scroll-mt border-divider">
+      <h3 class="section-title">Core Skills</h3>
+      <div id="skills-grid" class="skills-grid">
+        <!-- Dynamically populated from data.js -->
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="scroll-mt border-divider">
+      <h3 class="section-title">Education</h3>
+      <div class="spotlight-card quest-card">
+        <div class="quest-layout">
+          <!-- Left side: Quest Badge -->
+          <div class="quest-badge-col">
+            <div class="quest-radial"></div>
+            <span class="badge-emoji">🎓</span>
+            <div class="quest-tracker-header">Active Quest</div>
+            <span class="quest-status-pill">In Progress</span>
+          </div>
+
+          <!-- Right side: Education Info -->
+          <div class="quest-details-col">
+            <div class="edu-header">
+              <div class="edu-title-group">
+                <h4 class="edu-degree">B.Tech CSE (Gaming Technology)</h4>
+                <p class="edu-location">📍 VIT Bhopal University</p>
+              </div>
+              <div class="edu-grade-group">
+                <span class="edu-grade-label">Current Status</span>
+                <span class="edu-grade-val">Grade: 8.1 CGPA</span>
+              </div>
+            </div>
+
+            <p class="edu-quote">
+              &ldquo;Engage in advanced gaming technology curricula to master computer systems, algorithmic complexity,
+              skeletal animation rigging, and immersive spatial environments.&rdquo;
+            </p>
+
+            <div class="quest-objectives-container">
+              <h5 class="objectives-title">Quest Objectives</h5>
+              <ul class="objectives-list">
+                <li class="objective-item">
+                  <span class="check-icon">✔</span>
+                  Specialization in Unity & UE5 Pipelines
+                </li>
+                <li class="objective-item">
+                  <span class="check-icon">✔</span>
+                  Advanced 3D Asset Rigging & Animation
+                </li>
+                <li class="objective-item in-progress-objective">
+                  <span class="check-icon in-progress-spin">⠋</span>
+                  <span class="obj-text-gray">Deploy final capstone gaming applications (In Progress)</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Project Portfolio Section -->
+    <section id="projects" class="scroll-mt border-divider">
+      <h3 class="section-title">Portfolio Projects</h3>
+
+      <div class="project-categories">
+        <!-- Category 1: Game Design -->
+        <div class="category-block">
+          <h4 class="category-heading">Game Design & Development</h4>
+          <div id="game-design-grid" class="project-grid-row">
+            <!-- Dynamically populated from data.js -->
+          </div>
+        </div>
+
+        <!-- Category 2: Immersive XR -->
+        <div class="category-block mt-12">
+          <h4 class="category-heading">Immersive XR Experiences</h4>
+          <div id="immersive-xr-grid" class="project-grid-row">
+            <!-- Dynamically populated from data.js -->
+          </div>
+        </div>
+
+        <!-- Category 3: Game Art -->
+        <div class="category-block mt-12">
+          <h4 class="category-heading">3D Game Art & Animation</h4>
+          <div id="game-art-grid" class="project-grid-row">
+      </div>
+    </section>
+
+    <!-- Certificates & Achievements Section -->
+    <section id="certificates" class="scroll-mt border-divider">
+      <h3 class="section-title">Certificates & Achievements</h3>
+
+      <div class="ticker-wrapper mt-12">
+        <!-- Fades for edge blending -->
+        <div class="fade-overlay left-fade"></div>
+        <div class="fade-overlay right-fade"></div>
+
+        <div id="ticker-track" class="ticker-track">
+          <!-- Dynamically populated from data.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+      <p>© 2026 Shoubhik Bhattacharya</p>
+    </footer>
+
+  </main>
+
+  <!-- Interactive Project Modal (Gamer HUD Style) -->
+  <div id="project-modal" class="modal-overlay hidden">
+    <div class="gamer-hud-card" onclick="event.stopPropagation()">
+
+      <!-- Modal Header -->
+      <div class="hud-header">
+        <div class="hud-header-left">
+          <img src="public/my photos/pixel_avatar.png" alt="HUD Avatar" class="hud-avatar-img">
+          <div class="hud-project-info">
+            <h4 id="modal-title" class="hud-title">Project Title</h4>
+            <span id="modal-subtitle" class="hud-subtitle">Category Tag</span>
+          </div>
+        </div>
+        <div class="hud-header-right">
+          <button id="modal-close-btn" class="hud-close-btn" aria-label="Close modal">
+            <svg class="close-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Body (Two columns) -->
+      <div class="hud-body">
+
+        <!-- Left: Image Viewer Column -->
+        <div class="hud-viewer-col">
+          <div class="hud-media-box">
+            <div id="modal-slides-wrapper" class="hud-slides-wrapper">
+              <!-- Slides injected via JavaScript -->
+            </div>
+
+            <!-- Navigation arrows -->
+            <button id="modal-prev-btn" class="hud-nav-btn prev-btn" aria-label="Previous image">◀</button>
+            <button id="modal-next-btn" class="hud-nav-btn next-btn" aria-label="Next image">▶</button>
+
+            <div id="modal-dots-container" class="hud-dots-row"></div>
+          </div>
+
+          <!-- Section 4: CTAs (Moved to Viewer Column) -->
+          <div class="hud-panel-ctas" style="margin-top: 16px;">
+            <a id="modal-visit-btn" href="#" target="_blank" rel="noopener noreferrer" class="hud-cta-btn launch-btn">
+              LAUNCH BUILD
+            </a>
+            <a id="modal-video-btn" href="#" target="_blank" rel="noopener noreferrer" class="hud-cta-btn trailer-btn">
+              WATCH VIDEO
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: System Config Details Column -->
+        <div class="hud-details-col">
+
+          <!-- Section 1: Objective/Description -->
+          <div class="hud-panel-section">
+            <h5 class="panel-section-title">📂 MISSION BRIEFING</h5>
+            <p id="modal-description" class="panel-briefing-text">Description goes here</p>
+          </div>
+
+          <!-- Section 2: Attributes / System Stats -->
+          <div class="hud-panel-section">
+            <h5 class="panel-section-title">⚡ SYSTEM CONFIG</h5>
+            <div class="hud-stats-grid">
+              <div class="hud-stat-item">
+                <span class="hud-stat-label">ENGINE</span>
+                <span id="modal-stat-engine" class="hud-stat-value">Unity</span>
+              </div>
+              <div class="hud-stat-item">
+                <span class="hud-stat-label">COMPLEXITY</span>
+                <span id="modal-stat-complexity" class="hud-stat-value">85%</span>
+              </div>
+              <div class="hud-stat-item">
+                <span class="hud-stat-label">BUILD STAGE</span>
+                <span id="modal-stat-stage" class="hud-stat-value">Completed</span>
+              </div>
+              <div class="hud-stat-item">
+                <span class="hud-stat-label">TOOLS USED</span>
+                <span id="modal-stat-tools" class="hud-stat-value">Blender, C#</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Log Entries / Workflow Steps -->
+          <div class="hud-panel-section">
+            <h5 class="panel-section-title">🛠️ DEVELOPMENT LOGS</h5>
+            <div id="modal-log-timeline" class="hud-log-timeline">
+              <!-- Timelines items injected via javascript -->
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- Zoom Lightbox Modal for Certificates -->
+  <div id="lightbox-modal" class="modal-overlay hidden">
+    <button id="lightbox-close-btn" class="lightbox-close-btn">
+      <svg class="close-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <div class="lightbox-img-box" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="Zoomed Certificate">
+    </div>
+  </div>
+
+  <!-- JS Scripts -->
+  <script src="./data.js"></script>
+  <script src="./script.js"></script>
+</body>
+
+</html>
