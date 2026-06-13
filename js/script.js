@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  
+
   // Increment Real Server-Based Daily Active User (DAU) Counter
   try {
     const todayStr = new Date().toISOString().split('T')[0];
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const renderSkills = () => {
     const skillsGrid = document.getElementById("skills-grid");
     if (!skillsGrid) return;
-    
+
     skillsGrid.innerHTML = skillsData.map(skill => `
       <div class="skill-card-animated flip-card"
         style="--skill-color-from: ${skill.style.from}; --skill-color-to: ${skill.style.to}; --skill-border: ${skill.style.border}; --skill-text: ${skill.style.text};">
@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!tickerTrack) return;
 
     const items = [...certificatesData, ...certificatesData, ...certificatesData];
-    
+
     tickerTrack.innerHTML = items.map(cert => `
       <div class="ticker-item" data-src="${cert.src}" data-alt="${cert.alt}">
         <img src="${cert.src}" alt="${cert.alt}">
@@ -155,6 +155,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (window.Telemetry) {
           window.Telemetry.state.currentLevel = lvlName;
           window.Telemetry.logEvent(`Entered section: ${lvlName}`, 'info');
+          if (typeof window.Telemetry.changeActiveSection === 'function') {
+            window.Telemetry.changeActiveSection(entry.target.id);
+          }
         }
       }
     });
@@ -169,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     if (docHeight <= 0) return;
     const progress = (window.scrollY / docHeight) * 100;
-    
+
     if (xpProgressBar) {
       xpProgressBar.style.width = `${progress}%`;
     }
@@ -178,7 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (floatingTracker) {
       floatingTracker.classList.remove("show");
       if (floatTrackerTimeout) clearTimeout(floatTrackerTimeout);
-      
+
       // Show when resting
       floatTrackerTimeout = setTimeout(() => {
         floatingTracker.classList.add("show");
@@ -211,11 +214,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const runTypingLoop = () => {
     const fullText = roles[roleIndex];
-    
+
     if (isDeletingText) {
       currentDisplayText = fullText.slice(0, currentDisplayText.length - 1);
       if (roleTextEl) roleTextEl.textContent = currentDisplayText;
-      
+
       if (currentDisplayText === "") {
         isDeletingText = false;
         roleIndex = (roleIndex + 1) % roles.length;
@@ -270,13 +273,13 @@ document.addEventListener("DOMContentLoaded", () => {
     // Set canvas display size dynamically based on its offset dimensions!
     const width = profileCanvas.clientWidth || 400;
     const height = profileCanvas.clientHeight || 480;
-    
+
     // Only set width/height if they changed to avoid resetting canvas state on every animation frame
     if (profileCanvas.width !== width || profileCanvas.height !== height) {
       profileCanvas.width = width;
       profileCanvas.height = height;
     }
-    
+
     ctx.clearRect(0, 0, width, height);
 
     // Center crop details (similar to CSS object-cover)
@@ -343,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      
+
       card.style.setProperty("--mouse-x", x);
       card.style.setProperty("--mouse-y", y);
     });
@@ -366,7 +369,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalTitle = document.getElementById("modal-title");
   const modalSubtitle = document.getElementById("modal-subtitle");
   const modalDescription = document.getElementById("modal-description");
-  
+
   const modalStatEngine = document.getElementById("modal-stat-engine");
   const modalStatComplexity = document.getElementById("modal-stat-complexity");
   const modalStatStage = document.getElementById("modal-stat-stage");
@@ -378,7 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const modalSlidesWrapper = document.getElementById("modal-slides-wrapper");
   const modalDotsContainer = document.getElementById("modal-dots-container");
-  
+
   const modalPrevBtn = document.getElementById("modal-prev-btn");
   const modalNextBtn = document.getElementById("modal-next-btn");
   const modalCloseBtn = document.getElementById("modal-close-btn");
@@ -435,7 +438,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const stage = card.getAttribute("data-stage") || "N/A";
       const tools = card.getAttribute("data-tools") || "N/A";
       const logs = (card.getAttribute("data-logs") || "").split("|").filter(l => l.trim() !== "");
-      
+
       const link = card.getAttribute("data-link") || "";
       const video = card.getAttribute("data-video");
       const linkText = card.getAttribute("data-link-text") || "LAUNCH BUILD";
@@ -561,12 +564,12 @@ document.addEventListener("DOMContentLoaded", () => {
     item.addEventListener("click", () => {
       const src = item.getAttribute("data-src");
       const alt = item.getAttribute("data-alt");
-      
+
       if (lightboxImg) {
         lightboxImg.src = src;
         lightboxImg.alt = alt;
       }
-      
+
       if (lightboxModal) {
         lightboxModal.classList.remove("hidden");
       }
@@ -597,7 +600,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ==========================================================================
      8. Audio Engine (Global Clicks - Zero Latency)
      ========================================================================== */
-  
+
   let audioCtx = null;
   let clickBuffer = null;
   let flipBuffer = null;
@@ -606,20 +609,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const loadAudioFiles = async () => {
     try {
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      
+
       const [clickRes, flipRes] = await Promise.all([
         fetch('./universfield-computer-mouse-click-352734.mp3'),
         fetch('./freesound_community-page-flip-99838.mp3')
       ]);
-      
+
       const [clickArr, flipArr] = await Promise.all([
         clickRes.arrayBuffer(),
         flipRes.arrayBuffer()
       ]);
-      
+
       clickBuffer = await audioCtx.decodeAudioData(clickArr);
       flipBuffer = await audioCtx.decodeAudioData(flipArr);
-      
+
       // Attempt to play a startup sound
       // Note: Browsers may block this unless the user has already interacted with the domain!
       playSound(clickBuffer, 0.5);
@@ -633,7 +636,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const playSound = (buffer, volume = 0.5) => {
     if (!audioCtx || !buffer) return;
-    
+
     if (audioCtx.state === 'suspended') {
       audioCtx.resume();
     }
@@ -641,15 +644,15 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const source = audioCtx.createBufferSource();
       source.buffer = buffer;
-      
+
       const gainNode = audioCtx.createGain();
       gainNode.gain.value = volume;
-      
+
       source.connect(gainNode);
       gainNode.connect(audioCtx.destination);
-      
+
       source.start(0);
-    } catch(e) {
+    } catch (e) {
       console.error("Error playing sound:", e);
     }
   };
@@ -661,14 +664,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Play sound on flip card hover with stability check
   let hoverSoundTimer = null;
-  
+
   document.body.addEventListener('mouseover', (e) => {
     const flipCard = e.target.closest('.flip-card');
     if (flipCard) {
       // Check if we entered the card from outside
       if (!flipCard.contains(e.relatedTarget)) {
         if (hoverSoundTimer) clearTimeout(hoverSoundTimer);
-        
+
         // Wait 150ms to ensure the cursor is actually resting on the card
         hoverSoundTimer = setTimeout(() => {
           playSound(flipBuffer, 0.6);
@@ -691,7 +694,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Logic to wait until scroll "rests" before animating
   const inViewElements = new Set();
-  
+
   const visibilityObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -705,7 +708,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (questCard) visibilityObserver.observe(questCard);
 
   let scrollRestTimeout = null;
-  
+
   const triggerRestAnimations = () => {
     inViewElements.forEach(el => {
       // Trigger quest card reveal
@@ -737,10 +740,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const listContainer = document.getElementById("dash-hire-list");
     const countEl = document.getElementById("dash-hire-count");
     if (!listContainer || !countEl || !window.Telemetry) return;
-    
+
     const leads = window.Telemetry.state.hiringLeads || [];
     countEl.textContent = leads.length;
-    
+
     if (leads.length === 0) {
       listContainer.innerHTML = `<div style="font-style:italic; color:#94a3b8; padding:8px 0; text-align:center;">No leads registered.</div>`;
     } else {
@@ -752,7 +755,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ${lead.companyLink ? `<div style="font-size:9px; color:#fbbf24; word-break:break-all;">🔗 <a href="${lead.companyLink.startsWith('http') ? lead.companyLink : 'https://' + lead.companyLink}" target="_blank" rel="noopener noreferrer" style="color:#fbbf24; text-decoration:underline;">${lead.companyLink}</a></div>` : ''}
             <div style="font-size:8px; color:#94a3b8;">${lead.timestamp}</div>
           </div>
-          <button onclick="window.Telemetry.deleteHiringLead('${lead.id || idx}')" style="background:transparent; border:none; color:#ef4444; font-size:11px; cursor:pointer; padding:4px;" title="Delete Lead">🗑️</button>
+          <button onclick="window.Telemetry.deleteHiringLead(${idx})" style="background:transparent; border:none; color:#ef4444; font-size:11px; cursor:pointer; padding:4px;" title="Delete Lead">🗑️</button>
         </div>
       `).join("");
     }
@@ -788,7 +791,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.style.overflow = "unset";
   };
 
-  const submitHiringLead = async () => {
+  const submitHiringLead = () => {
     const val = hireNameInput ? hireNameInput.value.trim() : "";
     const emailVal = hireEmailInput ? hireEmailInput.value.trim() : "";
     const linkVal = hireLinkInput ? hireLinkInput.value.trim() : "";
@@ -797,40 +800,58 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    if (hireSubmitBtn) {
-      hireSubmitBtn.disabled = true;
-      hireSubmitBtn.textContent = "SUBMITTING...";
+    if (window.Telemetry && typeof window.Telemetry.addHiringLead === 'function') {
+      window.Telemetry.addHiringLead(val, emailVal, linkVal);
+      window.updateDashboardHiringUI();
     }
 
-    try {
-      if (window.Telemetry && typeof window.Telemetry.addHiringLead === 'function') {
-        await window.Telemetry.addHiringLead(val, emailVal, linkVal);
-        if (typeof window.updateDashboardHiringUI === 'function') {
-          window.updateDashboardHiringUI();
-        }
-      }
-      closeHireModal();
+    closeHireModal();
 
-      const successToast = document.getElementById("success-toast");
-      if (successToast) {
-        successToast.classList.add("show");
-        if (window.successToastTimeout) clearTimeout(window.successToastTimeout);
-        window.successToastTimeout = setTimeout(() => {
-          successToast.classList.remove("show");
-        }, 5000);
-      }
-    } catch (err) {
-      if (hireErrorMsg) {
-        hireErrorMsg.textContent = "SUBMISSION FAILED. PLEASE TRY AGAIN.";
-        hireErrorMsg.classList.remove("hidden");
-      }
-    } finally {
-      if (hireSubmitBtn) {
-        hireSubmitBtn.disabled = false;
-        hireSubmitBtn.textContent = "SUBMIT";
-      }
+    // Trigger Success Toast
+    const successToast = document.getElementById("success-toast");
+    if (successToast) {
+      successToast.classList.add("show");
+      if (window.successToastTimeout) clearTimeout(window.successToastTimeout);
+      window.successToastTimeout = setTimeout(() => {
+        successToast.classList.remove("show");
+      }, 5000);
     }
   };
+
+  // --- Share Portfolio Event Trigger ---
+  const sharePortfolioBtn = document.getElementById("share-portfolio-btn");
+  if (sharePortfolioBtn) {
+    sharePortfolioBtn.addEventListener("click", () => {
+      const urlToShare = window.location.href;
+      navigator.clipboard.writeText(urlToShare)
+        .then(() => {
+          const successToast = document.getElementById("success-toast");
+          if (successToast) {
+            const titleEl = successToast.querySelector(".cyber-toast-title");
+            const bodyEl = successToast.querySelector(".cyber-toast-body");
+            const originalTitle = titleEl ? titleEl.textContent : "SUBMISSION SUCCESSFUL";
+            const originalBody = bodyEl ? bodyEl.textContent : "Your submission was successful! Shoubhik will reach out to you soon.";
+
+            if (titleEl) titleEl.textContent = "LINK COPIED!";
+            if (bodyEl) bodyEl.textContent = "Portfolio link has been copied to clipboard to share!";
+
+            successToast.classList.add("show");
+            if (window.successToastTimeout) clearTimeout(window.successToastTimeout);
+            window.successToastTimeout = setTimeout(() => {
+              successToast.classList.remove("show");
+              setTimeout(() => {
+                if (titleEl) titleEl.textContent = originalTitle;
+                if (bodyEl) bodyEl.textContent = originalBody;
+              }, 500);
+            }, 4000);
+          }
+
+          fetch('/api/telemetry/share', { method: 'POST' })
+            .catch(err => console.warn("Failed to log share event:", err));
+        })
+        .catch(err => console.error("Could not copy link:", err));
+    });
+  }
 
   if (hireInterestBtn) {
     hireInterestBtn.addEventListener("click", openHireModal);

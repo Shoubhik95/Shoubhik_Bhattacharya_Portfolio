@@ -16,19 +16,19 @@
 
   <style>
     :root {
-      --bg-main: #060913;
-      --bg-sidebar: #0b1120;
-      --bg-card: #0b1120;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
-      --border-color: rgba(255, 255, 255, 0.06);
-      --primary: #38bdf8;
-      --primary-glow: rgba(56, 189, 248, 0.15);
-      --success: #22c55e;
-      --success-glow: rgba(34, 197, 94, 0.15);
+      --bg-main: #050202;
+      --bg-sidebar: #0f0606;
+      --bg-card: rgba(31, 12, 12, 0.45);
+      --text-main: #fcf8f8;
+      --text-muted: #8c7373;
+      --border-color: rgba(239, 68, 68, 0.08);
+      --primary: #f97316;
+      --primary-glow: rgba(249, 115, 22, 0.12);
+      --success: #ef4444;
+      --success-glow: rgba(239, 68, 68, 0.12);
       --warning: #f59e0b;
-      --danger: #ef4444;
-      --danger-glow: rgba(239, 68, 68, 0.15);
+      --danger: #b91c1c;
+      --danger-glow: rgba(185, 28, 28, 0.15);
       --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --font-mono: 'Space Mono', monospace;
     }
@@ -45,17 +45,39 @@
       font-family: var(--font-sans);
       min-height: 100vh;
       overflow-x: hidden;
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(239, 68, 68, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(249, 115, 22, 0.04) 0%, transparent 40%);
     }
 
     .hidden {
       display: none !important;
     }
 
+    /* Scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(249, 115, 22, 0.3);
+    }
+
     /* Entry Animations */
     @keyframes fadeInUp {
       from {
         opacity: 0;
-        transform: translateY(15px);
+        transform: translateY(12px);
         filter: blur(4px);
       }
 
@@ -66,18 +88,35 @@
       }
     }
 
-    /* Glow Pulse Animation */
-    @keyframes cardGlow {
+    @keyframes pulse {
       0% {
-        box-shadow: 0 0 15px rgba(56, 189, 248, 0.05);
+        transform: scale(0.95);
+        opacity: 0.5;
       }
 
       50% {
-        box-shadow: 0 0 25px rgba(56, 189, 248, 0.15);
+        transform: scale(1.1);
+        opacity: 1;
       }
 
       100% {
-        box-shadow: 0 0 15px rgba(56, 189, 248, 0.05);
+        transform: scale(0.95);
+        opacity: 0.5;
+      }
+    }
+
+    /* Cyber Security Laser Scan Animation */
+    @keyframes scan {
+      0% {
+        top: 0%;
+      }
+
+      50% {
+        top: 100%;
+      }
+
+      100% {
+        top: 0%;
       }
     }
 
@@ -88,31 +127,49 @@
       justify-content: center;
       min-height: 100vh;
       padding: 20px;
-      background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+      background: radial-gradient(circle at center, #0b1120 0%, #030712 100%);
     }
 
     .passcode-card {
       width: 100%;
       max-width: 420px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 32px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      background: rgba(17, 24, 39, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 40px 32px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
       text-align: center;
-      animation: fadeInUp 0.4s ease forwards;
+      animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .passcode-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      box-shadow: 0 0 8px var(--primary);
+      animation: scan 3s linear infinite;
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 2;
     }
 
     .passcode-icon {
-      font-size: 48px;
-      margin-bottom: 16px;
+      font-size: 44px;
+      margin-bottom: 20px;
       display: inline-block;
-      filter: drop-shadow(0 0 8px var(--primary));
+      filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
     }
 
     .passcode-card h4 {
-      font-size: 20px;
-      font-weight: 700;
+      font-size: 22px;
+      font-weight: 800;
       color: var(--text-main);
       margin-bottom: 8px;
       letter-spacing: 0.5px;
@@ -120,26 +177,26 @@
 
     .passcode-card p {
       font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 24px;
-      line-height: 1.5;
+      color: #94a3b8;
+      margin-bottom: 28px;
+      line-height: 1.6;
     }
 
     .passcode-input-group {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
     }
 
     .passcode-input-group input {
       width: 100%;
-      padding: 12px 16px;
+      padding: 14px 16px;
       font-size: 16px;
-      border: 1.5px solid var(--border-color);
-      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
       outline: none;
-      transition: all 0.2s;
-      background: rgba(15, 23, 42, 0.6);
+      transition: all 0.3s;
+      background: rgba(15, 23, 42, 0.7);
       color: #ffffff;
       text-align: center;
       font-family: var(--font-mono);
@@ -148,31 +205,38 @@
 
     .passcode-input-group input:focus {
       border-color: var(--primary);
-      box-shadow: 0 0 10px var(--primary-glow);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+      background: rgba(15, 23, 42, 0.9);
     }
 
     .decrypt-btn {
       background-color: var(--primary);
-      color: #020617;
+      color: #030712;
       border: none;
-      border-radius: 8px;
-      padding: 12px;
-      font-size: 14px;
-      font-weight: 700;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
       cursor: pointer;
-      transition: all 0.2s;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .decrypt-btn:hover {
-      box-shadow: 0 0 15px var(--primary);
-      transform: scale(1.02);
+      box-shadow: 0 0 20px var(--primary);
+      transform: translateY(-1px);
+    }
+
+    .decrypt-btn:active {
+      transform: translateY(0);
     }
 
     .passcode-error {
       color: var(--danger);
       font-size: 12px;
-      font-weight: 600;
-      margin-top: 12px;
+      font-weight: 700;
+      margin-top: 14px;
+      letter-spacing: 0.5px;
     }
 
     /* Main Dashboard Layout */
@@ -183,62 +247,67 @@
 
     /* Sidebar Navigation */
     .sidebar {
-      width: 260px;
+      width: 280px;
       background-color: var(--bg-sidebar);
       border-right: 1px solid var(--border-color);
       display: flex;
       flex-direction: column;
-      padding: 24px;
+      padding: 32px 24px;
       flex-shrink: 0;
     }
 
     .logo-container {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 32px;
+      gap: 12px;
+      margin-bottom: 40px;
     }
 
     .logo-badge {
-      font-size: 20px;
+      font-size: 14px;
       font-weight: 800;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       color: var(--primary);
       text-transform: uppercase;
-      text-shadow: 0 0 8px var(--primary-glow);
+      text-shadow: 0 0 10px var(--primary-glow);
+      line-height: 1.4;
+      text-align: left;
     }
 
     .nav-list {
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
     }
 
     .nav-item-link {
       display: flex;
       align-items: center;
-      gap: 12px;
-      padding: 12px 16px;
-      border-radius: 8px;
-      color: var(--text-muted);
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      color: #94a3b8;
       text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.2s;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid transparent;
     }
 
     .nav-item-link:hover {
-      background-color: rgba(255, 255, 255, 0.02);
-      color: var(--primary);
+      background-color: rgba(255, 255, 255, 0.03);
+      color: var(--text-main);
+      border-color: rgba(255, 255, 255, 0.02);
     }
 
     .nav-item-link.active {
-      background-color: var(--primary-glow);
+      background: linear-gradient(90deg, var(--primary-glow) 0%, rgba(56, 189, 248, 0.02) 100%);
       color: var(--primary);
-      font-weight: 600;
+      font-weight: 700;
       border-left: 3px solid var(--primary);
-      border-radius: 0 8px 8px 0;
+      border-radius: 0 10px 10px 0;
+      box-shadow: inset 2px 0 10px rgba(56, 189, 248, 0.05);
     }
 
     .sidebar-footer {
@@ -258,136 +327,158 @@
 
     /* Header */
     .header-bar {
-      height: 72px;
-      background-color: var(--bg-sidebar);
+      height: 80px;
+      background-color: rgba(9, 15, 30, 0.5);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 32px;
+      padding: 0 40px;
       flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     .header-title-group h2 {
-      font-size: 20px;
-      font-weight: 700;
+      font-size: 22px;
+      font-weight: 800;
       color: var(--text-main);
+      letter-spacing: -0.5px;
     }
 
     .header-title-group p {
       font-size: 12px;
-      color: var(--text-muted);
+      color: #64748b;
+      margin-top: 2px;
     }
 
     .header-actions {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 16px;
     }
 
     .action-btn {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 16px;
-      font-size: 13px;
-      font-weight: 600;
+      padding: 10px 18px;
+      font-size: 12px;
+      font-weight: 700;
       border-radius: 8px;
       cursor: pointer;
       text-decoration: none;
-      transition: all 0.2s;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .btn-primary {
       background-color: var(--primary);
-      color: #020617;
+      color: #030712;
       border: none;
     }
 
     .btn-primary:hover {
-      box-shadow: 0 0 10px var(--primary);
+      box-shadow: 0 0 15px var(--primary);
+      transform: translateY(-1px);
     }
 
     .btn-outline {
       background-color: transparent;
       color: var(--text-main);
-      border: 1px solid var(--border-color);
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .btn-outline:hover {
-      background-color: rgba(255, 255, 255, 0.05);
+      background-color: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.2);
     }
 
     /* Content Dashboard Wrapper */
     .dashboard-container {
-      padding: 32px;
+      padding: 40px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 32px;
       max-width: 1400px;
       width: 100%;
       margin: 0 auto;
-      animation: fadeInUp 0.5s ease-out;
+      animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
     /* Filter Strip */
     .filters-bar {
       display: flex;
-      gap: 16px;
+      gap: 20px;
       flex-wrap: wrap;
       align-items: center;
       background-color: var(--bg-card);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border: 1px solid var(--border-color);
-      padding: 16px 24px;
-      border-radius: 12px;
+      padding: 18px 28px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
     }
 
     .filter-group {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .filter-label {
       font-size: 12px;
-      font-weight: 600;
-      color: var(--text-muted);
+      font-weight: 700;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .filter-select {
-      background-color: rgba(15, 23, 42, 0.6);
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 6px 12px;
+      background-color: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 8px 14px;
       font-size: 13px;
       color: var(--text-main);
       outline: none;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .filter-select:focus {
+      border-color: var(--primary);
     }
 
     /* Metrics Grid */
     .metrics-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
     }
 
     .metric-card {
-      background-color: var(--bg-card);
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.3) 0%, rgba(15, 23, 42, 0.6) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 20px 24px;
+      border-radius: 16px;
+      padding: 24px 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     }
 
     .metric-card:hover {
       transform: translateY(-4px);
-      border-color: var(--primary);
-      box-shadow: 0 10px 25px -5px rgba(56, 189, 248, 0.15);
+      border-color: rgba(56, 189, 248, 0.3);
+      box-shadow: 0 15px 35px -5px rgba(56, 189, 248, 0.12);
     }
 
     .metric-details {
@@ -397,23 +488,24 @@
 
     .metric-title {
       font-size: 11px;
-      font-weight: 600;
-      color: var(--text-muted);
+      font-weight: 700;
+      color: #64748b;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 6px;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
     }
 
     .metric-value {
-      font-size: 22px;
-      font-weight: 700;
+      font-size: 24px;
+      font-weight: 800;
       color: var(--text-main);
+      letter-spacing: -0.5px;
     }
 
     /* Circular progress indicator widget */
     .metric-circle-box {
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
       position: relative;
     }
 
@@ -424,7 +516,7 @@
     }
 
     .circle-bg {
-      stroke: rgba(255, 255, 255, 0.05);
+      stroke: rgba(255, 255, 255, 0.03);
     }
 
     .circle-fill {
@@ -435,7 +527,7 @@
     .dashboard-columns {
       display: grid;
       grid-template-columns: 1.5fr 1fr;
-      gap: 24px;
+      gap: 32px;
     }
 
     @media (max-width: 1024px) {
@@ -446,33 +538,37 @@
 
     /* Standard Card Container */
     .data-card {
-      background-color: var(--bg-card);
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.25) 0%, rgba(15, 23, 42, 0.5) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 24px;
+      border-radius: 16px;
+      padding: 28px;
       display: flex;
       flex-direction: column;
-      transition: all 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     }
 
     .data-card:hover {
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.08);
     }
 
     .card-header-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
-      padding-bottom: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 14px;
       border-bottom: 1px solid var(--border-color);
     }
 
     .card-header-row h3 {
-      font-size: 15px;
-      font-weight: 700;
+      font-size: 16px;
+      font-weight: 800;
       color: var(--text-main);
+      letter-spacing: -0.2px;
     }
 
     /* Traffic Donut and Legend Layout */
@@ -480,21 +576,21 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 32px;
-      padding: 16px 0;
+      gap: 40px;
+      padding: 20px 0;
     }
 
     @media (max-width: 640px) {
       .traffic-container {
         flex-direction: column;
-        gap: 16px;
+        gap: 24px;
       }
     }
 
     .donut-chart-box {
       position: relative;
-      width: 130px;
-      height: 130px;
+      width: 140px;
+      height: 140px;
     }
 
     .donut-center-text {
@@ -508,22 +604,23 @@
     }
 
     .donut-center-val {
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 20px;
+      font-weight: 800;
       color: var(--text-main);
     }
 
     .donut-center-lbl {
       font-size: 9px;
-      color: var(--text-muted);
+      color: #64748b;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
+      margin-top: 2px;
     }
 
     .legend-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
       flex-grow: 1;
     }
 
@@ -537,70 +634,80 @@
     .legend-label-group {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .legend-dot {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
     }
 
     .legend-label-text {
-      color: var(--text-muted);
-      font-weight: 500;
+      color: #94a3b8;
+      font-weight: 600;
     }
 
     .legend-value {
-      font-weight: 700;
+      font-weight: 800;
       color: var(--text-main);
+      font-family: var(--font-mono);
     }
 
     /* Hiring Leads List Styles */
     .leads-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-      max-height: 240px;
+      gap: 14px;
+      max-height: 260px;
       overflow-y: auto;
-      padding-right: 4px;
+      padding-right: 6px;
     }
 
+    #leads-panel .leads-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+      max-height: none;
+      overflow-y: visible;
+      padding-top: 10px;
+    }
     .lead-item-card {
-      background-color: rgba(255, 255, 255, 0.02);
+      background-color: rgba(255, 255, 255, 0.01);
       border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 12px 16px;
+      border-radius: 10px;
+      padding: 14px 18px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: all 0.2s;
+      transition: all 0.3s;
     }
 
     .lead-item-card:hover {
-      border-color: rgba(255, 255, 255, 0.12);
-      background-color: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.1);
+      background-color: rgba(255, 255, 255, 0.02);
+      transform: translateX(2px);
     }
 
     .lead-details {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
       max-width: 80%;
     }
 
     .lead-name {
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-main);
     }
 
     .lead-meta {
       font-size: 11px;
-      color: var(--text-muted);
+      color: #64748b;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
       flex-wrap: wrap;
     }
 
@@ -615,9 +722,9 @@
       cursor: pointer;
       color: var(--danger);
       font-size: 14px;
-      padding: 4px;
-      border-radius: 4px;
-      transition: background-color 0.2s;
+      padding: 6px;
+      border-radius: 6px;
+      transition: all 0.2s;
     }
 
     .lead-delete-btn:hover {
@@ -628,17 +735,17 @@
     .telemetry-rows {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
       max-height: 380px;
       overflow-y: auto;
-      padding-right: 4px;
+      padding-right: 6px;
     }
 
     .telemetry-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 8px;
+      padding-bottom: 10px;
       border-bottom: 1px solid var(--border-color);
     }
 
@@ -649,13 +756,13 @@
 
     .telemetry-key {
       font-size: 13px;
-      font-weight: 500;
-      color: var(--text-muted);
+      font-weight: 600;
+      color: #64748b;
     }
 
     .telemetry-val {
       font-size: 13px;
-      font-weight: 600;
+      font-weight: 700;
       color: var(--text-main);
       font-family: var(--font-mono);
       max-width: 60%;
@@ -669,62 +776,68 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-      max-height: 380px;
+      max-height: 440px;
       overflow-y: auto;
-      padding-right: 4px;
+      padding-right: 6px;
     }
 
     .feed-item {
       display: flex;
-      gap: 12px;
-      padding: 10px 14px;
-      border-radius: 8px;
-      background-color: rgba(255, 255, 255, 0.01);
+      gap: 14px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      background-color: rgba(15, 23, 42, 0.4);
       border: 1px solid var(--border-color);
       border-left: 3px solid var(--primary);
       font-size: 12px;
-      line-height: 1.4;
+      line-height: 1.5;
       animation: fadeInUp 0.3s ease-out;
     }
 
     .feed-item.alert-event {
       border-left-color: var(--danger);
       background-color: var(--danger-glow);
+      border-color: rgba(239, 68, 68, 0.1);
     }
 
     .feed-item.highlight-event {
       border-left-color: var(--success);
       background-color: var(--success-glow);
+      border-color: rgba(16, 185, 129, 0.1);
     }
 
     .feed-dot {
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background-color: var(--primary);
-      margin-top: 5px;
+      background-color: #38bdf8;
+      margin-top: 6px;
       flex-shrink: 0;
+      box-shadow: 0 0 8px rgba(56, 189, 248, 0.8);
     }
 
     .feed-item.alert-event .feed-dot {
-      background-color: var(--danger);
+      background-color: #ef4444;
+      box-shadow: 0 0 8px rgba(239, 68, 68, 0.8);
     }
 
     .feed-item.highlight-event .feed-dot {
-      background-color: var(--success);
+      background-color: #22c55e;
+      box-shadow: 0 0 8px rgba(34, 197, 94, 0.8);
     }
 
     .feed-text {
-      color: var(--text-main);
+      color: #e2e8f0;
       font-family: var(--font-mono);
     }
 
     /* Info Badge Info Trigger */
     .info-btn {
       font-size: 14px;
-      color: var(--text-muted);
+      color: #64748b;
       cursor: pointer;
       display: inline-flex;
+      transition: color 0.2s;
     }
 
     .info-btn:hover {
@@ -733,12 +846,12 @@
 
     .info-box-block {
       background-color: var(--primary-glow);
-      border: 1px solid rgba(56, 189, 248, 0.15);
-      padding: 12px 16px;
-      border-radius: 8px;
-      margin-bottom: 16px;
+      border: 1px solid rgba(56, 189, 248, 0.1);
+      padding: 14px 18px;
+      border-radius: 10px;
+      margin-bottom: 20px;
       font-size: 12px;
-      line-height: 1.5;
+      line-height: 1.6;
     }
   </style>
 </head>
@@ -747,53 +860,66 @@
 
   <!-- Passcode Verification Screen (Shown by default if not authenticated) -->
   <div id="passcode-screen" class="passcode-container">
-    <div class="passcode-card">
-      <span class="passcode-icon">🔐</span>
-      <h4>Decryption Required</h4>
-      <p>Please enter your owner security authorization code to access the telemetry dashboard databases.</p>
-      
+    <div class="passcode-card"
+      style="border-color: rgba(239, 68, 68, 0.15); box-shadow: 0 20px 50px rgba(0,0,0,0.6); max-width: 440px;">
+      <div style="display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 24px;">
+        <span
+          style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #ef4444; box-shadow: 0 0 8px #ef4444; animation: pulse 1.5s infinite;"></span>
+        <span
+          style="font-size: 10px; font-weight: 800; font-family: var(--font-mono); color: var(--success); letter-spacing: 1.5px; text-transform: uppercase;">SECURE
+          LINK STATUS: SECURED</span>
+      </div>
+
+      <span class="passcode-icon" style="margin-bottom: 12px;">🛡️</span>
+      <h4 style="letter-spacing: 0.5px; margin-bottom: 6px; font-size: 20px;">COMMAND DASHBOARD ACCESS</h4>
+      <p style="font-size: 12px; line-height: 1.5; color: #a38d8d; margin-bottom: 24px;">Please verify your identity key
+        to decrypt the database terminals.</p>
+
       <!-- Normal Authentication Section -->
       <div id="passcode-auth-section">
         <div class="passcode-input-group">
-          <input type="password" id="owner-passcode-input" placeholder="••••••••" maxlength="12">
-          <button id="owner-passcode-submit" class="decrypt-btn">DECRYPT DATABASE</button>
+          <input type="password" id="owner-passcode-input" placeholder="ENTER ACCESS KEY" maxlength="12"
+            style="background: rgba(15, 23, 42, 0.9); font-size: 14px; padding: 14px; border-color: rgba(239, 68, 68, 0.15);">
+          <button id="owner-passcode-submit" class="decrypt-btn"
+            style="background-color: var(--primary); color: #050202; font-weight: 800; text-transform: uppercase; font-size: 12px;">VERIFY
+            ACCESS KEY</button>
         </div>
-        <p id="passcode-error-msg" class="passcode-error hidden">ACCESS DENIED: INVALID KEY CARD</p>
-        <div style="margin-top: 16px;">
-          <a href="#" id="forgot-passcode-link" style="color: var(--primary); font-size: 12px; text-decoration: none; font-weight: 600;">Forgot Passcode?</a>
+        <p id="passcode-error-msg" class="passcode-error hidden"
+          style="font-family: var(--font-mono); font-size: 11px; background: rgba(239, 68, 68, 0.08); padding: 8px; border-radius: 6px; border: 1px solid rgba(239, 68, 68, 0.2);">
+          ACCESS DENIED: INVALID KEY CARD</p>
+        <div style="margin-top: 24px; display: flex; justify-content: center; gap: 16px; align-items: center;">
+          <a href="#" id="forgot-passcode-link"
+            style="color: var(--primary); font-size: 11px; text-decoration: none; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Forgot
+            Key?</a>
+          <span style="color: rgba(255, 255, 255, 0.1); font-size: 12px;">|</span>
+          <a href="index.html"
+            style="color: var(--text-muted); font-size: 11px; text-decoration: none; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.2s;"
+            onmouseover="this.style.color='var(--text-main)'" onmouseout="this.style.color='var(--text-muted)'">← Exit
+            Terminal</a>
         </div>
-      </div>
-
-      <!-- Forgot Passcode / Reset Section -->
-      <div id="reset-passcode-section" class="hidden" style="margin-top: 16px; border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; background-color: rgba(15, 23, 42, 0.4); text-align: center;">
-        <h5 style="color: var(--primary); font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">Reset Passcode</h5>
-        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.4;">Verify ownership by generating a 6-digit OTP code to your registered Gmail address, then set a new passcode.</p>
-        <div class="passcode-input-group" style="gap: 12px;">
-          <button id="reset-generate-otp-btn" class="decrypt-btn" style="background-color: var(--primary); color: #020617; font-weight: 700; width: 100%;">GENERATE RESET OTP</button>
-          
-          <div id="reset-otp-fields" class="hidden" style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
-            <input type="text" id="reset-otp-input" placeholder="Enter 6-Digit OTP" maxlength="6" style="letter-spacing: 2px; text-align: center; width: 100%;">
-            <input type="password" id="new-passcode-input" placeholder="Enter New Passcode" maxlength="12" style="letter-spacing: 2px; text-align: center; width: 100%;">
-            <input type="password" id="confirm-passcode-input" placeholder="Confirm New Passcode" maxlength="12" style="letter-spacing: 2px; text-align: center; width: 100%;">
-            <button id="reset-submit-btn" class="decrypt-btn" style="background-color: var(--success); color: #ffffff; font-weight: 700; width: 100%;">RESET & LOGIN</button>
-          </div>
-          
-          <button id="reset-cancel-btn" class="decrypt-btn" style="background-color: transparent; border: 1px solid var(--border-color); color: var(--text-main); width: 100%;">CANCEL</button>
-        </div>
-        <p id="reset-status-msg" class="passcode-error hidden" style="margin-top: 12px; font-size: 11px;"></p>
       </div>
 
       <!-- Locked Warning & OTP Verification Section -->
-      <div id="lockout-warning-section" class="hidden" style="margin-top: 16px; border: 1.5px solid var(--danger); border-radius: 8px; padding: 20px; background-color: var(--danger-glow); text-align: center;">
+      <div id="lockout-warning-section" class="hidden"
+        style="margin-top: 16px; border: 1.5px solid var(--danger); border-radius: 8px; padding: 20px; background-color: var(--danger-glow); text-align: center;">
         <span style="font-size: 28px; display: block; margin-bottom: 8px;">⚠️</span>
-        <h5 style="color: var(--danger); font-size: 14px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">Security Lockout Active</h5>
-        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.4;">Multiple failed login attempts detected. Generate a 6-digit verification code to your registered Gmail address to unlock the panel.</p>
+        <h5
+          style="color: var(--danger); font-size: 13px; font-weight: 800; text-transform: uppercase; margin-bottom: 8px;">
+          Access Revoked: Lockout Active</h5>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.4;">Multiple failed
+          login attempts detected. Send a password reset email to your registered Gmail address to unlock the panel.</p>
         <div class="passcode-input-group" style="gap: 12px;">
-          <button id="generate-otp-btn" class="decrypt-btn" style="background-color: var(--primary); color: #020617; font-weight: 700; width: 100%;">GENERATE SECURITY OTP</button>
-          <input type="text" id="lockout-otp-input" placeholder="Enter 6-Digit OTP" maxlength="6" style="display: none; letter-spacing: 2px; text-align: center; width: 100%;">
-          <button id="verify-otp-btn" class="decrypt-btn" style="display: none; background-color: var(--success); color: #ffffff; font-weight: 700; width: 100%;">VERIFY & UNLOCK</button>
+          <button id="firebase-reset-btn" class="decrypt-btn"
+            style="background-color: var(--primary); color: #020617; font-weight: 700; width: 100%;">SEND RESET EMAIL &
+            UNLOCK</button>
         </div>
         <p id="otp-status-msg" class="passcode-error hidden" style="margin-top: 12px; font-size: 11px;"></p>
+        <div style="margin-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.05); padding-top: 12px;">
+          <a href="index.html"
+            style="color: var(--text-muted); font-size: 11px; text-decoration: none; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; transition: color 0.2s;"
+            onmouseover="this.style.color='var(--text-main)'" onmouseout="this.style.color='var(--text-muted)'">← Exit
+            Terminal</a>
+        </div>
       </div>
     </div>
   </div>
@@ -814,7 +940,22 @@
         </li>
         <li>
           <a href="#" id="nav-netlify" class="nav-item-link">
-            <span>⚡</span> Netlify Dashboard
+            <span>⚡</span> Traffic on Web Page
+          </a>
+        </li>
+        <li>
+          <a href="#" id="nav-clickbait" class="nav-item-link">
+            <span>🎯</span> Clickbait
+          </a>
+        </li>
+        <li>
+          <a href="#" id="nav-leads" class="nav-item-link">
+            <span>💼</span> Hiring Leads
+          </a>
+        </li>
+        <li>
+          <a href="#" id="nav-iplogs" class="nav-item-link">
+            <span>🌐</span> IP Tracker
           </a>
         </li>
         <li>
@@ -841,11 +982,15 @@
           <p id="panel-subtitle">Real-time analytics and interaction logging feed.</p>
         </div>
         <div class="header-actions">
-          <a href="https://app.netlify.com/teams/shoubhik95/projects" target="_blank" class="action-btn btn-outline" style="border-color: #00ad9f; color: #00ad9f; font-weight: 700;">
+          <a href="https://app.netlify.com/teams/shoubhik95/projects" target="_blank" class="action-btn btn-outline"
+            style="border-color: #00ad9f; color: #00ad9f; font-weight: 700;">
             <span>⚡</span> Netlify Console
           </a>
           <button id="owner-export-btn" class="action-btn btn-primary">
             <span>📥</span> Download Report
+          </button>
+          <button id="owner-reset-db-btn" class="action-btn btn-outline" style="border-color: var(--danger); color: var(--danger); font-weight: 700;">
+            <span>⚠️</span> Reset Data
           </button>
           <a href="index.html" class="action-btn btn-outline">
             <span>←</span> Back to Website
@@ -857,269 +1002,208 @@
       <div class="dashboard-container">
         <div id="reports-panel" style="display: flex; flex-direction: column; gap: 24px; width: 100%;">
 
-        <!-- Filters Strip -->
-        <div class="filters-bar">
-          <div class="filter-group">
-            <span class="filter-label">Timeframe:</span>
-            <select id="graph-time-filter" class="filter-select">
-              <option value="live" selected>Live Session</option>
-              <option value="weekly">Weekly</option>
-              <option value="monthly">Monthly</option>
-              <option value="yearly">Yearly</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <span class="filter-label">Segment:</span>
-            <select id="graph-segment-filter" class="filter-select">
-              <option value="all" selected>All Interactions</option>
-              <option value="alert">Security Warnings</option>
-              <option value="highlight">Important Actions</option>
-              <option value="info">General Navigation</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Metrics cards row with circular indicators -->
-        <div class="metrics-grid">
-          <div class="metric-card">
-            <div class="metric-details">
-              <span class="metric-title">Session Time</span>
-              <span id="dash-session-time" class="metric-value">00:00:00</span>
+          <!-- Filters Strip -->
+          <div class="filters-bar">
+            <div class="filter-group">
+              <span class="filter-label">Timeframe:</span>
+              <select id="graph-time-filter" class="filter-select">
+                <option value="live" selected>Live Session</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="yearly">Yearly</option>
+              </select>
             </div>
-            <div class="metric-circle-box">
-              <svg class="metric-circle-graph" viewBox="0 0 36 36">
-                <circle class="circle-bg" cx="18" cy="18" r="16" fill="none" stroke-width="3"></circle>
-                <circle class="circle-fill" cx="18" cy="18" r="16" fill="none" stroke="var(--primary)" stroke-width="3"
-                  stroke-dasharray="75, 100" stroke-linecap="round"></circle>
-              </svg>
+            <div class="filter-group">
+              <span class="filter-label">Segment:</span>
+              <select id="graph-segment-filter" class="filter-select">
+                <option value="all" selected>All Interactions</option>
+                <option value="alert">Security Warnings</option>
+                <option value="highlight">Important Actions</option>
+                <option value="info">General Navigation</option>
+              </select>
             </div>
           </div>
 
-          <div class="metric-card">
-            <div class="metric-details">
-              <span class="metric-title">Total Interactions</span>
-              <span id="dash-total-clicks" class="metric-value">0</span>
-            </div>
-            <div class="metric-circle-box">
-              <svg class="metric-circle-graph" viewBox="0 0 36 36">
-                <circle class="circle-bg" cx="18" cy="18" r="16" fill="none" stroke-width="3"></circle>
-                <circle class="circle-fill" cx="18" cy="18" r="16" fill="none" stroke="var(--success)" stroke-width="3"
-                  stroke-dasharray="85, 100" stroke-linecap="round"></circle>
-              </svg>
-            </div>
-          </div>
-
-          <div class="metric-card">
-            <div class="metric-details">
-              <span class="metric-title">Max Scroll Depth</span>
-              <span id="dash-scroll-depth" class="metric-value">0%</span>
-            </div>
-            <div class="metric-circle-box">
-              <svg class="metric-circle-graph" viewBox="0 0 36 36">
-                <circle class="circle-bg" cx="18" cy="18" r="16" fill="none" stroke-width="3"></circle>
-                <circle class="circle-fill" cx="18" cy="18" r="16" fill="none" stroke="var(--warning)" stroke-width="3"
-                  stroke-dasharray="50, 100" stroke-linecap="round"></circle>
-              </svg>
-            </div>
-          </div>
-
-          <div class="metric-card">
-            <div class="metric-details">
-              <span class="metric-title">Active Section</span>
-              <span id="dash-active-level" class="metric-value"
-                style="font-size: 15px; font-weight: 700; margin-top: 4px;">LVL 1</span>
-            </div>
-            <div class="metric-circle-box">
-              <svg class="metric-circle-graph" viewBox="0 0 36 36">
-                <circle class="circle-bg" cx="18" cy="18" r="16" fill="none" stroke-width="3"></circle>
-                <circle class="circle-fill" cx="18" cy="18" r="16" fill="none" stroke="#6366f1" stroke-width="3"
-                  stroke-dasharray="60, 100" stroke-linecap="round"></circle>
-              </svg>
-            </div>
-          </div>
-        </div>
-
-        <!-- Columns layout: Traffic + Hiring, and User profiles & events -->
-        <div class="dashboard-columns">
-
-          <!-- Column Left: Traffic chart & Hiring Leads -->
-          <div style="display: flex; flex-direction: column; gap: 24px;">
-
-            <!-- Traffic chart Card -->
-            <div class="data-card">
-              <div class="card-header-row">
-                <h3>Traffic & Event Analysis</h3>
+          <!-- Metrics cards row with circular indicators -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-details">
+                <span class="metric-title">Session Time</span>
+                <span id="dash-session-time" class="metric-value">00:00:00</span>
               </div>
-              <div class="traffic-container">
-                <div class="donut-chart-box">
-                  <svg width="130" height="130" viewBox="0 0 140 140">
-                    <circle cx="70" cy="70" r="50" fill="transparent" stroke="rgba(255, 255, 255, 0.03)"
-                      stroke-width="14"></circle>
-                    <circle id="graph-seg-direct" cx="70" cy="70" r="50" fill="transparent" stroke="#38bdf8"
-                      stroke-width="14" stroke-dasharray="314.15" stroke-dashoffset="0" transform="rotate(-90 70 70)"
-                      style="transition: stroke-dashoffset 0.6s ease;"></circle>
-                    <circle id="graph-seg-search" cx="70" cy="70" r="50" fill="transparent" stroke="#22c55e"
-                      stroke-width="14" stroke-dasharray="314.15" stroke-dashoffset="0" transform="rotate(-90 70 70)"
-                      style="transition: stroke-dashoffset 0.6s ease;"></circle>
-                    <circle id="graph-seg-refer" cx="70" cy="70" r="50" fill="transparent" stroke="#ef4444"
-                      stroke-width="14" stroke-dasharray="314.15" stroke-dashoffset="0" transform="rotate(-90 70 70)"
-                      style="transition: stroke-dashoffset 0.6s ease;"></circle>
-                  </svg>
-                  <div class="donut-center-text">
-                    <span id="graph-total-views" class="donut-center-val">0</span>
-                    <span id="graph-total-label" class="donut-center-lbl">Actions</span>
-                  </div>
-                </div>
+              <div class="metric-circle-box">
+                <svg class="metric-circle-graph" viewBox="0 0 36 36">
+                  <circle class="circle-bg" cx="18" cy="18" r="16" fill="none" stroke-width="3"></circle>
+                  <circle class="circle-fill" cx="18" cy="18" r="16" fill="none" stroke="var(--primary)"
+                    stroke-width="3" stroke-dasharray="75, 100" stroke-linecap="round"></circle>
+                </svg>
+              </div>
+            </div>
 
-                <div class="legend-list">
-                  <div class="legend-item">
-                    <div class="legend-label-group">
-                      <span class="legend-dot" style="background-color: #38bdf8;"></span>
-                      <span id="legend-lbl-direct" class="legend-label-text">Clicks</span>
+            <div class="metric-card">
+              <div class="metric-details">
+                <span class="metric-title">Total Interactions</span>
+                <span id="dash-total-clicks" class="metric-value">0</span>
+              </div>
+              <div class="metric-circle-box">
+                <svg class="metric-circle-graph" viewBox="0 0 36 36">
+                  <circle class="circle-bg" cx="18" cy="18" r="16" fill="none" stroke-width="3"></circle>
+                  <circle class="circle-fill" cx="18" cy="18" r="16" fill="none" stroke="var(--success)"
+                    stroke-width="3" stroke-dasharray="85, 100" stroke-linecap="round"></circle>
+                </svg>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-details">
+                <span class="metric-title">Max Scroll Depth</span>
+                <span id="dash-scroll-depth" class="metric-value">0%</span>
+              </div>
+              <div class="metric-circle-box">
+                <svg class="metric-circle-graph" viewBox="0 0 36 36">
+                  <circle class="circle-bg" cx="18" cy="18" r="16" fill="none" stroke-width="3"></circle>
+                  <circle class="circle-fill" cx="18" cy="18" r="16" fill="none" stroke="var(--warning)"
+                    stroke-width="3" stroke-dasharray="50, 100" stroke-linecap="round"></circle>
+                </svg>
+              </div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-details">
+                <span class="metric-title">Active Section</span>
+                <span id="dash-active-level" class="metric-value"
+                  style="font-size: 15px; font-weight: 700; margin-top: 4px;">LVL 1</span>
+              </div>
+              <div class="metric-circle-box">
+                <svg class="metric-circle-graph" viewBox="0 0 36 36">
+                  <circle class="circle-bg" cx="18" cy="18" r="16" fill="none" stroke-width="3"></circle>
+                  <circle class="circle-fill" cx="18" cy="18" r="16" fill="none" stroke="#6366f1" stroke-width="3"
+                    stroke-dasharray="60, 100" stroke-linecap="round"></circle>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Columns layout: Traffic + Hiring, and User profiles & events -->
+          <div class="dashboard-columns">
+
+            <!-- Column Left: Traffic chart & Hiring Leads -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+
+              <!-- Suspicious Activity & Warnings Card -->
+              <div class="data-card"
+                style="border-color: rgba(239, 68, 68, 0.2); box-shadow: 0 4px 25px rgba(239, 68, 68, 0.05);">
+                <div class="card-header-row" style="border-bottom-color: rgba(239, 68, 68, 0.15);">
+                  <h3 style="color: var(--danger); display: flex; align-items: center; gap: 8px;">
+                    <span>⚠️</span> Suspicious Activity & Threat Log
+                  </h3>
+                </div>
+                <div id="dash-warning-log" class="feed-container" style="max-height: 200px;">
+                  <!-- Injected via security.js -->
+                </div>
+              </div>
+
+              <!-- Traffic chart Card -->
+              <div class="data-card">
+                <div class="card-header-row">
+                  <h3>Traffic & Event Analysis</h3>
+                </div>
+                <div class="traffic-container">
+                  <div class="donut-chart-box">
+                    <svg width="130" height="130" viewBox="0 0 140 140">
+                      <circle cx="70" cy="70" r="50" fill="transparent" stroke="rgba(255, 255, 255, 0.03)"
+                        stroke-width="14"></circle>
+                      <circle id="graph-seg-direct" cx="70" cy="70" r="50" fill="transparent" stroke="#38bdf8"
+                        stroke-width="14" stroke-dasharray="314.15" stroke-dashoffset="0" transform="rotate(-90 70 70)"
+                        style="transition: stroke-dashoffset 0.6s ease;"></circle>
+                      <circle id="graph-seg-search" cx="70" cy="70" r="50" fill="transparent" stroke="#22c55e"
+                        stroke-width="14" stroke-dasharray="314.15" stroke-dashoffset="0" transform="rotate(-90 70 70)"
+                        style="transition: stroke-dashoffset 0.6s ease;"></circle>
+                      <circle id="graph-seg-refer" cx="70" cy="70" r="50" fill="transparent" stroke="#ef4444"
+                        stroke-width="14" stroke-dasharray="314.15" stroke-dashoffset="0" transform="rotate(-90 70 70)"
+                        style="transition: stroke-dashoffset 0.6s ease;"></circle>
+                    </svg>
+                    <div class="donut-center-text">
+                      <span id="graph-total-views" class="donut-center-val">0</span>
+                      <span id="graph-total-label" class="donut-center-lbl">Actions</span>
                     </div>
-                    <span id="graph-val-direct" class="legend-value">0%</span>
                   </div>
-                  <div class="legend-item">
-                    <div class="legend-label-group">
-                      <span class="legend-dot" style="background-color: #22c55e;"></span>
-                      <span id="legend-lbl-search" class="legend-label-text">Skills</span>
+
+                  <div class="legend-list">
+                    <div class="legend-item">
+                      <div class="legend-label-group">
+                        <span class="legend-dot" style="background-color: #38bdf8;"></span>
+                        <span id="legend-lbl-direct" class="legend-label-text">Clicks</span>
+                      </div>
+                      <span id="graph-val-direct" class="legend-value">0%</span>
                     </div>
-                    <span id="graph-val-search" class="legend-value">0%</span>
-                  </div>
-                  <div class="legend-item">
-                    <div class="legend-label-group">
-                      <span class="legend-dot" style="background-color: #ef4444;"></span>
-                      <span id="legend-lbl-refer" class="legend-label-text">Projects</span>
+                    <div class="legend-item">
+                      <div class="legend-label-group">
+                        <span class="legend-dot" style="background-color: #22c55e;"></span>
+                        <span id="legend-lbl-search" class="legend-label-text">Skills</span>
+                      </div>
+                      <span id="graph-val-search" class="legend-value">0%</span>
                     </div>
-                    <span id="graph-val-refer" class="legend-value">0%</span>
+                    <div class="legend-item">
+                      <div class="legend-label-group">
+                        <span class="legend-dot" style="background-color: #ef4444;"></span>
+                        <span id="legend-lbl-refer" class="legend-label-text">Projects</span>
+                      </div>
+                      <span id="graph-val-refer" class="legend-value">0%</span>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Hiring Leads Card -->
-            <div class="data-card">
-              <div class="card-header-row">
-                <h3>Hiring Leads Registered (<span id="dash-hire-count">0</span>)</h3>
+            <!-- Column Right: Live Activity Logs & Interactions -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+
+              <div class="data-card" style="flex: 1;">
+                <div class="card-header-row">
+                  <h3>Live Activity Timeline</h3>
+                  <span id="log-legend-trigger" class="info-btn" title="Show Log Legend">ⓘ</span>
+                </div>
+
+                <!-- Log Legend -->
+                <div id="log-legend-box" class="info-box-block hidden">
+                  <div style="font-weight: 700; margin-bottom: 6px;">TIMELINE LEGEND</div>
+                  <div style="display: flex; flex-direction: column; gap: 4px;">
+                    <div><span style="color: #38bdf8; font-weight: 700;">BLUE</span>: User clicks, navigations, and
+                      normal interactions.</div>
+                    <div><span style="color: #22c55e; font-weight: 700;">GREEN</span>: Success logs, resume downloads,
+                      and authorized credentials.</div>
+                    <div><span style="color: #d90429; font-weight: 700;">RED</span>: Security warnings, wrong passcode
+                      attempts, text copying, and blocks.</div>
+                  </div>
+                </div>
+
+                <div id="dash-activity-log" class="feed-container">
+                  <!-- Injected via security.js -->
+                </div>
               </div>
-              <div id="dash-hire-list" class="leads-list">
-                <!-- Injected via security.js -->
+
+              <!-- Interaction statistics -->
+              <div class="data-card">
+                <div class="card-header-row">
+                  <h3>Interaction Specifics</h3>
+                </div>
+                <div class="telemetry-rows">
+                  <div class="telemetry-item"><span class="telemetry-key">Projects Examined</span><span
+                      id="dash-projects-opened" class="telemetry-val">0</span></div>
+                  <div class="telemetry-item"><span class="telemetry-key">Skill Cards Inspected</span><span
+                      id="dash-skills-flipped" class="telemetry-val">0</span></div>
+                  <div class="telemetry-item"><span class="telemetry-key">Resume Downloads</span><span
+                      id="dash-resume-downloads" class="telemetry-val">0</span></div>
+                  <div class="telemetry-item"><span class="telemetry-key">External Clicks</span><span
+                      id="dash-external-clicks" class="telemetry-val">0</span></div>
+                </div>
               </div>
+
             </div>
 
-            <!-- User Profile Data Card -->
-            <div class="data-card">
-              <div class="card-header-row">
-                <h3>User Device & Session Profile</h3>
-              </div>
-              <div class="telemetry-rows">
-                <div class="telemetry-item"><span class="telemetry-key">IP Address</span><span id="dash-ip"
-                    class="telemetry-val">Retrieving...</span></div>
-                <div class="telemetry-item"><span class="telemetry-key">Region</span><span id="dash-region"
-                    class="telemetry-val">Retrieving...</span></div>
-                <div class="telemetry-item"><span class="telemetry-key">Browser</span><span id="dash-browser"
-                    class="telemetry-val">Unknown</span></div>
-                <div class="telemetry-item"><span class="telemetry-key">OS</span><span id="dash-os"
-                    class="telemetry-val">Unknown</span></div>
-                <div class="telemetry-item"><span class="telemetry-key">Screen Resolution</span><span
-                    id="dash-resolution" class="telemetry-val">0x0</span></div>
-                <div class="telemetry-item"><span class="telemetry-key">Language</span><span id="dash-language"
-                    class="telemetry-val">en-US</span></div>
-                <div class="telemetry-item"><span class="telemetry-key">Network Type</span><span id="dash-network"
-                    class="telemetry-val">N/A</span></div>
-                <div class="telemetry-item"><span class="telemetry-key">Referrer Source</span><span id="dash-referrer"
-                    class="telemetry-val">Direct Visit</span></div>
-                <div class="telemetry-item"><span class="telemetry-key">Timezone</span><span id="dash-timezone"
-                    class="telemetry-val">N/A</span></div>
-                <div class="telemetry-item"><span class="telemetry-key">Cookie Status</span><span id="dash-cookies"
-                    class="telemetry-val">N/A</span></div>
-                <div class="telemetry-item"><span class="telemetry-key">Do Not Track</span><span id="dash-dnt"
-                    class="telemetry-val">N/A</span></div>
-                <div class="telemetry-item"><span class="telemetry-key">Online Status</span><span id="dash-online"
-                    class="telemetry-val">N/A</span></div>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Column Right: Live Activity Logs & Interactions -->
-          <div style="display: flex; flex-direction: column; gap: 24px;">
-
-            <div class="data-card" style="flex: 1;">
-              <div class="card-header-row">
-                <h3>Live Activity Timeline</h3>
-                <span id="log-legend-trigger" class="info-btn" title="Show Log Legend">ⓘ</span>
-              </div>
-
-              <!-- Log Legend -->
-              <div id="log-legend-box" class="info-box-block hidden">
-                <div style="font-weight: 700; margin-bottom: 6px;">TIMELINE LEGEND</div>
-                <div style="display: flex; flex-direction: column; gap: 4px;">
-                  <div><span style="color: var(--primary); font-weight: 700;">BLUE</span>: User clicks, navigations, and
-                    normal interactions.</div>
-                  <div><span style="color: var(--success); font-weight: 700;">GREEN</span>: Success logs, resume
-                    downloads, and authorized credentials.</div>
-                  <div><span style="color: var(--danger); font-weight: 700;">RED</span>: Security warnings, wrong
-                    passcode attempts, text copying, and blocks.</div>
-                </div>
-              </div>
-
-              <div id="dash-activity-log" class="feed-container">
-                <!-- Injected via security.js -->
-              </div>
-            </div>
-
-            <!-- Netlify Live Status Card -->
-            <div class="data-card">
-              <div class="card-header-row">
-                <h3>Netlify Status</h3>
-                <span id="netlify-badge" style="background-color: rgba(34, 197, 94, 0.15); border: 1.5px solid var(--success); color: var(--success); font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 9999px; text-transform: uppercase; font-family: var(--font-mono); letter-spacing: 0.5px;">● Online</span>
-              </div>
-              <div class="telemetry-rows">
-                <div class="telemetry-item">
-                  <span class="telemetry-key">Netlify Console</span>
-                  <span class="telemetry-val"><a href="https://app.netlify.com/teams/shoubhik95/projects" target="_blank" style="color: var(--primary); text-decoration: underline;">shoubhik95 Projects</a></span>
-                </div>
-                <div class="telemetry-item">
-                  <span class="telemetry-key">Build Status</span>
-                  <span style="color: var(--success); font-weight: 600; font-family: var(--font-mono);">DEPLOY SUCCESS</span>
-                </div>
-                <div class="telemetry-item">
-                  <span class="telemetry-key">Branch</span>
-                  <span class="telemetry-val">main</span>
-                </div>
-                <div class="telemetry-item">
-                  <span class="telemetry-key">Last Deploy</span>
-                  <span id="netlify-last-deploy" class="telemetry-val">Loading...</span>
-                </div>
-                <div class="telemetry-item">
-                  <span class="telemetry-key">Total Deploys</span>
-                  <span class="telemetry-val" style="font-family: var(--font-mono);">48</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Interaction statistics -->
-            <div class="data-card">
-              <div class="card-header-row">
-                <h3>Interaction Specifics</h3>
-              </div>
-              <div class="telemetry-rows">
-                <div class="telemetry-item"><span class="telemetry-key">Projects Examined</span><span
-                    id="dash-projects-opened" class="telemetry-val">0</span></div>
-                <div class="telemetry-item"><span class="telemetry-key">Skill Cards Inspected</span><span
-                    id="dash-skills-flipped" class="telemetry-val">0</span></div>
-                <div class="telemetry-item"><span class="telemetry-key">Resume Downloads</span><span
-                    id="dash-resume-downloads" class="telemetry-val">0</span></div>
-                <div class="telemetry-item"><span class="telemetry-key">External Clicks</span><span
-                    id="dash-external-clicks" class="telemetry-val">0</span></div>
-              </div>
-            </div>
-
-          </div>
-
-        </div> <!-- End of dashboard-columns -->
-      </div> <!-- End of reports-panel -->
+          </div> <!-- End of dashboard-columns -->
+        </div> <!-- End of reports-panel -->
 
         <!-- Netlify Panel (Hidden by default) -->
         <div id="netlify-panel" class="hidden" style="display: flex; flex-direction: column; gap: 24px; width: 100%;">
@@ -1129,25 +1213,25 @@
               <div class="metric-details" style="width: 100%;">
                 <span class="metric-title">Daily Active Users (DAU)</span>
                 <span id="netlify-dau-val" class="metric-value" style="font-size: 28px;">Loading...</span>
-                <span style="font-size: 11px; color: var(--success); font-weight: 600; margin-top: 4px;">↑ 12% vs yesterday</span>
+                <span style="font-size: 11px; color: var(--success); font-weight: 600; margin-top: 4px;">↑ 12% vs
+                  yesterday</span>
               </div>
             </div>
             <div class="metric-card">
               <div class="metric-details" style="width: 100%;">
-                <span class="metric-title">Bandwidth Usage</span>
-                <span class="metric-value">2.4 GB <span style="font-size: 13px; color: var(--text-muted); font-weight: 500;">/ 100 GB</span></span>
-                <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; margin-top: 8px; overflow: hidden;">
-                  <div style="width: 2.4%; height: 100%; background: var(--primary);"></div>
-                </div>
+                <span class="metric-title">Total Portfolio Shares</span>
+                <span id="netlify-shares-val" class="metric-value" style="font-size: 28px;">0</span>
+                <span style="font-size: 11px; color: var(--primary); font-weight: 600; margin-top: 4px;">via Copy Link /
+                  Share</span>
               </div>
             </div>
             <div class="metric-card">
               <div class="metric-details" style="width: 100%;">
-                <span class="metric-title">Build Minutes</span>
-                <span class="metric-value">75 <span style="font-size: 13px; color: var(--text-muted); font-weight: 500;">/ 300 min</span></span>
-                <div style="width: 100%; height: 6px; background: rgba(255,255,255,0.05); border-radius: 3px; margin-top: 8px; overflow: hidden;">
-                  <div style="width: 25%; height: 100%; background: var(--warning);"></div>
-                </div>
+                <span class="metric-title">Build Pipeline Status</span>
+                <span class="metric-value" style="font-size: 22px; color: var(--success); font-weight: 700;">● DEPLOY
+                  SUCCESS</span>
+                <span style="font-size: 11px; color: var(--text-muted); font-weight: 600; margin-top: 4px;">Production
+                  Branch: main</span>
               </div>
             </div>
           </div>
@@ -1159,88 +1243,229 @@
               <div class="card-header-row">
                 <h3>Daily Active Users (Last 7 Days)</h3>
               </div>
-              <div id="netlify-dau-chart" style="display: flex; align-items: flex-end; justify-content: space-between; height: 200px; padding: 20px 10px 10px 10px; background: rgba(0,0,0,0.2); border-radius: 8px;">
-                <!-- Mon -->
-                <div style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; gap: 8px;">
-                  <span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted);">120</span>
-                  <div style="width: 24px; height: 60px; background: linear-gradient(to top, #1d4ed8, var(--primary)); border-radius: 4px; box-shadow: 0 0 10px var(--primary-glow);"></div>
-                  <span style="font-size: 11px; font-weight: 600;">Mon</span>
+              <div id="netlify-dau-chart"
+                style="display: flex; align-items: flex-end; justify-content: space-between; height: 200px; padding: 20px 10px 10px 10px; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                <!-- Dynamically populated via security.js -->
+              </div>
+            </div>
+
+            <!-- Referrer Breakdown Card -->
+            <div class="data-card">
+              <div class="card-header-row">
+                <h3>Referrer Traffic Breakdown</h3>
+              </div>
+              <div class="telemetry-rows" style="gap: 16px;">
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600;">
+                    <span>GitHub Referrals</span>
+                    <span id="referrer-count-github">0 visits</span>
+                  </div>
+                  <div
+                    style="width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden;">
+                    <div id="referrer-bar-github"
+                      style="width: 0%; height: 100%; background: #ffffff; transition: width 0.5s ease-out;"></div>
+                  </div>
                 </div>
-                <!-- Tue -->
-                <div style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; gap: 8px;">
-                  <span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted);">150</span>
-                  <div style="width: 24px; height: 75px; background: linear-gradient(to top, #1d4ed8, var(--primary)); border-radius: 4px; box-shadow: 0 0 10px var(--primary-glow);"></div>
-                  <span style="font-size: 11px; font-weight: 600;">Tue</span>
+
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600;">
+                    <span>Netlify Referrals</span>
+                    <span id="referrer-count-netlify">0 visits</span>
+                  </div>
+                  <div
+                    style="width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden;">
+                    <div id="referrer-bar-netlify"
+                      style="width: 0%; height: 100%; background: #00ad9f; transition: width 0.5s ease-out;"></div>
+                  </div>
                 </div>
-                <!-- Wed -->
-                <div style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; gap: 8px;">
-                  <span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted);">180</span>
-                  <div style="width: 24px; height: 90px; background: linear-gradient(to top, #1d4ed8, var(--primary)); border-radius: 4px; box-shadow: 0 0 10px var(--primary-glow);"></div>
-                  <span style="font-size: 11px; font-weight: 600;">Wed</span>
+
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600;">
+                    <span>Direct Visits</span>
+                    <span id="referrer-count-direct">0 visits</span>
+                  </div>
+                  <div
+                    style="width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden;">
+                    <div id="referrer-bar-direct"
+                      style="width: 0%; height: 100%; background: var(--primary); transition: width 0.5s ease-out;">
+                    </div>
+                  </div>
                 </div>
-                <!-- Thu -->
-                <div style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; gap: 8px;">
-                  <span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted);">220</span>
-                  <div style="width: 24px; height: 110px; background: linear-gradient(to top, #1d4ed8, var(--primary)); border-radius: 4px; box-shadow: 0 0 10px var(--primary-glow);"></div>
-                  <span style="font-size: 11px; font-weight: 600;">Thu</span>
+
+                <div style="display: flex; flex-direction: column; gap: 4px;">
+                  <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600;">
+                    <span>Search Engines & Other</span>
+                    <span id="referrer-count-other">0 visits</span>
+                  </div>
+                  <div
+                    style="width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden;">
+                    <div id="referrer-bar-other"
+                      style="width: 0%; height: 100%; background: var(--warning); transition: width 0.5s ease-out;">
+                    </div>
+                  </div>
                 </div>
-                <!-- Fri -->
-                <div style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; gap: 8px;">
-                  <span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted);">190</span>
-                  <div style="width: 24px; height: 95px; background: linear-gradient(to top, #1d4ed8, var(--primary)); border-radius: 4px; box-shadow: 0 0 10px var(--primary-glow);"></div>
-                  <span style="font-size: 11px; font-weight: 600;">Fri</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clickbait Panel (Hidden by default) -->
+        <div id="clickbait-panel" class="hidden" style="display: flex; flex-direction: column; gap: 24px; width: 100%;">
+
+          <!-- Top summary metrics -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-details" style="width: 100%;">
+                <span class="metric-title">Most Engaged Section</span>
+                <span id="clickbait-top-section" class="metric-value"
+                  style="font-size: 22px; color: var(--primary);">N/A</span>
+                <span style="font-size: 11px; color: var(--text-muted); font-weight: 600; margin-top: 4px;">Highest
+                  cumulative attention</span>
+              </div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-details" style="width: 100%;">
+                <span class="metric-title">Total Project Details Views</span>
+                <span id="clickbait-total-proj-clicks" class="metric-value"
+                  style="font-size: 22px; color: var(--success);">0</span>
+                <span style="font-size: 11px; color: var(--text-muted); font-weight: 600; margin-top: 4px;">Direct
+                  interactions in portfolio</span>
+              </div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-details" style="width: 100%;">
+                <span class="metric-title">Total Section Interactions</span>
+                <span id="clickbait-total-sect-clicks" class="metric-value"
+                  style="font-size: 22px; color: #6366f1;">0</span>
+                <span style="font-size: 11px; color: var(--text-muted); font-weight: 600; margin-top: 4px;">Clicks
+                  logged across elements</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charts and Lists -->
+          <div class="dashboard-columns">
+            <!-- Left Card: Pie Chart of Time Spent -->
+            <div class="data-card" style="display: flex; flex-direction: column;">
+              <div class="card-header-row">
+                <h3>Time Spent Per Section</h3>
+              </div>
+              <div class="traffic-container"
+                style="justify-content: space-around; padding: 20px 0; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                <div class="donut-chart-box" style="position: relative; width: 160px; height: 160px;">
+                  <svg id="clickbait-pie-chart" width="160" height="160" viewBox="0 0 160 160"
+                    style="transform: rotate(-90deg); width: 100%; height: 100%;">
+                    <circle cx="80" cy="80" r="60" fill="transparent" stroke="rgba(255,255,255,0.03)" stroke-width="20">
+                    </circle>
+                  </svg>
+                  <div class="donut-center-text"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <span id="clickbait-total-time" class="donut-center-val"
+                      style="font-size: 20px; font-weight: 800; font-family: var(--font-mono);">0s</span>
+                    <span class="donut-center-lbl"
+                      style="font-size: 9px; color: var(--text-muted); text-transform: uppercase;">Total Time</span>
+                  </div>
                 </div>
-                <!-- Sat -->
-                <div style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; gap: 8px;">
-                  <span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted);">240</span>
-                  <div style="width: 24px; height: 120px; background: linear-gradient(to top, #1d4ed8, var(--primary)); border-radius: 4px; box-shadow: 0 0 10px var(--primary-glow);"></div>
-                  <span style="font-size: 11px; font-weight: 600;">Sat</span>
-                </div>
-                <!-- Sun -->
-                <div style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; gap: 8px;">
-                  <span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted);">310</span>
-                  <div style="width: 24px; height: 155px; background: linear-gradient(to top, #1d4ed8, var(--primary)); border-radius: 4px; box-shadow: 0 0 10px var(--primary-glow);"></div>
-                  <span style="font-size: 11px; font-weight: 600;">Sun</span>
+                <div id="clickbait-pie-legend" class="legend-list"
+                  style="display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: 10px;">
+                  <!-- Legend items dynamically populated -->
                 </div>
               </div>
             </div>
 
-            <!-- Deploy Log / Deploy History -->
-            <div class="data-card">
-              <div class="card-header-row">
-                <h3>Recent Deploys</h3>
+            <!-- Right Card: Section Clicks Breakdown & Project Clicks Leaderboard -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+
+              <!-- Section Clicks Bar Chart / Progress Lists -->
+              <div class="data-card">
+                <div class="card-header-row">
+                  <h3>Section Clicks Breakdown</h3>
+                </div>
+                <div id="clickbait-clicks-list" class="telemetry-rows" style="gap: 16px; padding: 10px 0;">
+                  <!-- Progress bars injected via JS -->
+                </div>
               </div>
-              <div class="telemetry-rows" style="max-height: 200px; overflow-y: auto;">
-                <div class="telemetry-item">
-                  <div style="display: flex; flex-direction: column;">
-                    <span style="font-weight: 600;">Deploy #48: main branch</span>
-                    <span style="font-size: 11px; color: var(--text-muted);">Production deploy - 11m ago</span>
-                  </div>
-                  <span style="color: var(--success); font-weight: 700; font-family: var(--font-mono); font-size: 12px;">SUCCESS</span>
+
+              <!-- Project clicks leaderboard -->
+              <div class="data-card">
+                <div class="card-header-row">
+                  <h3>Project Inspection Leaderboard</h3>
                 </div>
-                <div class="telemetry-item">
-                  <div style="display: flex; flex-direction: column;">
-                    <span style="font-weight: 600;">Deploy #47: main branch</span>
-                    <span style="font-size: 11px; color: var(--text-muted);">Production deploy - 3 hours ago</span>
-                  </div>
-                  <span style="color: var(--success); font-weight: 700; font-family: var(--font-mono); font-size: 12px;">SUCCESS</span>
+                <div style="overflow-x: auto; width: 100%;">
+                  <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13px;">
+                    <thead>
+                      <tr
+                        style="border-bottom: 1px solid var(--border-color); color: var(--text-muted); font-family: var(--font-mono); font-size: 11px;">
+                        <th style="padding: 10px 8px;">Rank</th>
+                        <th style="padding: 10px 8px;">Project Title</th>
+                        <th style="padding: 10px 8px; text-align: right;">Inspection Count</th>
+                      </tr>
+                    </thead>
+                    <tbody id="clickbait-leaderboard-body">
+                      <!-- Rows injected via JS -->
+                    </tbody>
+                  </table>
                 </div>
-                <div class="telemetry-item">
-                  <div style="display: flex; flex-direction: column;">
-                    <span style="font-weight: 600;">Deploy #46: main branch</span>
-                    <span style="font-size: 11px; color: var(--text-muted);">Production deploy - 1 day ago</span>
-                  </div>
-                  <span style="color: var(--success); font-weight: 700; font-family: var(--font-mono); font-size: 12px;">SUCCESS</span>
-                </div>
-                <div class="telemetry-item">
-                  <div style="display: flex; flex-direction: column;">
-                    <span style="font-weight: 600;">Deploy #45: main branch</span>
-                    <span style="font-size: 11px; color: var(--text-muted);">Production deploy - 2 days ago</span>
-                  </div>
-                  <span style="color: var(--success); font-weight: 700; font-family: var(--font-mono); font-size: 12px;">SUCCESS</span>
-                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Hiring Leads Panel (Hidden by default) -->
+        <div id="leads-panel" class="hidden" style="display: flex; flex-direction: column; gap: 24px; width: 100%;">
+          <div class="data-card" style="width: 100%;">
+            <div class="card-header-row">
+              <h3>Hiring Leads Registered (<span id="dash-hire-count">0</span>)</h3>
+            </div>
+            <div id="dash-hire-list" class="leads-list" style="margin-top: 16px;">
+              <!-- Injected via security.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- IP Tracker Panel (Hidden by default) -->
+        <div id="iplogs-panel" class="hidden" style="display: flex; flex-direction: column; gap: 24px; width: 100%;">
+          
+          <!-- Summary Metrics Cards -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-details" style="width: 100%;">
+                <span class="metric-title">Total Logged Sessions</span>
+                <span id="iplogs-total-count" class="metric-value" style="font-size: 28px;">0</span>
+                <span style="font-size: 11px; color: var(--primary); font-weight: 600; margin-top: 4px;">Across all recorded days</span>
               </div>
             </div>
+            <div class="metric-card">
+              <div class="metric-details" style="width: 100%;">
+                <span class="metric-title">Unique IP Addresses</span>
+                <span id="iplogs-unique-count" class="metric-value" style="font-size: 28px;">0</span>
+                <span style="font-size: 11px; color: var(--success); font-weight: 600; margin-top: 4px;">Distinct devices identified</span>
+              </div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-details" style="width: 100%;">
+                <span class="metric-title">Active Dates Tracked</span>
+                <span id="iplogs-dates-count" class="metric-value" style="font-size: 28px;">0</span>
+                <span style="font-size: 11px; color: #6366f1; font-weight: 600; margin-top: 4px;">Days with activity logs</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Search & Filter Strip -->
+          <div class="filters-bar" style="justify-content: space-between; align-items: center; display: flex;">
+            <div class="filter-group" style="flex-grow: 1; max-width: 400px; display: flex; align-items: center; gap: 10px;">
+              <span class="filter-label">Search:</span>
+              <input type="text" id="iplogs-search-input" placeholder="Search IP, Region, Browser, Referrer..." 
+                style="flex-grow: 1; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 8px 14px; font-size: 13px; color: var(--text-main); outline: none; transition: border-color 0.3s;"
+                onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='rgba(255, 255, 255, 0.08)'">
+            </div>
+          </div>
+
+          <!-- IP logs daily grouped content -->
+          <div id="iplogs-container" style="display: flex; flex-direction: column; gap: 16px;">
+            <!-- Injected via JS -->
           </div>
         </div>
 
@@ -1251,12 +1476,14 @@
   </div>
 
   <!-- JS Scripts -->
-  <script src="./config.js"></script>
-  <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
-  <script src="./api-client.js"></script>
-  <script src="./data.js"></script>
-  <script src="./telemetry.js"></script>
-  <script src="./security.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <script src="./js/firebase-config.js"></script>
+  <script src="./js/mock-backend.js"></script>
+  <script src="./js/data.js"></script>
+  <script src="./js/telemetry.js"></script>
+  <script src="./js/security.js"></script>
 </body>
 
 </html>

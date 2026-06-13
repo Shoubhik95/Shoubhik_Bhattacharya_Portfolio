@@ -5,6 +5,109 @@
 
 window.Telemetry = (() => {
   // --- State Variables ---
+  const getReferrerSource = () => {
+    const ref = document.referrer.toLowerCase();
+    if (!ref) return "direct";
+    if (ref.includes("github.com") || ref.includes("github.io")) {
+      return "github";
+    }
+    if (ref.includes("netlify.app") || ref.includes("127.0.0.1") || ref.includes("localhost")) {
+      return "netlify";
+    }
+    if (ref.includes("google.") || ref.includes("bing.") || ref.includes("yahoo.") || ref.includes("duckduckgo.") || ref.includes("yandex.") || ref.includes("baidu.")) {
+      return "search";
+    }
+    return "refer";
+  };
+
+  let activeSectionKey = 'about';
+  let sectionEntryTime = Date.now();
+  
+  const sectionDurations = { about: 0, skills: 0, education: 0, projects: 0, certificates: 0 };
+  const sectionClicks = { about: 0, skills: 0, education: 0, projects: 0, certificates: 0 };
+  const projectClicks = {};
+
+  const lastSyncedDurations = { about: 0, skills: 0, education: 0, projects: 0, certificates: 0 };
+  const lastSyncedClicks = { about: 0, skills: 0, education: 0, projects: 0, certificates: 0 };
+  const lastSyncedProjectClicks = {};
+
+  const changeActiveSection = (sectionId) => {
+    const id = sectionId.toLowerCase();
+    if (sectionDurations[id] !== undefined && id !== activeSectionKey) {
+      const elapsed = Math.floor((Date.now() - sectionEntryTime) / 1000);
+      if (elapsed > 0) {
+        sectionDurations[activeSectionKey] += elapsed;
+      }
+      activeSectionKey = id;
+      sectionEntryTime = Date.now();
+      syncEngagementData();
+    }
+  };
+
+  let syncTimeout;
+  const syncEngagementData = () => {
+    clearTimeout(syncTimeout);
+    syncTimeout = setTimeout(() => {
+      const elapsed = Math.floor((Date.now() - sectionEntryTime) / 1000);
+      const currentDurations = { ...sectionDurations };
+      if (elapsed > 0 && currentDurations[activeSectionKey] !== undefined) {
+        currentDurations[activeSectionKey] += elapsed;
+      }
+      
+      const deltaDurations = {};
+      for (const key in currentDurations) {
+        deltaDurations[key] = currentDurations[key] - lastSyncedDurations[key];
+      }
+      
+      const deltaClicks = {};
+      for (const key in sectionClicks) {
+        deltaClicks[key] = sectionClicks[key] - lastSyncedClicks[key];
+      }
+      
+      const deltaProjectClicks = {};
+      for (const key in projectClicks) {
+        deltaProjectClicks[key] = projectClicks[key] - (lastSyncedProjectClicks[key] || 0);
+      }
+      
+      const hasDurations = Object.values(deltaDurations).some(v => v > 0);
+      const hasClicks = Object.values(deltaClicks).some(v => v > 0);
+      const hasProjectClicks = Object.values(deltaProjectClicks).some(v => v > 0);
+      
+      if (!hasDurations && !hasClicks && !hasProjectClicks) return;
+      
+      fetch('/api/telemetry/engagement', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          sessionKey: sessionStorage.getItem('portfolio_session_key'),
+          durations: deltaDurations,
+          clicks: deltaClicks,
+          projectClicks: deltaProjectClicks,
+          metrics: {
+            totalClicks: state.totalClicks,
+            skillsFlipped: state.skillsFlipped,
+            projectsOpened: state.projectsOpened,
+            resumeDownloads: state.resumeDownloads,
+            externalClicks: state.externalClicks
+          }
+        })
+      }).then(res => {
+        if (res.ok) {
+          for (const key in currentDurations) {
+            lastSyncedDurations[key] = currentDurations[key];
+          }
+          for (const key in sectionClicks) {
+            lastSyncedClicks[key] = sectionClicks[key];
+          }
+          for (const key in projectClicks) {
+            lastSyncedProjectClicks[key] = projectClicks[key];
+          }
+          sectionEntryTime = Date.now();
+        }
+      }).catch(e => console.warn("Failed to sync engagement metrics:", e));
+    }, 2000);
+  };
+
   const state = {
     totalClicks: 0,
     skillsFlipped: 0,
@@ -15,7 +118,8 @@ window.Telemetry = (() => {
     currentLevel: "LVL 1: About",
     maxScrollDepth: 0,
     activityLogs: [],
-    hiringLeads: JSON.parse(localStorage.getItem('portfolio_hiring_leads') || '[]'),
+    hiringLeads: [],
+    historicalTelemetry: {},
     deviceData: {
       ip: "Retrieving...",
       region: "Retrieving...",
@@ -33,18 +137,56 @@ window.Telemetry = (() => {
   };
 
   // --- Historical Analytics Engine (Real Data Collection) ---
-  const incrementActionCount = () => {
-    const todayStr = new Date().toISOString().split('T')[0];
-    const history = JSON.parse(localStorage.getItem('portfolio_historical_telemetry') || '{}');
-    if (!history[todayStr]) {
-      history[todayStr] = { direct: 0, search: 0, refer: 0, actions: 0 };
+  const fetchStats = async () => {
+    try {
+      const res = await fetch('/api/telemetry/stats');
+      if (res.status === 401 || res.status === 403) {
+        if (typeof window.handleUnauthorized === 'function') {
+          window.handleUnauthorized();
+        }
+        return;
+      }
+      if (res.ok) {
+        const data = await res.json();
+        state.activityLogs = data.activityLogs || [];
+        state.historicalTelemetry = data.historicalTelemetry || {};
+        state.visitorSessions = data.visitorSessions || [];
+        state.sharesCount = data.sharesCount || 0;
+        if (typeof window.populateActivityFeed === 'function') {
+          window.populateActivityFeed();
+        }
+        if (typeof window.populateVisitorSessionsDropdown === 'function') {
+          window.populateVisitorSessionsDropdown();
+        }
+      }
+    } catch (e) {
+      console.warn("Failed to fetch telemetry stats from server:", e);
     }
-    history[todayStr].actions++;
-    localStorage.setItem('portfolio_historical_telemetry', JSON.stringify(history));
+  };
+
+  const fetchLeads = async () => {
+    try {
+      const res = await fetch('/api/hiring-leads');
+      if (res.status === 401 || res.status === 403) {
+        if (typeof window.handleUnauthorized === 'function') {
+          window.handleUnauthorized();
+        }
+        return;
+      }
+      if (res.ok) {
+        const data = await res.json();
+        state.hiringLeads = data;
+        if (typeof window.updateDashboardHiringUI === 'function') {
+          window.updateDashboardHiringUI();
+        }
+      }
+    } catch (e) {
+      console.warn("Failed to fetch hiring leads from server:", e);
+    }
   };
 
   const getHistoricalStats = (timeframe) => {
-    const history = JSON.parse(localStorage.getItem('portfolio_historical_telemetry') || '{}');
+    const history = state.historicalTelemetry || {};
     let daysLimit = 30; // monthly default
     if (timeframe === 'weekly') daysLimit = 7;
     if (timeframe === 'yearly') daysLimit = 365;
@@ -79,18 +221,83 @@ window.Telemetry = (() => {
     };
   };
 
+  // --- Offline Telemetry Queue Helpers ---
+  const getOfflineQueue = () => {
+    try {
+      const q = localStorage.getItem('portfolio_telemetry_queue');
+      return q ? JSON.parse(q) : [];
+    } catch (e) {
+      return [];
+    }
+  };
+
+  const saveOfflineQueue = (queue) => {
+    try {
+      localStorage.setItem('portfolio_telemetry_queue', JSON.stringify(queue.slice(-50)));
+    } catch (e) {
+      console.warn("Failed to save offline telemetry queue:", e);
+    }
+  };
+
+  const queueOfflineEvent = (eventData) => {
+    const queue = getOfflineQueue();
+    queue.push(eventData);
+    saveOfflineQueue(queue);
+  };
+
+  let isSyncing = false;
+  const syncOfflineQueue = async () => {
+    if (isSyncing || !navigator.onLine) return;
+    const queue = getOfflineQueue();
+    if (queue.length === 0) return;
+    isSyncing = true;
+    
+    while (queue.length > 0) {
+      const event = queue[0];
+      try {
+        const res = await fetch('/api/telemetry/event', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(event)
+        });
+        if (res.ok) {
+          queue.shift();
+          saveOfflineQueue(queue);
+        } else {
+          break;
+        }
+      } catch (err) {
+        break;
+      }
+    }
+    isSyncing = false;
+  };
+
+  window.addEventListener('online', syncOfflineQueue);
+
   // --- Logger ---
   const logEvent = (message, type = 'info') => {
     const time = new Date().toLocaleTimeString();
     state.activityLogs.unshift({ time, message, type });
     if (state.activityLogs.length > 100) state.activityLogs.pop();
     
-    // Save to historical counts
-    incrementActionCount();
+    const eventData = { 
+      message, 
+      type, 
+      telemetryState: { source: getReferrerSource() } 
+    };
 
-    // Sync to backend for real-time dashboard
-    if (window.PortfolioAPI) {
-      window.PortfolioAPI.postTelemetryEvent(message, type);
+    if (!navigator.onLine) {
+      queueOfflineEvent(eventData);
+    } else {
+      fetch('/api/telemetry/event', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(eventData)
+      }).catch(err => {
+        console.warn("Failed to log telemetry to server, queueing offline:", err);
+        queueOfflineEvent(eventData);
+      });
     }
 
     // Update live UI feed if visible
@@ -145,6 +352,16 @@ window.Telemetry = (() => {
     document.body.addEventListener('click', (e) => {
       state.totalClicks++;
       
+      // Track clicks per section
+      const sectionEl = e.target.closest('section');
+      if (sectionEl) {
+        const id = sectionEl.id.toLowerCase();
+        if (sectionClicks[id] !== undefined) {
+          sectionClicks[id]++;
+          syncEngagementData();
+        }
+      }
+
       const target = e.target.closest('a, button');
       if (target) {
         const text = (target.innerText || target.getAttribute('aria-label') || target.tagName).trim().substring(0, 30);
@@ -204,6 +421,12 @@ window.Telemetry = (() => {
         const title = projCard.getAttribute("data-title") || "Unknown Project";
         state.projectsOpened++;
         logEvent(`Opened project details: ${title}`, 'highlight');
+        
+        if (!projectClicks[title]) {
+          projectClicks[title] = 0;
+        }
+        projectClicks[title]++;
+        syncEngagementData();
       }
     });
 
@@ -269,6 +492,16 @@ window.Telemetry = (() => {
     document.addEventListener('visibilitychange', () => {
       const visibilityMsg = document.hidden ? "User switched tab (Background)" : "User returned to tab (Active)";
       logEvent(visibilityMsg, "info");
+      
+      if (document.hidden) {
+        const elapsed = Math.floor((Date.now() - sectionEntryTime) / 1000);
+        if (elapsed > 0 && sectionDurations[activeSectionKey] !== undefined) {
+          sectionDurations[activeSectionKey] += elapsed;
+        }
+        syncEngagementData();
+      } else {
+        sectionEntryTime = Date.now();
+      }
     });
 
     window.addEventListener('online', () => {
@@ -281,94 +514,39 @@ window.Telemetry = (() => {
       logEvent("Network connection lost: Offline", "alert");
     });
 
-    // 6. Hiring Interest Helper (backend + local fallback)
-    window.Telemetry.addHiringLead = async (name, email = '', companyLink = '') => {
-      if (window.PortfolioAPI) {
-        try {
-          const lead = await window.PortfolioAPI.submitHiringLead(name, email, companyLink);
-          state.hiringLeads.unshift(lead);
-          localStorage.setItem('portfolio_hiring_leads', JSON.stringify(state.hiringLeads));
-          if (typeof window.updateDashboardHiringUI === 'function') {
-            window.updateDashboardHiringUI();
+    // 6. Hiring Interest Helper
+    window.Telemetry.addHiringLead = (name, email = '', companyLink = '') => {
+      fetch('/api/hiring-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, companyLink })
+      })
+      .then(res => {
+        if (res.ok) {
+          fetchLeads();
+          logEvent(`Hiring Lead Added: ${name}`, 'highlight');
+        }
+      })
+      .catch(err => console.error("Failed to add hiring lead:", err));
+    };
+
+    window.Telemetry.deleteHiringLead = (idx) => {
+      fetch(`/api/hiring-lead/${idx}`, {
+        method: 'DELETE'
+      })
+      .then(res => {
+        if (res.status === 401 || res.status === 403) {
+          if (typeof window.handleUnauthorized === 'function') {
+            window.handleUnauthorized();
           }
-          return lead;
-        } catch (err) {
-          console.warn("Backend hiring submit failed, using local fallback:", err);
+          return;
         }
-      }
-
-      const lead = {
-        id: `local-${Date.now()}`,
-        name: name.trim(),
-        email: email.trim(),
-        companyLink: companyLink.trim(),
-        timestamp: new Date().toLocaleString()
-      };
-      const leads = JSON.parse(localStorage.getItem('portfolio_hiring_leads') || '[]');
-      leads.unshift(lead);
-      localStorage.setItem('portfolio_hiring_leads', JSON.stringify(leads));
-      state.hiringLeads = leads;
-      logEvent(`Hiring Lead Added: ${lead.name}`, 'highlight');
-      return lead;
-    };
-
-    window.Telemetry.deleteHiringLead = async (idxOrId) => {
-      const leads = state.hiringLeads.length
-        ? state.hiringLeads
-        : JSON.parse(localStorage.getItem('portfolio_hiring_leads') || '[]');
-
-      let removed;
-      let idToDelete;
-
-      if (typeof idxOrId === "string") {
-        idToDelete = idxOrId;
-        const idx = leads.findIndex((l) => l.id === idxOrId);
-        if (idx === -1) return;
-        removed = leads.splice(idx, 1)[0];
-      } else {
-        removed = leads.splice(idxOrId, 1)[0];
-        idToDelete = removed && removed.id;
-      }
-
-      if (window.PortfolioAPI && idToDelete && !String(idToDelete).startsWith("local-")) {
-        try {
-          await window.PortfolioAPI.deleteHiringLead(idToDelete);
-        } catch (err) {
-          console.warn("Backend delete failed:", err);
+        if (res.ok) {
+          fetchLeads();
+          logEvent(`Hiring Lead Deleted at index ${idx}`, 'alert');
         }
-      }
-
-      localStorage.setItem('portfolio_hiring_leads', JSON.stringify(leads));
-      state.hiringLeads = leads;
-      logEvent(`Hiring Lead Deleted: ${removed ? removed.name : ''}`, 'alert');
-      if (typeof window.updateDashboardHiringUI === 'function') {
-        window.updateDashboardHiringUI();
-      }
-    };
-
-    window.Telemetry.syncHiringFromBackend = async () => {
-      if (!window.PortfolioAPI) return;
-      try {
-        const leads = await window.PortfolioAPI.fetchHiringLeads();
-        if (leads.length) {
-          state.hiringLeads = leads;
-          localStorage.setItem('portfolio_hiring_leads', JSON.stringify(leads));
-        }
-      } catch (err) {
-        console.warn("Could not sync hiring leads:", err);
-      }
-    };
-
-    window.Telemetry.mergeRemoteEvent = (event) => {
-      const exists = state.activityLogs.some(
-        (l) => l.time === event.time && l.message === event.message
-      );
-      if (exists) return;
-      state.activityLogs.unshift(event);
-      if (state.activityLogs.length > 100) state.activityLogs.pop();
-      if (typeof window.populateActivityFeed === 'function') {
-        window.populateActivityFeed();
-      }
+      })
+      .catch(err => console.error("Failed to delete hiring lead:", err));
     };
 
     // 7. Gather browser data
@@ -389,6 +567,28 @@ window.Telemetry = (() => {
     const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
     state.deviceData.network = conn ? (conn.effectiveType || "N/A").toUpperCase() : "N/A";
 
+    const recordSessionVisit = () => {
+      const source = getReferrerSource();
+      if (!sessionStorage.getItem('portfolio_session_key')) {
+        fetch('/api/telemetry/session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ source, deviceData: state.deviceData })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data && data.sessionKey) {
+            sessionStorage.setItem('portfolio_session_key', data.sessionKey);
+          }
+          fetchStats();
+        })
+        .catch(err => console.warn("Failed to record session visit:", err));
+      } else {
+        fetchStats();
+      }
+      fetchLeads();
+    };
+
     const fetchIP = () => {
       fetch("https://ipapi.co/json/")
         .then(r => {
@@ -406,7 +606,7 @@ window.Telemetry = (() => {
         })
         .catch(err => {
           // Fallback to HTTPS compatible ipify API
-          fetch("https://api.ipify.org?format=json")
+          return fetch("https://api.ipify.org?format=json")
             .then(r => {
               if (!r.ok) throw new Error("ipify.org error");
               return r.json();
@@ -423,39 +623,14 @@ window.Telemetry = (() => {
               state.deviceData.region = "Sandbox / VPN / Offline";
               logEvent("IP telemetry blocked by browser security policies", "info");
             });
+        })
+        .finally(() => {
+          recordSessionVisit();
         });
     };
     fetchIP();
 
-    // 8. Record Session Visit (Historical Analytics)
-    const getReferrerSource = () => {
-      const ref = document.referrer.toLowerCase();
-      if (!ref) return "direct";
-      if (ref.includes("google.") || ref.includes("bing.") || ref.includes("yahoo.") || ref.includes("duckduckgo.") || ref.includes("yandex.") || ref.includes("baidu.")) {
-        return "search";
-      }
-      return "refer";
-    };
-
-    const recordSessionVisit = () => {
-      const source = getReferrerSource();
-      const todayStr = new Date().toISOString().split('T')[0];
-      const history = JSON.parse(localStorage.getItem('portfolio_historical_telemetry') || '{}');
-      
-      if (!sessionStorage.getItem('portfolio_session_active')) {
-        sessionStorage.setItem('portfolio_session_active', 'true');
-        if (!history[todayStr]) {
-          history[todayStr] = { direct: 0, search: 0, refer: 0, actions: 0 };
-        }
-        if (source === 'direct') history[todayStr].direct++;
-        else if (source === 'search') history[todayStr].search++;
-        else history[todayStr].refer++;
-        
-        localStorage.setItem('portfolio_historical_telemetry', JSON.stringify(history));
-      }
-    };
-    recordSessionVisit();
-
+    syncOfflineQueue();
     logEvent("Telemetry engine initialised with security policies", "info");
   };
 
@@ -466,10 +641,33 @@ window.Telemetry = (() => {
     init();
   }
 
+  const deleteVisitorSession = (sessionKey) => {
+    fetch(`/api/visitor-session/${sessionKey}`, {
+      method: 'DELETE'
+    })
+    .then(res => {
+      if (res.status === 401 || res.status === 403) {
+        if (typeof window.handleUnauthorized === 'function') {
+          window.handleUnauthorized();
+        }
+        return;
+      }
+      if (res.ok) {
+        fetchStats();
+        logEvent(`Deleted Visitor Session log: ${sessionKey}`, 'alert');
+      }
+    })
+    .catch(err => console.error("Failed to delete visitor session:", err));
+  };
+
   return {
     state,
     logEvent,
     exportData,
-    getHistoricalStats
+    getHistoricalStats,
+    fetchStats,
+    fetchLeads,
+    changeActiveSection,
+    deleteVisitorSession
   };
 })();

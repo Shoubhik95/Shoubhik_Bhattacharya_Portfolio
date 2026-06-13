@@ -16,12 +16,12 @@
     rel="stylesheet">
 
   <!-- Modular CSS Stylesheets -->
-  <link rel="stylesheet" href="./globals.css">
-  <link rel="stylesheet" href="./layout.css">
-  <link rel="stylesheet" href="./components.css">
-  <link rel="stylesheet" href="./sections.css">
-  <link rel="stylesheet" href="./hud-animations.css">
-  <link rel="stylesheet" href="./core-animations.css">
+  <link rel="stylesheet" href="./css/globals.css">
+  <link rel="stylesheet" href="./css/layout.css">
+  <link rel="stylesheet" href="./css/components.css">
+  <link rel="stylesheet" href="./css/sections.css">
+  <link rel="stylesheet" href="./css/hud-animations.css">
+  <link rel="stylesheet" href="./css/core-animations.css">
 </head>
 
 <body>
@@ -109,6 +109,10 @@
             <button id="hire-interest-btn" class="cta-btn btn-dark"
               style="border: 2px solid #22c55e !important; color: #22c55e !important; background: transparent; cursor: pointer; font-weight: 700; transition: all 0.3s ease;">
               HIRING INTEREST
+            </button>
+            <button id="share-portfolio-btn" class="cta-btn btn-dark"
+              style="border: 2px solid #38bdf8 !important; color: #38bdf8 !important; background: transparent; cursor: pointer; font-weight: 700; transition: all 0.3s ease;">
+              🔗 SHARE
             </button>
           </div>
 
@@ -449,12 +453,14 @@
   </div>
 
   <!-- JS Scripts -->
-  <script src="./config.js"></script>
-  <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
-  <script src="./api-client.js"></script>
-  <script src="./data.js"></script>
-  <script src="./telemetry.js"></script>
-  <script src="./script.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+  <script src="./js/firebase-config.js"></script>
+  <script src="./js/mock-backend.js"></script>
+  <script src="./js/data.js"></script>
+  <script src="./js/telemetry.js"></script>
+  <script src="./js/script.js"></script>
 </body>
 
 </html>

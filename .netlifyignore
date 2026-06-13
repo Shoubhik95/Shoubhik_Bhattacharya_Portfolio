@@ -1,6 +1,0 @@
-node_modules
-server
-.env
-server/data/*.json
-.git
-*.mp3
