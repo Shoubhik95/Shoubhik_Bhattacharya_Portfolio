@@ -1,22 +1,147 @@
 document.addEventListener("DOMContentLoaded", () => {
   
+  // Render dynamic components from data.js
+  const renderSkills = () => {
+    const skillsGrid = document.getElementById("skills-grid");
+    if (!skillsGrid) return;
+    
+    skillsGrid.innerHTML = skillsData.map(skill => `
+      <div class="skill-card-animated flip-card"
+        style="--skill-color-from: ${skill.style.from}; --skill-color-to: ${skill.style.to}; --skill-border: ${skill.style.border}; --skill-text: ${skill.style.text};">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <h4 class="skill-name">${skill.name}</h4>
+            <span class="skill-status ${skill.statusClass}">${skill.status}</span>
+          </div>
+          <div class="flip-card-back">
+            <h4 class="skill-name">${skill.name}</h4>
+            <ul class="subskills-list">
+              ${skill.subskills.map(sub => `<li><span class="bullet ${skill.bulletClass}"></span>${sub}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  };
+
+  const renderProjects = () => {
+    const gameDesignGrid = document.getElementById("game-design-grid");
+    const immersiveXrGrid = document.getElementById("immersive-xr-grid");
+    const gameArtGrid = document.getElementById("game-art-grid");
+
+    const allProjects = [...gameProjectsData, ...webProjectsData];
+
+    const createProjectCard = (proj) => `
+      <div class="project-card-wrapper" 
+        data-title="${proj.title}" 
+        data-subtitle="${proj.subtitle}"
+        data-desc="${proj.desc}" 
+        data-images="${proj.images}" 
+        data-tags="${proj.tags ? proj.tags.join(',') : ''}"
+        data-engine="${proj.engine || ''}"
+        data-complexity="${proj.complexity || ''}"
+        data-stage="${proj.stage || ''}"
+        data-tools="${proj.tools || ''}"
+        data-logs="${proj.logEntries ? proj.logEntries.join('|') : ''}"
+        ${proj.link ? `data-link="${proj.link}"` : ''}
+        ${proj.linkText ? `data-link-text="${proj.linkText}"` : ''}
+        ${proj.video ? `data-video="${proj.video}"` : ''}>
+        <div class="spotlight-card card-inner-padding">
+          <div class="project-card-layout">
+            <div class="project-image-box">
+              <img src="${proj.images.split(',')[0]}" alt="${proj.title}" class="proj-img">
+              <div class="project-image-overlay">
+                <span>View Project Details</span>
+              </div>
+            </div>
+            <h4 class="project-card-title">${proj.title}</h4>
+            <p class="project-card-subtitle">${proj.subtitle}</p>
+            <p class="project-card-desc">${proj.desc}</p>
+            <div class="project-tags-row">
+              ${proj.tags ? proj.tags.slice(0, 3).map(tag => `<span class="project-tag">${tag}</span>`).join('') : ''}
+            </div>
+            <div class="project-learn-more">
+              Learn More &nbsp;<span class="arrow-trans">&rarr;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    if (gameDesignGrid) {
+      gameDesignGrid.innerHTML = allProjects
+        .filter(proj => proj.category === "game-design")
+        .map(createProjectCard)
+        .join('');
+    }
+
+    if (immersiveXrGrid) {
+      immersiveXrGrid.innerHTML = allProjects
+        .filter(proj => proj.category === "immersive-xr")
+        .map(createProjectCard)
+        .join('');
+    }
+
+    if (gameArtGrid) {
+      gameArtGrid.innerHTML = allProjects
+        .filter(proj => proj.category === "game-art")
+        .map(createProjectCard)
+        .join('');
+    }
+  };
+
+  const renderCertificates = () => {
+    const tickerTrack = document.getElementById("ticker-track");
+    if (!tickerTrack) return;
+
+    const items = [...certificatesData, ...certificatesData, ...certificatesData];
+    
+    tickerTrack.innerHTML = items.map(cert => `
+      <div class="ticker-item" data-src="${cert.src}" data-alt="${cert.alt}">
+        <img src="${cert.src}" alt="${cert.alt}">
+        <div class="ticker-overlay"><span>${cert.alt}</span></div>
+      </div>
+    `).join('');
+  };
+
+  renderSkills();
+  renderProjects();
+  renderCertificates();
+
   /* ==========================================================================
      1. Navigation Scroll & Level Tracker
      ========================================================================== */
-  const xpProgressBar = document.getElementById("xp-progress-bar");
-  const navLevel = document.getElementById("nav-level");
-  const navBtns = document.querySelectorAll(".nav-btn");
+  const xpProgressBar = document.getElementById("tracker-xp-fill");
+  const trackerLevelName = document.getElementById("tracker-level-name");
+  const floatingTracker = document.getElementById("floating-tracker");
 
-  // Smooth Scroll
-  navBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const targetId = btn.getAttribute("data-scroll");
-      const targetEl = document.getElementById(targetId);
-      if (targetEl) {
-        targetEl.scrollIntoView({ behavior: "smooth" });
+  const sectionNames = {
+    "about": "LVL 1: About",
+    "skills": "LVL 2: Skills",
+    "education": "LVL 3: Edu",
+    "projects": "LVL 4: Projects",
+    "certificates": "LVL 5: Awards"
+  };
+
+  // Intersection Observer for Active State
+  const sections = document.querySelectorAll("section[id]");
+  const observerOptions = {
+    root: null,
+    rootMargin: "-20% 0px -60% 0px",
+    threshold: 0
+  };
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && trackerLevelName) {
+        trackerLevelName.textContent = sectionNames[entry.target.id] || "LVL MAX";
       }
     });
-  });
+  }, observerOptions);
+
+  sections.forEach(sec => sectionObserver.observe(sec));
+
+  let floatTrackerTimeout = null;
 
   // Scroll Progress Tracker
   const updateScrollProgress = () => {
@@ -28,21 +153,22 @@ document.addEventListener("DOMContentLoaded", () => {
       xpProgressBar.style.width = `${progress}%`;
     }
 
-    if (navLevel) {
-      if (progress < 25) {
-        navLevel.textContent = "LVL 1";
-      } else if (progress < 55) {
-        navLevel.textContent = "LVL 2";
-      } else if (progress < 80) {
-        navLevel.textContent = "LVL 3";
-      } else {
-        navLevel.textContent = "MAX LVL";
-      }
+    // Hide while scrolling
+    if (floatingTracker) {
+      floatingTracker.classList.remove("show");
+      if (floatTrackerTimeout) clearTimeout(floatTrackerTimeout);
+      
+      // Show when resting
+      floatTrackerTimeout = setTimeout(() => {
+        floatingTracker.classList.add("show");
+      }, 400); // 400ms rest to pop out
     }
   };
 
   window.addEventListener("scroll", updateScrollProgress);
-  updateScrollProgress(); // Initial run
+  setTimeout(() => {
+    if (floatingTracker) floatingTracker.classList.add("show");
+  }, 1000);
 
   /* ==========================================================================
      2. Decrypted Typing Text Loop
@@ -96,26 +222,21 @@ document.addEventListener("DOMContentLoaded", () => {
      3. Canvas Pixelation Transition
      ========================================================================== */
   const photoPaths = [
-    "public/my photos/IMG_1506.jpg",
-    "public/my photos/WhatsApp Image 2026-06-07 at 9.59.14 PM.jpeg",
-    "public/my photos/WhatsApp Image 2026-06-07 at 9.59.15 PM(1).jpeg",
+    "public/my photos/IMG_1506.jpg"
   ];
 
   const profileCanvas = document.getElementById("profile-canvas");
   const preloadedImages = [];
-  let currentPhotoIdx = 0;
   let pixelScale = 1;
-  let isTransitioning = false;
 
-  // Preload profile photos
+  // Preload profile photo
   photoPaths.forEach(src => {
     const img = new Image();
     img.src = src;
     img.onload = () => {
       preloadedImages.push(img);
-      // Draw first image on load
       if (preloadedImages.length === 1) {
-        drawProfile(img, 1);
+        triggerIntroPixelation();
       }
     };
   });
@@ -127,7 +248,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Set canvas display size dynamically based on its offset dimensions!
     const width = profileCanvas.clientWidth || 400;
-    const height = profileCanvas.clientHeight || 400;
+    const height = profileCanvas.clientHeight || 480;
     
     // Only set width/height if they changed to avoid resetting canvas state on every animation frame
     if (profileCanvas.width !== width || profileCanvas.height !== height) {
@@ -170,40 +291,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  const triggerProfileTransition = () => {
-    if (isTransitioning || preloadedImages.length === 0) return;
-    isTransitioning = true;
-
-    let currentScale = 1;
-    let scalingUp = true;
+  const triggerIntroPixelation = () => {
+    if (preloadedImages.length === 0) return;
+    const img = preloadedImages[0];
+    let currentScale = 30;
 
     const animate = () => {
-      const activeImg = preloadedImages[currentPhotoIdx];
-      
-      if (scalingUp) {
-        currentScale += 1.5;
-        pixelScale = currentScale;
-        drawProfile(activeImg, pixelScale);
+      currentScale -= 1.0;
+      pixelScale = Math.max(1, currentScale);
+      drawProfile(img, pixelScale);
 
-        if (currentScale >= 28) {
-          scalingUp = false;
-          // Switch to next image at maximum pixelation
-          currentPhotoIdx = (currentPhotoIdx + 1) % preloadedImages.length;
-        }
+      if (currentScale > 1) {
         requestAnimationFrame(animate);
-      } else {
-        currentScale -= 1.5;
-        pixelScale = currentScale;
-        const nextImg = preloadedImages[currentPhotoIdx];
-        drawProfile(nextImg, pixelScale);
-
-        if (currentScale <= 1) {
-          pixelScale = 1;
-          drawProfile(nextImg, 1);
-          isTransitioning = false;
-        } else {
-          requestAnimationFrame(animate);
-        }
       }
     };
 
@@ -237,20 +336,24 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+
+
   /* ==========================================================================
-     5. Project Details Modals & Slider Control
+     6. Project Details Modals & Slider Control (Gamer HUD)
      ========================================================================== */
   const projectModal = document.getElementById("project-modal");
   const modalTitle = document.getElementById("modal-title");
   const modalSubtitle = document.getElementById("modal-subtitle");
   const modalDescription = document.getElementById("modal-description");
-  const modalHighlights = document.getElementById("modal-highlights");
-  const modalTags = document.getElementById("modal-tags");
   
+  const modalStatEngine = document.getElementById("modal-stat-engine");
+  const modalStatComplexity = document.getElementById("modal-stat-complexity");
+  const modalStatStage = document.getElementById("modal-stat-stage");
+  const modalStatTools = document.getElementById("modal-stat-tools");
+  const modalLogTimeline = document.getElementById("modal-log-timeline");
+
   const modalVisitBtn = document.getElementById("modal-visit-btn");
   const modalVideoBtn = document.getElementById("modal-video-btn");
-  const modalSecondaryLink = document.getElementById("modal-secondary-link");
-  const modalLinksBlock = document.getElementById("modal-links-block");
 
   const modalSlidesWrapper = document.getElementById("modal-slides-wrapper");
   const modalDotsContainer = document.getElementById("modal-dots-container");
@@ -259,23 +362,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const modalNextBtn = document.getElementById("modal-next-btn");
   const modalCloseBtn = document.getElementById("modal-close-btn");
 
-  // Instagram specific elements
-  const instaLikeBtn = document.getElementById("insta-like-btn");
-  const instaHeartIcon = document.getElementById("insta-heart-icon");
-  const instaLikesCount = document.getElementById("insta-likes-count");
-  const instaSaveBtn = document.getElementById("insta-save-btn");
-  const instaSaveIcon = document.getElementById("insta-save-icon");
-  const instaShareBtn = document.getElementById("insta-share-btn");
-  const instaShareTooltip = document.getElementById("insta-share-tooltip");
-  const instaCommentFocusBtn = document.getElementById("insta-comment-focus-btn");
-  const instaCommentInput = document.getElementById("insta-comment-input");
-  const instaCommentPostBtn = document.getElementById("insta-comment-post-btn");
-
   let projectImagesList = [];
   let currentSliderIdx = 0;
-  let activeProjectLink = "";
-  let baseLikeCount = 1420;
-  let isCurrentlyLiked = false;
 
   const updateSliderView = () => {
     const slides = document.querySelectorAll(".modal-slide");
@@ -312,73 +400,47 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSliderView();
   };
 
-  // Setup click listeners on all project cards
   const projectWrappers = document.querySelectorAll(".project-card-wrapper");
-  const mockUsers = ["unreal_dev", "3d_sculptor", "game_critic_x", "level_master", "viewport_fan", "polygon_chief", "pixel_wizard"];
 
   projectWrappers.forEach(card => {
     card.addEventListener("click", () => {
       // Pull dataset attributes
-      const title = card.getAttribute("data-title");
-      const subtitle = card.getAttribute("data-subtitle");
-      const desc = card.getAttribute("data-desc");
-      const longDescItems = card.getAttribute("data-long-desc").split("|");
-      const images = card.getAttribute("data-images").split(",");
-      const tags = card.getAttribute("data-tags").split(",");
+      const title = card.getAttribute("data-title") || "";
+      const subtitle = card.getAttribute("data-subtitle") || "";
+      const desc = card.getAttribute("data-desc") || "";
+      const images = (card.getAttribute("data-images") || "").split(",").filter(i => i.trim() !== "");
+      const engine = card.getAttribute("data-engine") || "N/A";
+      const complexity = card.getAttribute("data-complexity") || "N/A";
+      const stage = card.getAttribute("data-stage") || "N/A";
+      const tools = card.getAttribute("data-tools") || "N/A";
+      const logs = (card.getAttribute("data-logs") || "").split("|").filter(l => l.trim() !== "");
+      
       const link = card.getAttribute("data-link") || "";
       const video = card.getAttribute("data-video");
-      const linkText = card.getAttribute("data-link-text") || "Visit Site";
-
-      activeProjectLink = link;
+      const linkText = card.getAttribute("data-link-text") || "LAUNCH BUILD";
 
       // Bind data to modal elements
       if (modalTitle) modalTitle.textContent = title;
       if (modalSubtitle) modalSubtitle.textContent = subtitle;
       if (modalDescription) modalDescription.textContent = desc;
 
-      // Reset Instagram micro-interaction states
-      isCurrentlyLiked = false;
-      if (instaHeartIcon) {
-        instaHeartIcon.classList.remove("liked");
-      }
-      baseLikeCount = Math.floor(Math.random() * 500) + 800; // Randomize likes count for realism
-      if (instaLikesCount) {
-        instaLikesCount.innerHTML = `<b>${baseLikeCount.toLocaleString()} likes</b>`;
-      }
-      if (instaSaveIcon) {
-        instaSaveIcon.classList.remove("saved");
-        instaSaveIcon.setAttribute("fill", "none");
-      }
-      if (instaCommentInput) {
-        instaCommentInput.value = "";
-      }
-      if (instaCommentPostBtn) {
-        instaCommentPostBtn.classList.add("disabled");
-      }
+      if (modalStatEngine) modalStatEngine.textContent = engine;
+      if (modalStatComplexity) modalStatComplexity.textContent = complexity;
+      if (modalStatStage) modalStatStage.textContent = stage;
+      if (modalStatTools) modalStatTools.textContent = tools;
 
-      // Populate Highlights List (recreated as Mock Comments)
-      if (modalHighlights) {
-        modalHighlights.innerHTML = "";
-        longDescItems.forEach((item, idx) => {
-          const commentDiv = document.createElement("div");
-          commentDiv.className = "insta-comment-item";
-          const username = mockUsers[idx % mockUsers.length];
-          commentDiv.innerHTML = `<span class="insta-comment-user">${username}</span><span class="insta-comment-text">${item}</span>`;
-          modalHighlights.appendChild(commentDiv);
+      // Populate Logs
+      if (modalLogTimeline) {
+        modalLogTimeline.innerHTML = "";
+        logs.forEach(log => {
+          const item = document.createElement("div");
+          item.className = "hud-log-item";
+          item.innerHTML = `<div class="hud-log-dot"></div><div class="hud-log-text">${log}</div>`;
+          modalLogTimeline.appendChild(item);
         });
-      }
-
-      // Populate Skills Tags (recreated as Hashtags)
-      if (modalTags) {
-        modalTags.innerHTML = "";
-        tags.forEach(tag => {
-          const a = document.createElement("a");
-          a.className = "insta-comment-tag";
-          a.href = "#";
-          a.textContent = `#${tag.replace(/\s+/g, "")} `;
-          a.addEventListener("click", (e) => e.preventDefault());
-          modalTags.appendChild(a);
-        });
+        if (logs.length === 0) {
+          modalLogTimeline.innerHTML = `<div class="hud-log-text" style="font-style:italic">No logs available for this file.</div>`;
+        }
       }
 
       // Primary Link (Visit / Play / ArtStation)
@@ -388,18 +450,9 @@ document.addEventListener("DOMContentLoaded", () => {
           modalVisitBtn.href = link;
           modalVisitBtn.textContent = linkText;
         }
-        if (modalSecondaryLink) {
-          modalSecondaryLink.href = link;
-        }
-        if (modalLinksBlock) {
-          modalLinksBlock.classList.remove("hidden");
-        }
       } else {
         if (modalVisitBtn) {
           modalVisitBtn.classList.add("hidden");
-        }
-        if (modalLinksBlock) {
-          modalLinksBlock.classList.add("hidden");
         }
       }
 
@@ -452,154 +505,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Show Modal
-      projectModal.classList.remove("hidden");
-      document.body.style.overflow = "hidden"; // Freeze scroll
+      if (projectModal) {
+        projectModal.classList.remove("hidden");
+        document.body.style.overflow = "hidden"; // Freeze scroll
+      }
     });
   });
-
-  // Like Toggle Micro-Interaction
-  const toggleLike = () => {
-    isCurrentlyLiked = !isCurrentlyLiked;
-    if (isCurrentlyLiked) {
-      if (instaHeartIcon) instaHeartIcon.classList.add("liked");
-      if (instaLikesCount) instaLikesCount.innerHTML = `<b>${(baseLikeCount + 1).toLocaleString()} likes</b>`;
-    } else {
-      if (instaHeartIcon) instaHeartIcon.classList.remove("liked");
-      if (instaLikesCount) instaLikesCount.innerHTML = `<b>${baseLikeCount.toLocaleString()} likes</b>`;
-    }
-  };
-
-  if (instaLikeBtn) {
-    instaLikeBtn.addEventListener("click", toggleLike);
-  }
-
-  // Double Click Image to Like
-  if (modalSlidesWrapper) {
-    modalSlidesWrapper.addEventListener("dblclick", (e) => {
-      // Trigger like if not already liked
-      if (!isCurrentlyLiked) {
-        toggleLike();
-      }
-
-      // Create a floating heart overlay animation
-      const rect = modalSlidesWrapper.getBoundingClientRect();
-      const heartOverlay = document.createElement("div");
-      heartOverlay.innerHTML = `
-        <svg viewBox="0 0 24 24" fill="#ffffff" stroke="none" style="width: 80px; height: 80px; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));">
-          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-        </svg>
-      `;
-      heartOverlay.style.position = "absolute";
-      heartOverlay.style.top = "50%";
-      heartOverlay.style.left = "50%";
-      heartOverlay.style.transform = "translate(-50%, -50%) scale(0)";
-      heartOverlay.style.transition = "transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s";
-      heartOverlay.style.zIndex = "40";
-      heartOverlay.style.pointerEvents = "none";
-      
-      modalSlidesWrapper.appendChild(heartOverlay);
-      
-      // Force layout recalculation and animate
-      setTimeout(() => {
-        heartOverlay.style.transform = "translate(-50%, -50%) scale(1)";
-      }, 10);
-
-      // Fade out and remove
-      setTimeout(() => {
-        heartOverlay.style.opacity = "0";
-        heartOverlay.style.transform = "translate(-50%, -50%) scale(0.8)";
-      }, 700);
-
-      setTimeout(() => {
-        heartOverlay.remove();
-      }, 1100);
-    });
-  }
-
-  // Save/Bookmark Micro-Interaction
-  if (instaSaveBtn) {
-    instaSaveBtn.addEventListener("click", () => {
-      const isSaved = instaSaveIcon.classList.toggle("saved");
-      if (isSaved) {
-        instaSaveIcon.setAttribute("fill", "#ffffff");
-      } else {
-        instaSaveIcon.setAttribute("fill", "none");
-      }
-    });
-  }
-
-  // Share Copy Micro-Interaction
-  if (instaShareBtn) {
-    instaShareBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const shareUrl = activeProjectLink || window.location.href;
-      
-      navigator.clipboard.writeText(shareUrl).then(() => {
-        if (instaShareTooltip) {
-          instaShareTooltip.classList.remove("hidden");
-          setTimeout(() => {
-            instaShareTooltip.classList.add("hidden");
-          }, 2000);
-        }
-      }).catch(err => {
-        console.error("Could not copy link: ", err);
-      });
-    });
-  }
-
-  // Comment Bar Input Focus
-  if (instaCommentFocusBtn) {
-    instaCommentFocusBtn.addEventListener("click", () => {
-      if (instaCommentInput) {
-        instaCommentInput.focus();
-      }
-    });
-  }
-
-  // Enable/Disable Post button based on text
-  if (instaCommentInput) {
-    instaCommentInput.addEventListener("input", () => {
-      const text = instaCommentInput.value.trim();
-      if (text.length > 0) {
-        instaCommentPostBtn.classList.remove("disabled");
-      } else {
-        instaCommentPostBtn.classList.add("disabled");
-      }
-    });
-
-    instaCommentInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        postComment();
-      }
-    });
-  }
-
-  const postComment = () => {
-    const text = instaCommentInput.value.trim();
-    if (text.length === 0) return;
-
-    if (modalHighlights) {
-      const userComment = document.createElement("div");
-      userComment.className = "insta-comment-item";
-      userComment.innerHTML = `<span class="insta-comment-user">visitor_user</span><span class="insta-comment-text">${text}</span>`;
-      
-      modalHighlights.appendChild(userComment);
-      instaCommentInput.value = "";
-      instaCommentPostBtn.classList.add("disabled");
-
-      // Scroll list to bottom
-      const scrollParent = modalHighlights.parentElement;
-      if (scrollParent) {
-        setTimeout(() => {
-          scrollParent.scrollTop = scrollParent.scrollHeight;
-        }, 50);
-      }
-    }
-  };
-
-  if (instaCommentPostBtn) {
-    instaCommentPostBtn.addEventListener("click", postComment);
-  }
 
   // Modal Closures
   const closeModal = () => {
@@ -610,7 +521,9 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   if (modalCloseBtn) modalCloseBtn.addEventListener("click", closeModal);
-  if (projectModal) projectModal.addEventListener("click", closeModal);
+  if (projectModal) projectModal.addEventListener("click", (e) => {
+    if (e.target === projectModal) closeModal();
+  });
 
   if (modalNextBtn) modalNextBtn.addEventListener("click", handleNextSlide);
   if (modalPrevBtn) modalPrevBtn.addEventListener("click", handlePrevSlide);
@@ -659,5 +572,135 @@ document.addEventListener("DOMContentLoaded", () => {
       closeLightbox();
     }
   });
+
+  /* ==========================================================================
+     8. Audio Engine (Global Clicks - Zero Latency)
+     ========================================================================== */
+  
+  let audioCtx = null;
+  let clickBuffer = null;
+  let flipBuffer = null;
+
+  // Preload and decode the MP3s into memory immediately
+  const loadAudioFiles = async () => {
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      
+      const [clickRes, flipRes] = await Promise.all([
+        fetch('./universfield-computer-mouse-click-352734.mp3'),
+        fetch('./freesound_community-page-flip-99838.mp3')
+      ]);
+      
+      const [clickArr, flipArr] = await Promise.all([
+        clickRes.arrayBuffer(),
+        flipRes.arrayBuffer()
+      ]);
+      
+      clickBuffer = await audioCtx.decodeAudioData(clickArr);
+      flipBuffer = await audioCtx.decodeAudioData(flipArr);
+      
+      // Attempt to play a startup sound
+      // Note: Browsers may block this unless the user has already interacted with the domain!
+      playSound(clickBuffer, 0.5);
+    } catch (err) {
+      console.error("Failed to preload audio:", err);
+    }
+  };
+
+  // Start preloading immediately
+  loadAudioFiles();
+
+  const playSound = (buffer, volume = 0.5) => {
+    if (!audioCtx || !buffer) return;
+    
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+
+    try {
+      const source = audioCtx.createBufferSource();
+      source.buffer = buffer;
+      
+      const gainNode = audioCtx.createGain();
+      gainNode.gain.value = volume;
+      
+      source.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+      
+      source.start(0);
+    } catch(e) {
+      console.error("Error playing sound:", e);
+    }
+  };
+
+  // Play sound on every click
+  document.body.addEventListener('click', () => {
+    playSound(clickBuffer, 0.5);
+  });
+
+  // Play sound on flip card hover with stability check
+  let hoverSoundTimer = null;
+  
+  document.body.addEventListener('mouseover', (e) => {
+    const flipCard = e.target.closest('.flip-card');
+    if (flipCard) {
+      // Check if we entered the card from outside
+      if (!flipCard.contains(e.relatedTarget)) {
+        if (hoverSoundTimer) clearTimeout(hoverSoundTimer);
+        
+        // Wait 150ms to ensure the cursor is actually resting on the card
+        hoverSoundTimer = setTimeout(() => {
+          playSound(flipBuffer, 0.6);
+        }, 150);
+      }
+    }
+  });
+
+  document.body.addEventListener('mouseout', (e) => {
+    const flipCard = e.target.closest('.flip-card');
+    if (flipCard) {
+      // Check if we are leaving the card entirely
+      if (!flipCard.contains(e.relatedTarget)) {
+        if (hoverSoundTimer) clearTimeout(hoverSoundTimer);
+      }
+    }
+  });
+
+  const questCard = document.querySelector('.quest-card');
+
+  // Logic to wait until scroll "rests" before animating
+  const inViewElements = new Set();
+  
+  const visibilityObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        inViewElements.add(entry.target);
+      } else {
+        inViewElements.delete(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+
+  if (questCard) visibilityObserver.observe(questCard);
+
+  let scrollRestTimeout = null;
+  
+  const triggerRestAnimations = () => {
+    inViewElements.forEach(el => {
+      // Trigger quest card reveal
+      if (el.classList.contains('quest-card') && !el.classList.contains('revealed')) {
+        el.classList.add('revealed');
+      }
+    });
+  };
+
+  // Listen to scroll to detect when user stops
+  window.addEventListener('scroll', () => {
+    if (scrollRestTimeout) clearTimeout(scrollRestTimeout);
+    scrollRestTimeout = setTimeout(triggerRestAnimations, 400); // 400ms "rest" period
+  });
+
+  // Initial check in case they load directly into a section without scrolling
+  setTimeout(triggerRestAnimations, 1000);
 
 });

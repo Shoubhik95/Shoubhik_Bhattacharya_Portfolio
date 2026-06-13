@@ -15,63 +15,42 @@
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap"
     rel="stylesheet">
 
-  <!-- CSS Stylesheet -->
-  <link rel="stylesheet" href="./style.css">
+  <!-- Modular CSS Stylesheets -->
+  <link rel="stylesheet" href="./globals.css">
+  <link rel="stylesheet" href="./layout.css">
+  <link rel="stylesheet" href="./components.css">
+  <link rel="stylesheet" href="./sections.css">
+  <link rel="stylesheet" href="./hud-animations.css">
+  <link rel="stylesheet" href="./core-animations.css">
 </head>
 
 <body>
 
-  <!-- Floating Background Blobs -->
-  <div class="blob-container">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-    <div class="blob blob-4"></div>
+  <!-- Gamified Emoji Background -->
+  <div class="emoji-bg-container">
+    <span class="bg-emoji" style="--delay: 0s; --left: 10%; --size: 32px;">👾</span>
+    <span class="bg-emoji" style="--delay: 2s; --left: 30%; --size: 48px;">🎮</span>
+    <span class="bg-emoji" style="--delay: 4s; --left: 70%; --size: 40px;">⚔️</span>
+    <span class="bg-emoji" style="--delay: 1s; --left: 85%; --size: 24px;">🎯</span>
+    <span class="bg-emoji" style="--delay: 3s; --left: 50%; --size: 36px;">⚡</span>
+    <span class="bg-emoji" style="--delay: 5s; --left: 20%; --size: 28px;">🏆</span>
+    <span class="bg-emoji" style="--delay: 6s; --left: 90%; --size: 52px;">👾</span>
+    <span class="bg-emoji" style="--delay: 7s; --left: 40%; --size: 30px;">🎮</span>
   </div>
 
-  <!-- Navigation Bar -->
-  <nav class="navbar">
-    <div class="nav-container">
-      <!-- Left Side: Status / Level -->
-      <div class="nav-left">
-        <span class="pulse-indicator">
-          <span class="ping-circle"></span>
-          <span class="solid-circle"></span>
-        </span>
-        <span class="gamer-tag">SHOUBHIK</span>
-        <span id="nav-level" class="gamer-level">LVL 1</span>
-      </div>
-
-      <!-- Center: Navigation Actions -->
-      <div class="nav-links">
-        <button data-scroll="about" class="nav-btn">
-          <span class="nav-emoji">👤</span>
-          <span class="nav-text">About</span>
-        </button>
-        <button data-scroll="skills" class="nav-btn">
-          <span class="nav-emoji">⚡</span>
-          <span class="nav-text">Skills</span>
-        </button>
-        <button data-scroll="education" class="nav-btn">
-          <span class="nav-emoji">🎓</span>
-          <span class="nav-text">Edu</span>
-        </button>
-        <button data-scroll="projects" class="nav-btn">
-          <span class="nav-emoji">⚔️</span>
-          <span class="nav-text">Projects</span>
-        </button>
-        <button data-scroll="certificates" class="nav-btn">
-          <span class="nav-emoji">🏆</span>
-          <span class="nav-text">Awards</span>
-        </button>
-      </div>
-
-      <!-- Bottom: Scroll XP Progress Bar -->
-      <div class="xp-bar-container">
-        <div id="xp-progress-bar" class="xp-bar-fill"></div>
-      </div>
+  <!-- Floating Level Tracker -->
+  <div id="floating-tracker" class="floating-tracker">
+    <div class="tracker-text">
+      <span class="pulse-indicator">
+        <span class="ping-circle"></span>
+        <span class="solid-circle"></span>
+      </span>
+      <span id="tracker-level-name">LVL 1: About</span>
     </div>
-  </nav>
+    <div class="tracker-xp-bg">
+      <div id="tracker-xp-fill" class="tracker-xp-fill"></div>
+    </div>
+  </div>
 
   <!-- Main Content Layout -->
   <main class="main-content">
@@ -81,96 +60,80 @@
       <h3 class="section-title">About</h3>
       <div class="about-grid">
         <div class="about-info">
-          <h4 class="role-title">
-            <span>Aspiring&nbsp;</span>
-            <span id="role-text" class="decrypted-text"></span>
-            <span class="typing-cursor"></span>
-          </h4>
+          <div class="about-header-group">
+            <img src="public/my photos/pixel_avatar.png" alt="Pixel Avatar" class="pixel-avatar-img">
+            <div class="about-header-text">
+              <h4 class="hi-heading">Hi this is,</h4>
+              <div class="name-badge">SHOUBHIK</div>
+            </div>
+          </div>
 
-          <div class="profile-details">
-            <span class="fullname">Shoubhik Bhattacharya</span>
-            <span class="tagline">Technical Game Designer & Game Artist</span>
-            <p class="summary">
+          <div class="about-tagline">Technical Game Designer & Game Artist</div>
+
+          <div class="profile-details-new">
+            <p class="about-desc">
               Designing gameplay, building worlds, and staging cinematics.
-              B.Tech CSE (Gaming Tech) student combining a strong artistic eye with hands-on technical skills. Expertly
-              leveraging UE5, Unity, Blender, MetaHuman, and Sequencer to design cohesive, atmospheric, and
+              B.Tech CSE (Gaming Tech) student combining a strong artistic eye with hands-on technical skills.
+            </p>
+            <p class="about-desc">
+              Expertly leveraging UE5, Unity, Blender, MetaHuman, and Sequencer to design cohesive, atmospheric, and
               player-focused interactive experiences.
             </p>
           </div>
 
-          <!-- Social Buttons -->
-          <div class="social-links">
-            <a href="public/Shoubhik%20_Bhattacharya_Resume.docx" target="_blank" download class="fancy-btn resume-btn">
-              <span class="btn-gradient bg-resume"></span>
-              <span class="btn-content">
-                <svg class="btn-icon bounce-hover" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                Download Resume
-              </span>
+          <!-- Primary CTAs -->
+          <div class="primary-ctas">
+            <a href="#projects" class="cta-btn btn-blue">
+              <span class="cta-icon">👤</span> PROJECTS
             </a>
-
-            <a href="mailto:shoubhikbhattacharya06@gmail.com" class="fancy-btn contact-btn">
-              <span class="btn-gradient bg-contact"></span>
-              <span class="btn-content">
-                <svg class="btn-icon bounce-hover" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
-                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                Contact me here
-              </span>
+            <a href="mailto:shoubhikbhattacharya06@gmail.com" class="cta-btn btn-dark">
+              CONTACT
             </a>
+          </div>
 
+          <!-- Secondary Social Badges -->
+          <div class="secondary-socials">
+            <a href="public/Shoubhik%20_Bhattacharya_Resume.docx" target="_blank" download class="social-badge"
+              title="Download Resume">
+              📄 Resume
+            </a>
             <a href="https://www.artstation.com/gamedev_shoubhik2" target="_blank" rel="noopener noreferrer"
-              class="fancy-btn artstation-btn">
-              <span class="btn-gradient bg-artstation"></span>
-              <span class="btn-content">
-                <svg class="btn-icon bounce-hover" fill="currentColor" viewBox="0 0 512 512"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M2 377.9l113.8-198.8 20 35.2L56.5 348H197l-37.4 65.1H2zm215-165.1L272.8 122l112.1 196H296.8l-79.8-105.2zm106.6 123l37.3-65.1 150.1 262.2H373.8l-50.2-64.7-42.3-132.4 155.6.1-112.9 74.9z" />
-                </svg>
-                ArtStation
-              </span>
+              class="social-badge" title="ArtStation">
+              🎨 ArtStation
             </a>
-
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="fancy-btn github-btn">
-              <span class="btn-gradient bg-github"></span>
-              <span class="btn-content">
-                <svg class="btn-icon bounce-hover" fill="currentColor" viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.9-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.9 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z" />
-                </svg>
-                GitHub
-              </span>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-badge" title="GitHub">
+              💻 GitHub
             </a>
-
             <a href="https://www.linkedin.com/in/shoubhik-bhattacharya-8b4099324" target="_blank"
-              rel="noopener noreferrer" class="fancy-btn linkedin-btn">
-              <span class="btn-gradient bg-linkedin"></span>
-              <span class="btn-content">
-                <svg class="btn-icon bounce-hover" fill="currentColor" viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
-                </svg>
-                LinkedIn
-              </span>
+              rel="noopener noreferrer" class="social-badge" title="LinkedIn">
+              🔗 LinkedIn
             </a>
           </div>
         </div>
 
-        <!-- Canvas Spotlight / Pixelated Profile -->
+        <!-- Canvas Spotlight / 3D Card Deck -->
         <div class="about-profile">
-          <div class="spotlight-card h-full">
-            <div id="profile-container" class="profile-container">
-              <canvas id="profile-canvas" class="profile-canvas"></canvas>
-              <!-- Cyber Grid Overlay -->
-              <div class="cyber-overlay"></div>
+          <div class="card-deck-wrapper">
+            <!-- Card 3 (Backmost) -->
+            <div class="deck-card card-back-2"></div>
+            <!-- Card 2 (Middle) -->
+            <div class="deck-card card-back-1"></div>
+            <!-- Card 1 (Front / Main) -->
+            <div class="deck-card card-front">
+              <div class="card-image-wrapper">
+                <canvas id="profile-canvas" class="profile-canvas"></canvas>
+                <!-- Gamer Icons Overlay to mimic screenshot details -->
+                <div class="gamer-icons-overlay">
+                  <span class="gamer-icon icon-play">▶</span>
+                  <span class="gamer-icon icon-gamepad">🎮</span>
+                  <span class="gamer-icon icon-trophy">🏆</span>
+                  <span class="gamer-icon icon-heart">❤</span>
+                </div>
+              </div>
+              <div class="card-footer-label">
+                <span class="label-name">SHOUBHIK BHATTACHARYA</span>
+                <span class="label-role">Technical Game Designer & Game Artist</span>
+              </div>
             </div>
           </div>
         </div>
@@ -180,217 +143,8 @@
     <!-- Core Skills Section -->
     <section id="skills" class="scroll-mt border-divider">
       <h3 class="section-title">Core Skills</h3>
-      <div class="skills-grid">
-        <!-- Core skills will be flipped in 3D -->
-
-        <!-- Skill 1 -->
-        <div class="skill-card-animated flip-card"
-          style="--skill-color-from: rgba(16, 185, 129, 0.1); --skill-color-to: rgba(6, 78, 59, 0.3); --skill-border: rgba(16, 185, 129, 0.2); --skill-text: #6ee7b7;">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <h4 class="skill-name">Unity</h4>
-              <span class="skill-status border-emerald-text">Active</span>
-            </div>
-            <div class="flip-card-back">
-              <h4 class="skill-name">Unity</h4>
-              <ul class="subskills-list">
-                <li><span class="bullet emerald"></span>C# Programming</li>
-                <li><span class="bullet emerald"></span>2.5D/3D Gameplay</li>
-                <li><span class="bullet emerald"></span>Level Prototyping</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Skill 2 -->
-        <div class="skill-card-animated flip-card"
-          style="--skill-color-from: rgba(245, 158, 11, 0.1); --skill-color-to: rgba(120, 53, 4, 0.3); --skill-border: rgba(245, 158, 11, 0.2); --skill-text: #fde047;">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <h4 class="skill-name">Unreal Engine 5</h4>
-              <span class="skill-status border-amber-text">Active</span>
-            </div>
-            <div class="flip-card-back">
-              <h4 class="skill-name">Unreal Engine 5</h4>
-              <ul class="subskills-list">
-                <li><span class="bullet amber"></span>Blueprint Scripting</li>
-                <li><span class="bullet amber"></span>Sequencer Cinematics</li>
-                <li><span class="bullet amber"></span>Niagara VFX</li>
-                <li><span class="bullet amber"></span>Metahuman</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Skill 3 -->
-        <div class="skill-card-animated flip-card"
-          style="--skill-color-from: rgba(14, 165, 233, 0.1); --skill-color-to: rgba(8, 47, 73, 0.3); --skill-border: rgba(14, 165, 233, 0.2); --skill-text: #7dd3fc;">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <h4 class="skill-name">Environment Design</h4>
-              <span class="skill-status border-sky-text">Active</span>
-            </div>
-            <div class="flip-card-back">
-              <h4 class="skill-name">Environment Design</h4>
-              <ul class="subskills-list">
-                <li><span class="bullet sky"></span>High-Fidelity Worlds</li>
-                <li><span class="bullet sky"></span>Atmospheric Lighting</li>
-                <li><span class="bullet sky"></span>Material Shading</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Skill 4 -->
-        <div class="skill-card-animated flip-card"
-          style="--skill-color-from: rgba(236, 72, 153, 0.1); --skill-color-to: rgba(131, 24, 67, 0.3); --skill-border: rgba(236, 72, 153, 0.2); --skill-text: #fbcfe8;">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <h4 class="skill-name">Animation & Cinematics</h4>
-              <span class="skill-status border-pink-text">Active</span>
-            </div>
-            <div class="flip-card-back">
-              <h4 class="skill-name">Animation & Cinematics</h4>
-              <ul class="subskills-list">
-                <li><span class="bullet pink"></span>Sequencer Camera Cuts</li>
-                <li><span class="bullet pink"></span>MetaHuman Setup</li>
-                <li><span class="bullet pink"></span>Timeline Keyframing</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Skill 5 -->
-        <div class="skill-card-animated flip-card"
-          style="--skill-color-from: rgba(99, 102, 241, 0.1); --skill-color-to: rgba(49, 46, 129, 0.3); --skill-border: rgba(99, 102, 241, 0.2); --skill-text: #c7d2fe;">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <h4 class="skill-name">3D Modelling</h4>
-              <span class="skill-status border-indigo-text">Active</span>
-            </div>
-            <div class="flip-card-back">
-              <h4 class="skill-name">3D Modelling</h4>
-              <ul class="subskills-list">
-                <li><span class="bullet indigo"></span>Stylized Low-Poly</li>
-                <li><span class="bullet indigo"></span>Asset Sculpting</li>
-                <li><span class="bullet indigo"></span>Blender Pipeline</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Skill 6 -->
-        <div class="skill-card-animated flip-card"
-          style="--skill-color-from: rgba(20, 184, 166, 0.1); --skill-color-to: rgba(19, 78, 74, 0.3); --skill-border: rgba(20, 184, 166, 0.2); --skill-text: #99f6e4;">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <h4 class="skill-name">VR/AR</h4>
-              <span class="skill-status border-teal-text">Active</span>
-            </div>
-            <div class="flip-card-back">
-              <h4 class="skill-name">VR/AR</h4>
-              <ul class="subskills-list">
-                <li><span class="bullet teal"></span>Locomotion</li>
-                <li><span class="bullet teal"></span>XR Interaction Toolkit</li>
-                <li><span class="bullet teal"></span>Spatial UI/UX</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Skill 7 -->
-        <div class="skill-card-animated flip-card"
-          style="--skill-color-from: rgba(244, 63, 94, 0.1); --skill-color-to: rgba(136, 19, 55, 0.3); --skill-border: rgba(244, 63, 94, 0.2); --skill-text: #fecdd3;">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <h4 class="skill-name">Rigging</h4>
-              <span class="skill-status border-rose-text">Active</span>
-            </div>
-            <div class="flip-card-back">
-              <h4 class="skill-name">Rigging</h4>
-              <ul class="subskills-list">
-                <li><span class="bullet rose"></span>Skeletal Weighting</li>
-                <li><span class="bullet rose"></span>IK/FK Controls</li>
-                <li><span class="bullet rose"></span>Blendshapes</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Skill 8 -->
-        <div class="skill-card-animated flip-card"
-          style="--skill-color-from: rgba(234, 179, 8, 0.1); --skill-color-to: rgba(113, 63, 4, 0.3); --skill-border: rgba(234, 179, 8, 0.2); --skill-text: #fef08a;">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <h4 class="skill-name">Python</h4>
-              <span class="skill-status border-yellow-text">Active</span>
-            </div>
-            <div class="flip-card-back">
-              <h4 class="skill-name">Python</h4>
-              <ul class="subskills-list">
-                <li><span class="bullet yellow"></span>Pipeline Automation</li>
-                <li><span class="bullet yellow"></span>Utility Tools</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Skill 9 -->
-        <div class="skill-card-animated flip-card"
-          style="--skill-color-from: rgba(59, 130, 246, 0.1); --skill-color-to: rgba(30, 58, 138, 0.3); --skill-border: rgba(59, 130, 246, 0.2); --skill-text: #bfdbfe;">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <h4 class="skill-name">C++</h4>
-              <span class="skill-status border-blue-text">Active</span>
-            </div>
-            <div class="flip-card-back">
-              <h4 class="skill-name">C++</h4>
-              <ul class="subskills-list">
-                <li><span class="bullet blue"></span>OOP Fundamentals</li>
-                <li><span class="bullet blue"></span>Unreal API Programming</li>
-                <li><span class="bullet blue"></span>Data Structures</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Skill 10 -->
-        <div class="skill-card-animated flip-card"
-          style="--skill-color-from: rgba(139, 92, 246, 0.1); --skill-color-to: rgba(76, 29, 149, 0.3); --skill-border: rgba(139, 92, 246, 0.2); --skill-text: #ddd6fe;">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <h4 class="skill-name">C#</h4>
-              <span class="skill-status border-violet-text">Active</span>
-            </div>
-            <div class="flip-card-back">
-              <h4 class="skill-name">C#</h4>
-              <ul class="subskills-list">
-                <li><span class="bullet violet"></span>Unity API Scripting</li>
-                <li><span class="bullet violet"></span>Design Patterns</li>
-                <li><span class="bullet violet"></span>DotNet Architecture</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <!-- Skill 11 -->
-        <div class="skill-card-animated flip-card"
-          style="--skill-color-from: rgba(249, 115, 22, 0.1); --skill-color-to: rgba(124, 45, 18, 0.3); --skill-border: rgba(249, 115, 22, 0.2); --skill-text: #fed7aa;">
-          <div class="flip-card-inner">
-            <div class="flip-card-front">
-              <h4 class="skill-name">HTML+CSS</h4>
-              <span class="skill-status border-orange-text">Active</span>
-            </div>
-            <div class="flip-card-back">
-              <h4 class="skill-name">HTML+CSS</h4>
-              <ul class="subskills-list">
-                <li><span class="bullet orange"></span>Modern Layouts</li>
-                <li><span class="bullet orange"></span>Aesthetic UI Design</li>
-                <li><span class="bullet orange"></span>Responsive Sites</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+      <div id="skills-grid" class="skills-grid">
+        <!-- Dynamically populated from data.js -->
       </div>
     </section>
 
@@ -430,11 +184,11 @@
               <ul class="objectives-list">
                 <li class="objective-item">
                   <span class="check-icon">✔</span>
-                  <span>Specialization in Unity & UE5 Pipelines</span>
+                  Specialization in Unity & UE5 Pipelines
                 </li>
                 <li class="objective-item">
                   <span class="check-icon">✔</span>
-                  <span>Advanced 3D Asset Rigging & Animation</span>
+                  Advanced 3D Asset Rigging & Animation
                 </li>
                 <li class="objective-item in-progress-objective">
                   <span class="check-icon in-progress-spin">⠋</span>
@@ -447,220 +201,31 @@
       </div>
     </section>
 
-    <!-- Game Projects Section -->
+    <!-- Project Portfolio Section -->
     <section id="projects" class="scroll-mt border-divider">
-      <h3 class="section-title">Game Projects</h3>
+      <h3 class="section-title">Portfolio Projects</h3>
 
       <div class="project-categories">
-        <!-- Category A: Game Dev and designs -->
+        <!-- Category 1: Game Design -->
         <div class="category-block">
-          <h4 class="category-heading">a. Game Dev and designs</h4>
-          <div class="project-grid-row">
-
-            <!-- Project 1: The Endless Survivor -->
-            <div class="project-card-wrapper" data-title="The Endless Survivor (Unity)"
-              data-subtitle="2.5D Survival Game"
-              data-desc="A 2.5D Survival game where you have to survive in a forest full of monsters."
-              data-long-desc="Survive in a dark, atmospheric forest infested with monsters.|Manage resources, health, and combat using responsive controls.|Features dynamic lighting, ambient soundscapes, and hand-crafted environment assets."
-              data-images="public/game dev and design/Game.png"
-              data-tags="Unity,Environment Design,Storytelling,C#,Level Design"
-              data-link="https://shoubhik-bhattacharya.itch.io/the-endless-survivor-god-of-the-forest"
-              data-link-text="Play Itch.io">
-              <div class="spotlight-card card-inner-padding">
-                <div class="project-card-layout">
-                  <div class="project-image-box">
-                    <img src="public/game dev and design/Game.png" alt="The Endless Survivor" class="proj-img">
-                    <div class="project-image-overlay">
-                      <span>View Project Details</span>
-                    </div>
-                  </div>
-                  <h4 class="project-card-title">The Endless Survivor (Unity)</h4>
-                  <p class="project-card-subtitle">2.5D SURVIVAL GAME</p>
-                  <p class="project-card-desc">A 2.5D Survival game where you have to survive in a forest full of
-                    monsters.</p>
-                  <div class="project-tags-row">
-                    <span class="project-tag">Unity</span>
-                    <span class="project-tag">Environment</span>
-                    <span class="project-tag">Storytelling</span>
-                  </div>
-                  <div class="project-learn-more">
-                    Learn More &nbsp;<span class="arrow-trans">&rarr;</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Project 2: VR Campus Tour -->
-            <div class="project-card-wrapper" data-title="VR Campus Tour" data-subtitle="VR/XR Experience"
-              data-desc="An immersive VR campus tour developed in Unreal Engine, exploring university grounds with high-fidelity environments."
-              data-long-desc="Explore the university campus in a fully immersive 3D virtual reality tour.|Developed with Unreal Engine 5 leveraging high-fidelity architectural models and realistic lighting.|Features interactive nodes, spatial audio, and smooth locomotion setups."
-              data-images="public/game dev and design/vr_campus_tour.jpg"
-              data-tags="Unreal Engine 5,VR/AR,3D Modeling,Environment Design">
-              <div class="spotlight-card card-inner-padding">
-                <div class="project-card-layout">
-                  <div class="project-image-box">
-                    <img src="public/game dev and design/vr_campus_tour.jpg" alt="VR Campus Tour" class="proj-img">
-                    <div class="project-image-overlay">
-                      <span>View Project Details</span>
-                    </div>
-                  </div>
-                  <h4 class="project-card-title">VR Campus Tour</h4>
-                  <p class="project-card-subtitle">VR/XR EXPERIENCE</p>
-                  <p class="project-card-desc">An immersive VR campus tour developed in Unreal Engine, exploring
-                    university grounds with high-fidelity environments.</p>
-                  <div class="project-tags-row">
-                    <span class="project-tag">Unreal Engine 5</span>
-                    <span class="project-tag">VR/AR</span>
-                    <span class="project-tag">3D Modeling</span>
-                  </div>
-                  <div class="project-learn-more">
-                    Learn More &nbsp;<span class="arrow-trans">&rarr;</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+          <h4 class="category-heading">Game Design & Development</h4>
+          <div id="game-design-grid" class="project-grid-row">
+            <!-- Dynamically populated from data.js -->
           </div>
         </div>
 
-        <!-- Category B: Modeling and Animation -->
+        <!-- Category 2: Immersive XR -->
         <div class="category-block mt-12">
-          <h4 class="category-heading">b. Modeling and Animation</h4>
-          <div class="project-grid-row">
-
-            <!-- Project 3: Axe Man -->
-            <div class="project-card-wrapper" data-title="Axe Man" data-subtitle="Created in Blender"
-              data-desc="A stylized low-poly character model of a woodsman wielding a powerful hammer-axe. Designed, modeled, and textured entirely in Blender."
-              data-long-desc="Hand-crafted 3D low-poly character detailing.|Features fully optimized geometry, clean UV unwrapping, and custom stylized hand-painted textures.|Rigged and prepared for animation pipelines in game engines."
-              data-images="public/model and animation/axe man/axe_man_0.png,public/model and animation/axe man/axe_man_1.png,public/model and animation/axe man/axe_man_2.png,public/model and animation/axe man/axe_man_3.png"
-              data-tags="Blender,3D Modeling,Stylized Art,Rigging">
-              <div class="spotlight-card card-inner-padding">
-                <div class="project-card-layout">
-                  <div class="project-image-box">
-                    <img src="public/model and animation/axe man/axe_man_0.png" alt="Axe Man" class="proj-img">
-                    <div class="project-image-overlay">
-                      <span>View Project Details</span>
-                    </div>
-                  </div>
-                  <h4 class="project-card-title">Axe Man</h4>
-                  <p class="project-card-subtitle">CREATED IN BLENDER</p>
-                  <p class="project-card-desc">A stylized low-poly character model of a woodsman wielding a powerful
-                    hammer-axe. Designed, modeled, and textured entirely in Blender.</p>
-                  <div class="project-tags-row">
-                    <span class="project-tag">Blender</span>
-                    <span class="project-tag">3D Modeling</span>
-                    <span class="project-tag">Stylized Art</span>
-                  </div>
-                  <div class="project-learn-more">
-                    Learn More &nbsp;<span class="arrow-trans">&rarr;</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Project 4: Magic Baby -->
-            <div class="project-card-wrapper" data-title="Magic Baby" data-subtitle="Created in Blender"
-              data-desc="A whimsical, stylized character model of a magic baby with expressive features. Sculpted, textured, and rendered entirely in Blender."
-              data-long-desc="Expressive stylized character design with focus on clean topology and soft-edge shading.|Hand-painted procedural textures for a magical, cartoony glow.|Perfect fit for stylized RPGs or animated narratives."
-              data-images="public/model and animation/Magic baby/magic_baby_1.png,public/model and animation/Magic baby/magic_baby_2.png,public/model and animation/Magic baby/magic_baby_3.png"
-              data-tags="Blender,Character Art,Texturing,Rendering">
-              <div class="spotlight-card card-inner-padding">
-                <div class="project-card-layout">
-                  <div class="project-image-box">
-                    <img src="public/model and animation/Magic baby/magic_baby_1.png" alt="Magic Baby" class="proj-img">
-                    <div class="project-image-overlay">
-                      <span>View Project Details</span>
-                    </div>
-                  </div>
-                  <h4 class="project-card-title">Magic Baby</h4>
-                  <p class="project-card-subtitle">CREATED IN BLENDER</p>
-                  <p class="project-card-desc">A whimsical, stylized character model of a magic baby with expressive
-                    features. Sculpted, textured, and rendered entirely in Blender.</p>
-                  <div class="project-tags-row">
-                    <span class="project-tag">Blender</span>
-                    <span class="project-tag">Character Art</span>
-                    <span class="project-tag">Texturing</span>
-                  </div>
-                  <div class="project-learn-more">
-                    Learn More &nbsp;<span class="arrow-trans">&rarr;</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Project 5: Cute Monster -->
-            <div class="project-card-wrapper" data-title="Cute Monster" data-subtitle="Created in Blender"
-              data-desc="A whimsical, stylized character model of a cute monster with multi-angle renders and detailed textures."
-              data-long-desc="High-fidelity 3D modeling and sculpting details in Blender.|Features expressive stylized elements, custom digital textures, and material shaders.|Ready for rig controls and animation cycles."
-              data-images="public/model and animation/Monster/Untold Story(1).png,public/model and animation/Monster/Cute_monster.png,public/model and animation/Monster/Cute_monster2.png,public/model and animation/Monster/Cute_monster3.png,public/model and animation/Monster/Body.png"
-              data-tags="Blender,3D Modeling,Character Art,Texturing"
-              data-link="https://gamedev_shoubhik2.artstation.com/projects/vbNrNx" data-link-text="ArtStation">
-              <div class="spotlight-card card-inner-padding">
-                <div class="project-card-layout">
-                  <div class="project-image-box">
-                    <img src="public/model and animation/Monster/Untold Story(1).png" alt="Cute Monster"
-                      class="proj-img">
-                    <div class="project-image-overlay">
-                      <span>View Project Details</span>
-                    </div>
-                  </div>
-                  <h4 class="project-card-title">Cute Monster</h4>
-                  <p class="project-card-subtitle">CREATED IN BLENDER</p>
-                  <p class="project-card-desc">A whimsical, stylized character model of a cute monster with multi-angle
-                    renders and detailed textures.</p>
-                  <div class="project-tags-row">
-                    <span class="project-tag">Blender</span>
-                    <span class="project-tag">3D Modeling</span>
-                    <span class="project-tag">Character Art</span>
-                  </div>
-                  <div class="project-learn-more">
-                    Learn More &nbsp;<span class="arrow-trans">&rarr;</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Web Projects Section -->
-    <section id="web-projects" class="scroll-mt border-divider">
-      <h3 class="section-title">Web Projects</h3>
-      <div class="project-grid-row">
-
-        <!-- Web Project 1: Interactive 360 Virtual Tour -->
-        <div class="project-card-wrapper" data-title="Interactive 360 Virtual Tour" data-subtitle="Interactive Web"
-          data-desc="An immersive, web-based 360-degree virtual tour experience. Designed with interactivity in mind, allowing users to explore spaces seamlessly directly from their browsers."
-          data-long-desc="Built with modern web standards, featuring high-definition panoramic images.|Dynamic interactive hot-spots that show detailed popups and audio descriptions.|Responsive layout ensuring smooth navigation on both mobile and desktop screens."
-          data-images="public/web-project-screenshot.jpg" data-tags="HTML+CSS,Interactive Web,360 Tour,Frontend Design"
-          data-link="https://interactive-360-virtual-tour.netlify.app/" data-video="public/virtual-tour-recording.mp4"
-          data-link-text="Visit Website">
-          <div class="spotlight-card card-inner-padding">
-            <div class="project-card-layout">
-              <div class="project-image-box">
-                <img src="public/web-project-screenshot.jpg" alt="Interactive 360 Virtual Tour" class="proj-img">
-                <div class="project-image-overlay">
-                  <span>View Project Details</span>
-                </div>
-              </div>
-              <h4 class="project-card-title">Interactive 360 Virtual Tour</h4>
-              <p class="project-card-subtitle">INTERACTIVE WEB</p>
-              <p class="project-card-desc">An immersive, web-based 360-degree virtual tour experience. Designed with
-                interactivity in mind, allowing users to explore spaces seamlessly.</p>
-              <div class="project-tags-row">
-                <span class="project-tag">HTML+CSS</span>
-                <span class="project-tag">360 Tour</span>
-                <span class="project-tag">Interactive</span>
-              </div>
-              <div class="project-learn-more">
-                Learn More &nbsp;<span class="arrow-trans">&rarr;</span>
-              </div>
-            </div>
+          <h4 class="category-heading">Immersive XR Experiences</h4>
+          <div id="immersive-xr-grid" class="project-grid-row">
+            <!-- Dynamically populated from data.js -->
           </div>
         </div>
 
+        <!-- Category 3: Game Art -->
+        <div class="category-block mt-12">
+          <h4 class="category-heading">3D Game Art & Animation</h4>
+          <div id="game-art-grid" class="project-grid-row">
       </div>
     </section>
 
@@ -674,86 +239,7 @@
         <div class="fade-overlay right-fade"></div>
 
         <div id="ticker-track" class="ticker-track">
-          <!-- Item list (will be duplicated in JS or listed statically for fallback) -->
-          <div class="ticker-item" data-src="public/certificates/UC-67865291-b780-4726-a4e3-e0e2f13653da.jpg.jpeg"
-            data-alt="Unreal Engine 5 Modeling">
-            <img src="public/certificates/UC-67865291-b780-4726-a4e3-e0e2f13653da.jpg.jpeg"
-              alt="Unreal Engine 5 Modeling">
-            <div class="ticker-overlay"><span>Unreal Engine 5 Modeling</span></div>
-          </div>
-          <div class="ticker-item" data-src="public/certificates/Screenshot_20260407_001427.jpg.jpeg"
-            data-alt="C++ Programming">
-            <img src="public/certificates/Screenshot_20260407_001427.jpg.jpeg" alt="C++ Programming">
-            <div class="ticker-overlay"><span>C++ Programming</span></div>
-          </div>
-          <div class="ticker-item" data-src="public/certificates/Screenshot_20260407_001439.jpg.jpeg"
-            data-alt="Python Essentials">
-            <img src="public/certificates/Screenshot_20260407_001439.jpg.jpeg" alt="Python Essentials">
-            <div class="ticker-overlay"><span>Python Essentials</span></div>
-          </div>
-          <div class="ticker-item" data-src="public/certificates/Coursera.jpg" data-alt="AR/VR/MR/XR">
-            <img src="public/certificates/Coursera.jpg" alt="AR/VR/MR/XR">
-            <div class="ticker-overlay"><span>AR/VR/MR/XR</span></div>
-          </div>
-          <div class="ticker-item" data-src="public/certificates/vityarth-MVBr2jPIObAF.png"
-            data-alt="Vityarthi Certification">
-            <img src="public/certificates/vityarth-MVBr2jPIObAF.png" alt="Vityarthi Certification">
-            <div class="ticker-overlay"><span>Vityarthi Certification</span></div>
-          </div>
-
-          <!-- Duplicated once for seamless animation -->
-          <div class="ticker-item" data-src="public/certificates/UC-67865291-b780-4726-a4e3-e0e2f13653da.jpg.jpeg"
-            data-alt="Unreal Engine 5 Modeling">
-            <img src="public/certificates/UC-67865291-b780-4726-a4e3-e0e2f13653da.jpg.jpeg"
-              alt="Unreal Engine 5 Modeling">
-            <div class="ticker-overlay"><span>Unreal Engine 5 Modeling</span></div>
-          </div>
-          <div class="ticker-item" data-src="public/certificates/Screenshot_20260407_001427.jpg.jpeg"
-            data-alt="C++ Programming">
-            <img src="public/certificates/Screenshot_20260407_001427.jpg.jpeg" alt="C++ Programming">
-            <div class="ticker-overlay"><span>C++ Programming</span></div>
-          </div>
-          <div class="ticker-item" data-src="public/certificates/Screenshot_20260407_001439.jpg.jpeg"
-            data-alt="Python Essentials">
-            <img src="public/certificates/Screenshot_20260407_001439.jpg.jpeg" alt="Python Essentials">
-            <div class="ticker-overlay"><span>Python Essentials</span></div>
-          </div>
-          <div class="ticker-item" data-src="public/certificates/Coursera.jpg" data-alt="AR/VR/MR/XR">
-            <img src="public/certificates/Coursera.jpg" alt="AR/VR/MR/XR">
-            <div class="ticker-overlay"><span>AR/VR/MR/XR</span></div>
-          </div>
-          <div class="ticker-item" data-src="public/certificates/vityarth-MVBr2jPIObAF.png"
-            data-alt="Vityarthi Certification">
-            <img src="public/certificates/vityarth-MVBr2jPIObAF.png" alt="Vityarthi Certification">
-            <div class="ticker-overlay"><span>Vityarthi Certification</span></div>
-          </div>
-
-          <!-- Duplicated twice for wider screens -->
-          <div class="ticker-item" data-src="public/certificates/UC-67865291-b780-4726-a4e3-e0e2f13653da.jpg.jpeg"
-            data-alt="Unreal Engine 5 Modeling">
-            <img src="public/certificates/UC-67865291-b780-4726-a4e3-e0e2f13653da.jpg.jpeg"
-              alt="Unreal Engine 5 Modeling">
-            <div class="ticker-overlay"><span>Unreal Engine 5 Modeling</span></div>
-          </div>
-          <div class="ticker-item" data-src="public/certificates/Screenshot_20260407_001427.jpg.jpeg"
-            data-alt="C++ Programming">
-            <img src="public/certificates/Screenshot_20260407_001427.jpg.jpeg" alt="C++ Programming">
-            <div class="ticker-overlay"><span>C++ Programming</span></div>
-          </div>
-          <div class="ticker-item" data-src="public/certificates/Screenshot_20260407_001439.jpg.jpeg"
-            data-alt="Python Essentials">
-            <img src="public/certificates/Screenshot_20260407_001439.jpg.jpeg" alt="Python Essentials">
-            <div class="ticker-overlay"><span>Python Essentials</span></div>
-          </div>
-          <div class="ticker-item" data-src="public/certificates/Coursera.jpg" data-alt="AR/VR/MR/XR">
-            <img src="public/certificates/Coursera.jpg" alt="AR/VR/MR/XR">
-            <div class="ticker-overlay"><span>AR/VR/MR/XR</span></div>
-          </div>
-          <div class="ticker-item" data-src="public/certificates/vityarth-MVBr2jPIObAF.png"
-            data-alt="Vityarthi Certification">
-            <img src="public/certificates/vityarth-MVBr2jPIObAF.png" alt="Vityarthi Certification">
-            <div class="ticker-overlay"><span>Vityarthi Certification</span></div>
-          </div>
+          <!-- Dynamically populated from data.js -->
         </div>
       </div>
     </section>
@@ -765,30 +251,21 @@
 
   </main>
 
-  <!-- Interactive Project Modal (Instagram Feed Style) -->
+  <!-- Interactive Project Modal (Gamer HUD Style) -->
   <div id="project-modal" class="modal-overlay hidden">
-    <div class="insta-post-card" onclick="event.stopPropagation()">
-      
-      <!-- Insta Header -->
-      <div class="insta-header">
-        <div class="insta-header-left">
-          <div class="insta-avatar-ring">
-            <img src="public/my photos/IMG_1506.jpg" alt="Shoubhik Avatar" class="insta-avatar-img">
-          </div>
-          <div class="insta-user-info">
-            <div class="insta-username-row">
-              <span class="insta-username">shoubhik_b</span>
-              <span class="insta-verified-badge">
-                <svg class="verified-svg" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                </svg>
-              </span>
-            </div>
-            <span id="modal-subtitle" class="insta-location">VIT Bhopal</span>
+    <div class="gamer-hud-card" onclick="event.stopPropagation()">
+
+      <!-- Modal Header -->
+      <div class="hud-header">
+        <div class="hud-header-left">
+          <img src="public/my photos/pixel_avatar.png" alt="HUD Avatar" class="hud-avatar-img">
+          <div class="hud-project-info">
+            <h4 id="modal-title" class="hud-title">Project Title</h4>
+            <span id="modal-subtitle" class="hud-subtitle">Category Tag</span>
           </div>
         </div>
-        <div class="insta-header-right">
-          <button id="modal-close-btn" class="insta-close-btn" aria-label="Close modal">
+        <div class="hud-header-right">
+          <button id="modal-close-btn" class="hud-close-btn" aria-label="Close modal">
             <svg class="close-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
             </svg>
@@ -796,107 +273,80 @@
         </div>
       </div>
 
-      <!-- Insta Media Box (Square Image Slider) -->
-      <div class="insta-media-box">
-        <div id="modal-slides-wrapper" class="insta-slides-wrapper">
-          <!-- Slides injected via JavaScript -->
-        </div>
-        
-        <!-- Left/Right Nav Arrows -->
-        <button id="modal-prev-btn" class="insta-nav-btn prev-btn">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <button id="modal-next-btn" class="insta-nav-btn next-btn">
-          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
+      <!-- Modal Body (Two columns) -->
+      <div class="hud-body">
 
-        <!-- Dots Indicator Carousel -->
-        <div id="modal-dots-container" class="insta-dots-row"></div>
-      </div>
+        <!-- Left: Image Viewer Column -->
+        <div class="hud-viewer-col">
+          <div class="hud-media-box">
+            <div id="modal-slides-wrapper" class="hud-slides-wrapper">
+              <!-- Slides injected via JavaScript -->
+            </div>
 
-      <!-- Action Sponsored Banner CTA (Learn More / Play / Watch Video) -->
-      <div class="insta-cta-banner">
-        <div class="insta-cta-left">
-          <span class="insta-cta-title" id="modal-title">Project Title</span>
-          <span class="insta-cta-subtitle">Click to learn more</span>
-        </div>
-        <div class="insta-cta-actions">
-          <a id="modal-visit-btn" href="#" target="_blank" rel="noopener noreferrer" class="insta-cta-btn blue-btn">Learn More</a>
-          <a id="modal-video-btn" href="#" target="_blank" rel="noopener noreferrer" class="insta-cta-btn purple-btn">Watch Video &nbsp;&#9654;</a>
-        </div>
-      </div>
+            <!-- Navigation arrows -->
+            <button id="modal-prev-btn" class="hud-nav-btn prev-btn" aria-label="Previous image">◀</button>
+            <button id="modal-next-btn" class="hud-nav-btn next-btn" aria-label="Next image">▶</button>
 
-      <!-- Insta Actions Row (Icons) -->
-      <div class="insta-actions-row">
-        <div class="insta-actions-left">
-          <button id="insta-like-btn" class="insta-icon-btn" aria-label="Like">
-            <svg id="insta-heart-icon" class="insta-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
-            </svg>
-          </button>
-          <button id="insta-comment-focus-btn" class="insta-icon-btn" aria-label="Comment">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>
-            </svg>
-          </button>
-          <button id="insta-share-btn" class="insta-icon-btn" aria-label="Share">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="22" y1="2" x2="11" y2="13"/>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-            </svg>
-            <span id="insta-share-tooltip" class="share-tooltip hidden">Copied link!</span>
-          </button>
-        </div>
-        <div class="insta-actions-right">
-          <button id="insta-save-btn" class="insta-icon-btn" aria-label="Bookmark">
-            <svg id="insta-save-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
-            </svg>
-          </button>
-        </div>
-      </div>
+            <div id="modal-dots-container" class="hud-dots-row"></div>
+          </div>
 
-      <!-- Likes Section -->
-      <div class="insta-likes-row">
-        <span id="insta-likes-count"><b>1,420 likes</b></span>
-      </div>
-
-      <!-- Caption & Hashtags & Comments -->
-      <div class="insta-comments-area">
-        <!-- Caption -->
-        <div class="insta-comment-item">
-          <span class="insta-comment-user">shoubhik_b</span>
-          <span id="modal-description" class="insta-comment-text">Description goes here</span>
+          <!-- Section 4: CTAs (Moved to Viewer Column) -->
+          <div class="hud-panel-ctas" style="margin-top: 16px;">
+            <a id="modal-visit-btn" href="#" target="_blank" rel="noopener noreferrer" class="hud-cta-btn launch-btn">
+              LAUNCH BUILD
+            </a>
+            <a id="modal-video-btn" href="#" target="_blank" rel="noopener noreferrer" class="hud-cta-btn trailer-btn">
+              WATCH VIDEO
+            </a>
+          </div>
         </div>
 
-        <!-- Role & Skills as Hashtags -->
-        <div class="insta-hashtags-box">
-          <span class="insta-comment-user">shoubhik_b</span>
-          <span id="modal-tags" class="insta-hashtags-row"></span>
-        </div>
+        <!-- Right: System Config Details Column -->
+        <div class="hud-details-col">
 
-        <!-- Comments (Key Highlights) -->
-        <div class="insta-comments-divider">Comments</div>
-        <div id="modal-highlights" class="insta-comments-list">
-          <!-- Populated as comments from mock usernames -->
-        </div>
-      </div>
+          <!-- Section 1: Objective/Description -->
+          <div class="hud-panel-section">
+            <h5 class="panel-section-title">📂 MISSION BRIEFING</h5>
+            <p id="modal-description" class="panel-briefing-text">Description goes here</p>
+          </div>
 
-      <!-- Comment Input Bar -->
-      <div class="insta-comment-bar">
-        <div class="insta-comment-bar-left">
-          <span class="emoji-selector">😀</span>
-          <input type="text" id="insta-comment-input" class="insta-input-field" placeholder="Add a comment..." autocomplete="off">
+          <!-- Section 2: Attributes / System Stats -->
+          <div class="hud-panel-section">
+            <h5 class="panel-section-title">⚡ SYSTEM CONFIG</h5>
+            <div class="hud-stats-grid">
+              <div class="hud-stat-item">
+                <span class="hud-stat-label">ENGINE</span>
+                <span id="modal-stat-engine" class="hud-stat-value">Unity</span>
+              </div>
+              <div class="hud-stat-item">
+                <span class="hud-stat-label">COMPLEXITY</span>
+                <span id="modal-stat-complexity" class="hud-stat-value">85%</span>
+              </div>
+              <div class="hud-stat-item">
+                <span class="hud-stat-label">BUILD STAGE</span>
+                <span id="modal-stat-stage" class="hud-stat-value">Completed</span>
+              </div>
+              <div class="hud-stat-item">
+                <span class="hud-stat-label">TOOLS USED</span>
+                <span id="modal-stat-tools" class="hud-stat-value">Blender, C#</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Log Entries / Workflow Steps -->
+          <div class="hud-panel-section">
+            <h5 class="panel-section-title">🛠️ DEVELOPMENT LOGS</h5>
+            <div id="modal-log-timeline" class="hud-log-timeline">
+              <!-- Timelines items injected via javascript -->
+            </div>
+          </div>
+
         </div>
-        <button id="insta-comment-post-btn" class="insta-post-btn disabled">Post</button>
       </div>
 
     </div>
   </div>
+
 
   <!-- Zoom Lightbox Modal for Certificates -->
   <div id="lightbox-modal" class="modal-overlay hidden">
@@ -911,6 +361,7 @@
   </div>
 
   <!-- JS Scripts -->
+  <script src="./data.js"></script>
   <script src="./script.js"></script>
 </body>
 
