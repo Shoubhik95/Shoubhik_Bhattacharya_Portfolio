@@ -154,13 +154,10 @@ document.addEventListener("DOMContentLoaded", () => {
       // Obfuscated email (shoubhikbhattacharya06@gmail.com) decoded safely
       const obfuscatedEmail = atob("c2hvdWJoaWtiaGF0dGFjaGFyeWEwNkBnbWFpbC5jb20=");
       
-      const subject = encodeURIComponent("Owner Dashboard OTP Security Code");
-      const body = encodeURIComponent(`Your owner verification security OTP code is: ${otp}\n\nEnter this code on your dashboard to unlock the panel.\n\nIf you did not request this code, please ignore it.`);
+      const subject = "Owner Dashboard OTP Security Code";
+      const plainBody = `Your owner verification security OTP code is: ${otp}\n\nEnter this code on your dashboard to unlock the panel.\n\nIf you did not request this code, please ignore it.`;
       
-      // Open Mailto link (does not expose Gmail id to the user source code directly)
-      window.open(`mailto:${obfuscatedEmail}?subject=${subject}&body=${body}`);
-
-      // Update UI elements
+      // Update UI elements immediately to let the user enter the OTP while it sends
       if (lockoutOtpInput) {
         lockoutOtpInput.style.display = "block";
         lockoutOtpInput.value = "";
@@ -170,10 +167,44 @@ document.addEventListener("DOMContentLoaded", () => {
         verifyOtpBtn.style.display = "block";
       }
       if (otpStatusMsg) {
-        otpStatusMsg.textContent = "Security verification OTP code sent successfully.";
-        otpStatusMsg.style.color = "var(--success)";
+        otpStatusMsg.textContent = "Sending OTP directly to your Gmail...";
+        otpStatusMsg.style.color = "var(--warning)";
         otpStatusMsg.classList.remove("hidden");
       }
+
+      // Send OTP directly to email via FormSubmit API
+      fetch(`https://formsubmit.co/ajax/${obfuscatedEmail}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          _subject: subject,
+          message: plainBody,
+          _captcha: "false"
+        })
+      })
+      .then(response => {
+        if (response.ok) {
+          if (otpStatusMsg) {
+            otpStatusMsg.textContent = "Security verification OTP code sent directly to your Gmail.";
+            otpStatusMsg.style.color = "var(--success)";
+          }
+        } else {
+          throw new Error("API failed");
+        }
+      })
+      .catch(error => {
+        console.error("Error sending OTP automatically:", error);
+        if (otpStatusMsg) {
+          otpStatusMsg.textContent = "Sending automatically failed. Opening mail client fallback...";
+          otpStatusMsg.style.color = "var(--danger)";
+        }
+        // Fallback to mailto link
+        window.open(`mailto:${obfuscatedEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(plainBody)}`);
+      });
+
       if (window.Telemetry) window.Telemetry.logEvent("OTP Generated and Sent to Owner", "highlight");
     });
   }
@@ -239,13 +270,10 @@ document.addEventListener("DOMContentLoaded", () => {
       // Obfuscated email (shoubhikbhattacharya06@gmail.com) decoded safely
       const obfuscatedEmail = atob("c2hvdWJoaWtiaGF0dGFjaGFyeWEwNkBnbWFpbC5jb20=");
       
-      const subject = encodeURIComponent("Owner Dashboard Passcode Reset OTP");
-      const body = encodeURIComponent(`Your owner verification security OTP code for passcode reset is: ${otp}\n\nEnter this code along with your new passcode on your dashboard to complete the reset.`);
+      const subject = "Owner Dashboard Passcode Reset OTP";
+      const plainBody = `Your owner verification security OTP code for passcode reset is: ${otp}\n\nEnter this code along with your new passcode on your dashboard to complete the reset.`;
       
-      // Open Mailto link (does not expose Gmail id to the user source code directly)
-      window.open(`mailto:${obfuscatedEmail}?subject=${subject}&body=${body}`);
-
-      // Update UI elements
+      // Update UI elements immediately
       if (resetOtpFields) {
         resetOtpFields.classList.remove("hidden");
       }
@@ -253,10 +281,44 @@ document.addEventListener("DOMContentLoaded", () => {
         resetGenerateOtpBtn.style.display = "none";
       }
       if (resetStatusMsg) {
-        resetStatusMsg.textContent = "Passcode reset OTP code sent successfully.";
-        resetStatusMsg.style.color = "var(--success)";
+        resetStatusMsg.textContent = "Sending passcode reset OTP directly to your Gmail...";
+        resetStatusMsg.style.color = "var(--warning)";
         resetStatusMsg.classList.remove("hidden");
       }
+
+      // Send OTP directly to email via FormSubmit API
+      fetch(`https://formsubmit.co/ajax/${obfuscatedEmail}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          _subject: subject,
+          message: plainBody,
+          _captcha: "false"
+        })
+      })
+      .then(response => {
+        if (response.ok) {
+          if (resetStatusMsg) {
+            resetStatusMsg.textContent = "Passcode reset OTP code sent directly to your Gmail.";
+            resetStatusMsg.style.color = "var(--success)";
+          }
+        } else {
+          throw new Error("API failed");
+        }
+      })
+      .catch(error => {
+        console.error("Error sending reset OTP automatically:", error);
+        if (resetStatusMsg) {
+          resetStatusMsg.textContent = "Sending automatically failed. Opening mail client fallback...";
+          resetStatusMsg.style.color = "var(--danger)";
+        }
+        // Fallback to mailto link
+        window.open(`mailto:${obfuscatedEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(plainBody)}`);
+      });
+
       if (window.Telemetry) window.Telemetry.logEvent("Passcode Reset OTP Generated and Sent", "highlight");
     });
   }
