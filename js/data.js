@@ -170,7 +170,7 @@ const gameProjectsData = [
   },
   {
     id: "campus-tour",
-    category: "immersive-xr",
+    category: "game-design",
     title: "VR Campus Tour",
     subtitle: "VR/XR EXPERIENCE",
     desc: "An immersive VR campus tour developed in Unreal Engine, exploring university grounds with high-fidelity environments.",
@@ -211,24 +211,24 @@ const gameProjectsData = [
     ]
   },
   {
-    id: "magic-baby",
+    id: "pichku",
     category: "game-art",
-    title: "Magic Baby",
+    title: "Pichku",
     subtitle: "CREATED IN BLENDER",
-    desc: "A whimsical, stylized character model of a magic baby with expressive features. Sculpted, textured, and rendered entirely in Blender.",
-    longDesc: "Expressive stylized character design with focus on clean topology and soft-edge shading.|Hand-painted procedural textures for a magical, cartoony glow.|Perfect fit for stylized RPGs or animated narratives.",
-    images: "public/model and animation/Magic baby/magic_baby_1.png,public/model and animation/Magic baby/magic_baby_2.png,public/model and animation/Magic baby/magic_baby_3.png",
-    tags: ["Blender", "Character Art", "Texturing", "Rendering"],
+    desc: "A whimsical, stylized character model of Pichku. Designed, modeled, and rendered entirely in Blender.",
+    longDesc: "Charming stylized character art featuring optimized game topology.|Meticulously unwrapped UV layout and hand-painted texturing mapping.|Rigged armature suitable for production game animation pipelines.",
+    images: "public/pichku/pichku_3.png,public/pichku/pichku_0.png,public/pichku/pichku_1.png,public/pichku/pichku_2.png,public/pichku/pichku_4.png",
+    tags: ["Blender", "3D Modeling", "Character Art", "Rendering"],
     // HUD Stats
     engine: "Blender Cycles",
-    complexity: "70%",
-    stage: "Rendered Model",
-    tools: "Blender Sculpting, Cycles renderer",
+    complexity: "85%",
+    stage: "Finished Model & Textures",
+    tools: "Blender, Substance Painter",
     logEntries: [
-      "Sculpted magic baby head and body outlines dynamically.",
-      "Re-topologized meshes for production-ready model limits.",
-      "Crafted procedural glowing shader networks in Blender Node Editor.",
-      "Set up dynamic studio cameras and Cycles rendering pipelines."
+      "Sketched digital profile blueprints and reference setup grids.",
+      "Sculpted clean stylized character mesh within Blender viewport.",
+      "Generated detailed texture overlays inside Substance Painter.",
+      "Assembled skeleton armature constraints and compiled final render shots."
     ]
   },
   {
@@ -253,13 +253,34 @@ const gameProjectsData = [
       "Rigged facial expressions and body mechanics.",
       "Rendered final beauty shots in Blender Cycles."
     ]
+  },
+  {
+    id: "magic-baby",
+    category: "game-art",
+    title: "Magic Baby",
+    subtitle: "CREATED IN BLENDER",
+    desc: "A whimsical, stylized character model of a magic baby with expressive features. Sculpted, textured, and rendered entirely in Blender.",
+    longDesc: "Expressive stylized character design with focus on clean topology and soft-edge shading.|Hand-painted procedural textures for a magical, cartoony glow.|Perfect fit for stylized RPGs or animated narratives.",
+    images: "public/model and animation/Magic baby/magic_baby_1.png,public/model and animation/Magic baby/magic_baby_2.png,public/model and animation/Magic baby/magic_baby_3.png",
+    tags: ["Blender", "Character Art", "Texturing", "Rendering"],
+    // HUD Stats
+    engine: "Blender Cycles",
+    complexity: "70%",
+    stage: "Rendered Model",
+    tools: "Blender Sculpting, Cycles renderer",
+    logEntries: [
+      "Sculpted magic baby head and body outlines dynamically.",
+      "Re-topologized meshes for production-ready model limits.",
+      "Crafted procedural glowing shader networks in Blender Node Editor.",
+      "Set up dynamic studio cameras and Cycles rendering pipelines."
+    ]
   }
 ];
 
 const webProjectsData = [
   {
     id: "virtual-tour",
-    category: "immersive-xr",
+    category: "web-projects",
     title: "Interactive 360 Virtual Tour",
     subtitle: "INTERACTIVE WEB",
     desc: "An immersive, web-based 360-degree virtual tour experience. Designed with interactivity in mind, allowing users to explore spaces seamlessly.",
@@ -279,6 +300,52 @@ const webProjectsData = [
       "Built semantic core web structure supporting desktop/mobile viewports.",
       "Coded click hotspot coordinates to load spatial context cards.",
       "Hosted production builds via Netlify CI/CD pipeline integrations."
+    ]
+  },
+  {
+    id: "tourism-project",
+    category: "web-projects",
+    title: "India Tourism Guider",
+    subtitle: "TOURISM WEB APP",
+    desc: "An interactive tourism guide web app showcasing beautiful destinations in India with a rich user interface.",
+    longDesc: "A comprehensive guide designed to help travelers discover top locations, attractions, and cultural details.|Built using modern responsive design patterns and dynamic navigation.|Includes immersive galleries and curated travel information.",
+    images: "public/tourism/tourism_0.png,public/tourism/tourism_1.png,public/tourism/tourism_2.png,public/tourism/tourism_3.png",
+    tags: ["HTML+CSS", "JavaScript", "Responsive Design"],
+    link: "https://our-indiatourism-guider.netlify.app/",
+    linkText: "Visit Website",
+    // HUD Stats
+    engine: "Web Browser",
+    complexity: "80%",
+    stage: "Live Production App",
+    tools: "HTML5, CSS3, Vanilla JS",
+    logEntries: [
+      "Created responsive layout structures and color schemes for tourism assets.",
+      "Implemented interactive navigation and destination search system.",
+      "Optimized image assets and UI transitions for smooth browsing.",
+      "Deployed to Netlify and performed cross-device testing."
+    ]
+  },
+  {
+    id: "portfolio-project",
+    category: "web-projects",
+    title: "Gamer HUD Portfolio Website",
+    subtitle: "PERSONAL PORTFOLIO",
+    desc: "My personal portfolio website featuring a gamified HUD system, level progression, and 3D visual showcases.",
+    longDesc: "Designed with a premium dark cyber-gamer theme, showcasing both game and web development work.|Includes real-time telemetry analytics, Firebase/LocalStorage integration for hiring profiles, and interactive 3D elements.|Features custom audio feedback on hover and click events.",
+    images: "public/image.png",
+    tags: ["HTML+CSS", "JavaScript", "Gamified UI", "Firebase"],
+    link: "./index.html",
+    linkText: "Visit Portfolio",
+    // HUD Stats
+    engine: "Vanilla JS / Web",
+    complexity: "95%",
+    stage: "Live Portfolio",
+    tools: "HTML5, CSS3, JS, Web Audio API, Firebase",
+    logEntries: [
+      "Designed futuristic gamified HUD and theme variables.",
+      "Configured dynamic project cards and details modal with image sliders.",
+      "Implemented custom Web Audio sound system and typing effect animations.",
+      "Integrated telemetry logger dashboard with real-time analytics tracking."
     ]
   }
 ];

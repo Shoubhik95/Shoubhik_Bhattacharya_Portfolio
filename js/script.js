@@ -42,8 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const renderProjects = () => {
     const gameDesignGrid = document.getElementById("game-design-grid");
-    const immersiveXrGrid = document.getElementById("immersive-xr-grid");
     const gameArtGrid = document.getElementById("game-art-grid");
+    const webProjectsGrid = document.getElementById("web-projects-grid");
 
     const allProjects = [...gameProjectsData, ...webProjectsData];
 
@@ -91,16 +91,16 @@ document.addEventListener("DOMContentLoaded", () => {
         .join('');
     }
 
-    if (immersiveXrGrid) {
-      immersiveXrGrid.innerHTML = allProjects
-        .filter(proj => proj.category === "immersive-xr")
+    if (gameArtGrid) {
+      gameArtGrid.innerHTML = allProjects
+        .filter(proj => proj.category === "game-art")
         .map(createProjectCard)
         .join('');
     }
 
-    if (gameArtGrid) {
-      gameArtGrid.innerHTML = allProjects
-        .filter(proj => proj.category === "game-art")
+    if (webProjectsGrid) {
+      webProjectsGrid.innerHTML = allProjects
+        .filter(proj => proj.category === "web-projects")
         .map(createProjectCard)
         .join('');
     }
