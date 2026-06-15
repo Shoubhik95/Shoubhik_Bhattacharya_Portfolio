@@ -7,7 +7,7 @@
  */
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDCypOkREYb3Q_AnzfHgwXNYRN44lecvVo",
+  apiKey: "AIzaSyDW5s20PrpTRTQLv3N1FwBZOor5N1PFhrA",
   authDomain: "portfolio-a6e43.firebaseapp.com",
   projectId: "portfolio-a6e43",
   storageBucket: "portfolio-a6e43.firebasestorage.app",
