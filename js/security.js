@@ -691,10 +691,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const totalOther = totalSearch + totalRefer;
-      const totalAllReferrals = totalGithub + totalNetlify + totalOther;
+      const totalAllReferrals = totalGithub + totalNetlify + totalDirect + totalOther;
 
       const pctGithub = totalAllReferrals > 0 ? Math.round((totalGithub / totalAllReferrals) * 100) : 0;
       const pctNetlify = totalAllReferrals > 0 ? Math.round((totalNetlify / totalAllReferrals) * 100) : 0;
+      const pctDirect = totalAllReferrals > 0 ? Math.round((totalDirect / totalAllReferrals) * 100) : 0;
       const pctOther = totalAllReferrals > 0 ? Math.round((totalOther / totalAllReferrals) * 100) : 0;
 
       // Update Referrer Labels and Bars
