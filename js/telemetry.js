@@ -376,6 +376,11 @@ window.Telemetry = (() => {
           } else if (href.startsWith('http') || href.startsWith('//')) {
             state.externalClicks++;
             logEvent(`Followed external link: ${href}`, 'alert');
+            if (href.includes("github.com/Shoubhik95")) {
+              fetch('/api/telemetry/github-click', { method: 'POST' }).catch(() => {});
+            } else if (href.includes("netlify.app")) {
+              fetch('/api/telemetry/netlify-click', { method: 'POST' }).catch(() => {});
+            }
           } else {
             logEvent(`Navigated anchor: ${href}`, 'info');
           }

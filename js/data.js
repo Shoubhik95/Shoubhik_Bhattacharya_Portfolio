@@ -311,7 +311,7 @@ const webProjectsData = [
     longDesc: "A comprehensive guide designed to help travelers discover top locations, attractions, and cultural details.|Built using modern responsive design patterns and dynamic navigation.|Includes immersive galleries and curated travel information.",
     images: "public/tourism/tourism_0.png,public/tourism/tourism_1.png,public/tourism/tourism_2.png,public/tourism/tourism_3.png",
     tags: ["HTML+CSS", "JavaScript", "Responsive Design"],
-    link: "https://ourchhattisgarhtourist.netlify.app/",
+    link: "https://our-indiatourism-guider.netlify.app/",
     linkText: "Visit Website",
     // HUD Stats
     engine: "Web Browser",

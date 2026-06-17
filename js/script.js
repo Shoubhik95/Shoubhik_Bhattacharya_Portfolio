@@ -16,34 +16,60 @@ document.addEventListener("DOMContentLoaded", () => {
     console.warn("DAU tracking disabled or error:", e);
   }
 
+  // --- Dark/Light Theme Toggle System ---
+  const themeToggleBtn = document.getElementById("theme-toggle-btn");
+  const toggleIcon = themeToggleBtn ? themeToggleBtn.querySelector(".toggle-icon") : null;
+
+  const setDarkTheme = (isDark) => {
+    if (isDark) {
+      document.body.classList.add("dark-theme");
+      if (toggleIcon) toggleIcon.textContent = "☀️";
+      localStorage.setItem("portfolio_theme", "dark");
+    } else {
+      document.body.classList.remove("dark-theme");
+      if (toggleIcon) toggleIcon.textContent = "🌙";
+      localStorage.setItem("portfolio_theme", "light");
+    }
+  };
+
+  // Initialize theme from localStorage or user preference
+  const savedTheme = localStorage.getItem("portfolio_theme");
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  if (savedTheme === "dark" || (!savedTheme && prefersDark)) {
+    setDarkTheme(true);
+  } else {
+    setDarkTheme(false);
+  }
+
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener("click", () => {
+      const isDark = document.body.classList.contains("dark-theme");
+      setDarkTheme(!isDark);
+    });
+  }
+
   // Render dynamic components from data.js
   const renderSkills = () => {
     const skillsGrid = document.getElementById("skills-grid");
     if (!skillsGrid) return;
 
     skillsGrid.innerHTML = skillsData.map(skill => `
-      <div class="skill-card-animated flip-card"
+      <div class="skill-card-flat"
         style="--skill-color-from: ${skill.style.from}; --skill-color-to: ${skill.style.to}; --skill-border: ${skill.style.border}; --skill-text: ${skill.style.text};">
-        <div class="flip-card-inner">
-          <div class="flip-card-front">
-            <h4 class="skill-name">${skill.name}</h4>
-            <span class="skill-status ${skill.statusClass}">${skill.status}</span>
-          </div>
-          <div class="flip-card-back">
-            <h4 class="skill-name">${skill.name}</h4>
-            <ul class="subskills-list">
-              ${skill.subskills.map(sub => `<li><span class="bullet ${skill.bulletClass}"></span>${sub}</li>`).join('')}
-            </ul>
-          </div>
+        <div class="skill-card-header">
+          <h4 class="skill-name">${skill.name}</h4>
+          <span class="skill-status ${skill.statusClass}">${skill.status}</span>
         </div>
+        <ul class="subskills-list">
+          ${skill.subskills.map(sub => `<li><span class="bullet ${skill.bulletClass}"></span>${sub}</li>`).join('')}
+        </ul>
       </div>
     `).join('');
   };
 
-  const renderProjects = () => {
-    const gameDesignGrid = document.getElementById("game-design-grid");
-    const gameArtGrid = document.getElementById("game-art-grid");
-    const webProjectsGrid = document.getElementById("web-projects-grid");
+  const renderProjects = (category = "game-design") => {
+    const projectsGrid = document.getElementById("projects-grid");
+    if (!projectsGrid) return;
 
     const allProjects = [...gameProjectsData, ...webProjectsData];
 
@@ -84,26 +110,47 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
-    if (gameDesignGrid) {
-      gameDesignGrid.innerHTML = allProjects
-        .filter(proj => proj.category === "game-design")
-        .map(createProjectCard)
-        .join('');
+    projectsGrid.innerHTML = allProjects
+      .filter(proj => proj.category === category)
+      .map(createProjectCard)
+      .join('');
+  };
+
+  const updateTabIndicator = (activeBtn) => {
+    const indicator = document.querySelector(".tab-slider-indicator");
+    if (!indicator || !activeBtn) return;
+    indicator.style.left = `${activeBtn.offsetLeft}px`;
+    indicator.style.width = `${activeBtn.offsetWidth}px`;
+  };
+
+  const setupProjectsTabs = () => {
+    const tabsContainer = document.querySelector(".projects-tabs");
+    if (!tabsContainer) return;
+
+    const tabButtons = tabsContainer.querySelectorAll(".tab-btn");
+    
+    // Set active class and indicator positioning
+    const activeBtn = tabsContainer.querySelector(".tab-btn.active");
+    if (activeBtn) {
+      setTimeout(() => updateTabIndicator(activeBtn), 100);
     }
 
-    if (gameArtGrid) {
-      gameArtGrid.innerHTML = allProjects
-        .filter(proj => proj.category === "game-art")
-        .map(createProjectCard)
-        .join('');
-    }
+    tabButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        tabButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        updateTabIndicator(btn);
+        const category = btn.getAttribute("data-category");
+        renderProjects(category);
+      });
+    });
 
-    if (webProjectsGrid) {
-      webProjectsGrid.innerHTML = allProjects
-        .filter(proj => proj.category === "web-projects")
-        .map(createProjectCard)
-        .join('');
-    }
+    window.addEventListener("resize", () => {
+      const currentActive = tabsContainer.querySelector(".tab-btn.active");
+      if (currentActive) {
+        updateTabIndicator(currentActive);
+      }
+    });
   };
 
   const renderCertificates = () => {
@@ -121,78 +168,11 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   renderSkills();
-  renderProjects();
+  renderProjects("game-design");
+  setupProjectsTabs();
   renderCertificates();
 
-  /* ==========================================================================
-     1. Navigation Scroll & Level Tracker
-     ========================================================================== */
-  const xpProgressBar = document.getElementById("tracker-xp-fill");
-  const trackerLevelName = document.getElementById("tracker-level-name");
-  const floatingTracker = document.getElementById("floating-tracker");
 
-  const sectionNames = {
-    "about": "LVL 1: About",
-    "skills": "LVL 2: Skills",
-    "education": "LVL 3: Edu",
-    "projects": "LVL 4: Projects",
-    "certificates": "LVL 5: Awards"
-  };
-
-  // Intersection Observer for Active State
-  const sections = document.querySelectorAll("section[id]");
-  const observerOptions = {
-    root: null,
-    rootMargin: "-20% 0px -60% 0px",
-    threshold: 0
-  };
-
-  const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && trackerLevelName) {
-        const lvlName = sectionNames[entry.target.id] || "LVL MAX";
-        trackerLevelName.textContent = lvlName;
-        if (window.Telemetry) {
-          window.Telemetry.state.currentLevel = lvlName;
-          window.Telemetry.logEvent(`Entered section: ${lvlName}`, 'info');
-          if (typeof window.Telemetry.changeActiveSection === 'function') {
-            window.Telemetry.changeActiveSection(entry.target.id);
-          }
-        }
-      }
-    });
-  }, observerOptions);
-
-  sections.forEach(sec => sectionObserver.observe(sec));
-
-  let floatTrackerTimeout = null;
-
-  // Scroll Progress Tracker
-  const updateScrollProgress = () => {
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    if (docHeight <= 0) return;
-    const progress = (window.scrollY / docHeight) * 100;
-
-    if (xpProgressBar) {
-      xpProgressBar.style.width = `${progress}%`;
-    }
-
-    // Hide while scrolling
-    if (floatingTracker) {
-      floatingTracker.classList.remove("show");
-      if (floatTrackerTimeout) clearTimeout(floatTrackerTimeout);
-
-      // Show when resting
-      floatTrackerTimeout = setTimeout(() => {
-        floatingTracker.classList.add("show");
-      }, 400); // 400ms rest to pop out
-    }
-  };
-
-  window.addEventListener("scroll", updateScrollProgress);
-  setTimeout(() => {
-    if (floatingTracker) floatingTracker.classList.add("show");
-  }, 1000);
 
   /* ==========================================================================
      2. Decrypted Typing Text Loop
@@ -424,116 +404,126 @@ document.addEventListener("DOMContentLoaded", () => {
     updateSliderView();
   };
 
-  const projectWrappers = document.querySelectorAll(".project-card-wrapper");
+  // Event delegation on the projects grid for project card clicks
+  document.body.addEventListener("click", (e) => {
+    const card = e.target.closest(".project-card-wrapper");
+    if (!card) return;
 
-  projectWrappers.forEach(card => {
-    card.addEventListener("click", () => {
-      // Pull dataset attributes
-      const title = card.getAttribute("data-title") || "";
-      const subtitle = card.getAttribute("data-subtitle") || "";
-      const desc = card.getAttribute("data-desc") || "";
-      const images = (card.getAttribute("data-images") || "").split(",").filter(i => i.trim() !== "");
-      const engine = card.getAttribute("data-engine") || "N/A";
-      const complexity = card.getAttribute("data-complexity") || "N/A";
-      const stage = card.getAttribute("data-stage") || "N/A";
-      const tools = card.getAttribute("data-tools") || "N/A";
-      const logs = (card.getAttribute("data-logs") || "").split("|").filter(l => l.trim() !== "");
+    // Pull dataset attributes
+    const title = card.getAttribute("data-title") || "";
+    const subtitle = card.getAttribute("data-subtitle") || "";
+    const desc = card.getAttribute("data-desc") || "";
+    const images = (card.getAttribute("data-images") || "").split(",").filter(i => i.trim() !== "");
+    const engine = card.getAttribute("data-engine") || "N/A";
+    const complexity = card.getAttribute("data-complexity") || "N/A";
+    const stage = card.getAttribute("data-stage") || "N/A";
+    const tools = card.getAttribute("data-tools") || "N/A";
+    const logs = (card.getAttribute("data-logs") || "").split("|").filter(l => l.trim() !== "");
 
-      const link = card.getAttribute("data-link") || "";
-      const video = card.getAttribute("data-video");
-      const linkText = card.getAttribute("data-link-text") || "LAUNCH BUILD";
+    const link = card.getAttribute("data-link") || "";
+    const video = card.getAttribute("data-video");
+    const linkText = card.getAttribute("data-link-text") || "LAUNCH BUILD";
 
-      // Bind data to modal elements
-      if (modalTitle) modalTitle.textContent = title;
-      if (modalSubtitle) modalSubtitle.textContent = subtitle;
-      if (modalDescription) modalDescription.textContent = desc;
+    // Bind data to modal elements
+    if (modalTitle) modalTitle.textContent = title;
+    if (modalSubtitle) modalSubtitle.textContent = subtitle;
+    if (modalDescription) modalDescription.textContent = desc;
 
-      if (modalStatEngine) modalStatEngine.textContent = engine;
-      if (modalStatComplexity) modalStatComplexity.textContent = complexity;
-      if (modalStatStage) modalStatStage.textContent = stage;
-      if (modalStatTools) modalStatTools.textContent = tools;
+    if (modalStatEngine) modalStatEngine.textContent = engine;
+    if (modalStatComplexity) modalStatComplexity.textContent = complexity;
+    if (modalStatStage) modalStatStage.textContent = stage;
+    if (modalStatTools) modalStatTools.textContent = tools;
 
-      // Populate Logs
-      if (modalLogTimeline) {
-        modalLogTimeline.innerHTML = "";
-        logs.forEach(log => {
-          const item = document.createElement("div");
-          item.className = "hud-log-item";
-          item.innerHTML = `<div class="hud-log-dot"></div><div class="hud-log-text">${log}</div>`;
-          modalLogTimeline.appendChild(item);
-        });
-        if (logs.length === 0) {
-          modalLogTimeline.innerHTML = `<div class="hud-log-text" style="font-style:italic">No logs available for this file.</div>`;
-        }
+    // Populate Logs
+    if (modalLogTimeline) {
+      modalLogTimeline.innerHTML = "";
+      logs.forEach(log => {
+        const item = document.createElement("div");
+        item.className = "hud-log-item";
+        item.innerHTML = `<div class="hud-log-dot"></div><div class="hud-log-text">${log}</div>`;
+        modalLogTimeline.appendChild(item);
+      });
+      if (logs.length === 0) {
+        modalLogTimeline.innerHTML = `<div class="hud-log-text" style="font-style:italic">No logs available for this file.</div>`;
       }
+    }
 
-      // Primary Link (Visit / Play / ArtStation)
-      if (link) {
-        if (modalVisitBtn) {
-          modalVisitBtn.classList.remove("hidden");
-          modalVisitBtn.href = link;
-          modalVisitBtn.textContent = linkText;
-        }
+    // Primary Link (Visit / Play / ArtStation)
+    if (link) {
+      if (modalVisitBtn) {
+        modalVisitBtn.classList.remove("hidden");
+        modalVisitBtn.href = link;
+        modalVisitBtn.textContent = linkText;
+      }
+    } else {
+      if (modalVisitBtn) {
+        modalVisitBtn.classList.add("hidden");
+      }
+    }
+
+    // Watch Video Button
+    if (video) {
+      if (modalVideoBtn) {
+        modalVideoBtn.classList.remove("hidden");
+        modalVideoBtn.href = video;
+      }
+    } else {
+      if (modalVideoBtn) {
+        modalVideoBtn.classList.add("hidden");
+      }
+    }
+
+    // Show/Hide CTAs Container depending on if there are links
+    const modalCtasContainer = document.getElementById("modal-ctas-container");
+    if (modalCtasContainer) {
+      if (link || video) {
+        modalCtasContainer.style.setProperty("display", "flex", "important");
       } else {
-        if (modalVisitBtn) {
-          modalVisitBtn.classList.add("hidden");
-        }
+        modalCtasContainer.style.setProperty("display", "none", "important");
       }
+    }
 
-      // Watch Video Button
-      if (video) {
-        if (modalVideoBtn) {
-          modalVideoBtn.classList.remove("hidden");
-          modalVideoBtn.href = video;
-        }
-      } else {
-        if (modalVideoBtn) {
-          modalVideoBtn.classList.add("hidden");
-        }
-      }
+    // Setup Image Slider structures
+    projectImagesList = images;
+    currentSliderIdx = 0;
 
-      // Setup Image Slider structures
-      projectImagesList = images;
-      currentSliderIdx = 0;
+    if (modalSlidesWrapper) {
+      modalSlidesWrapper.innerHTML = "";
+      images.forEach((imgSrc, idx) => {
+        const slideDiv = document.createElement("div");
+        slideDiv.className = `modal-slide ${idx === 0 ? "active" : ""}`;
+        slideDiv.innerHTML = `<img src="${imgSrc}" alt="${title} Image ${idx + 1}">`;
+        modalSlidesWrapper.appendChild(slideDiv);
+      });
+    }
 
-      if (modalSlidesWrapper) {
-        modalSlidesWrapper.innerHTML = "";
-        images.forEach((imgSrc, idx) => {
-          const slideDiv = document.createElement("div");
-          slideDiv.className = `modal-slide ${idx === 0 ? "active" : ""}`;
-          slideDiv.innerHTML = `<img src="${imgSrc}" alt="${title} Image ${idx + 1}">`;
-          modalSlidesWrapper.appendChild(slideDiv);
-        });
-      }
-
-      // Dots indicators setup
-      if (modalDotsContainer) {
-        modalDotsContainer.innerHTML = "";
-        if (images.length > 1) {
-          images.forEach((_, idx) => {
-            const dot = document.createElement("button");
-            dot.className = `slider-dot ${idx === 0 ? "active" : ""}`;
-            dot.addEventListener("click", (e) => {
-              e.stopPropagation();
-              currentSliderIdx = idx;
-              updateSliderView();
-            });
-            modalDotsContainer.appendChild(dot);
+    // Dots indicators setup
+    if (modalDotsContainer) {
+      modalDotsContainer.innerHTML = "";
+      if (images.length > 1) {
+        images.forEach((_, idx) => {
+          const dot = document.createElement("button");
+          dot.className = `slider-dot ${idx === 0 ? "active" : ""}`;
+          dot.addEventListener("click", (e) => {
+            e.stopPropagation();
+            currentSliderIdx = idx;
+            updateSliderView();
           });
-          modalPrevBtn.classList.remove("hidden");
-          modalNextBtn.classList.remove("hidden");
-        } else {
-          modalPrevBtn.classList.add("hidden");
-          modalNextBtn.classList.add("hidden");
-        }
+          modalDotsContainer.appendChild(dot);
+        });
+        modalPrevBtn.classList.remove("hidden");
+        modalNextBtn.classList.remove("hidden");
+      } else {
+        modalPrevBtn.classList.add("hidden");
+        modalNextBtn.classList.add("hidden");
       }
+    }
 
-      // Show Modal
-      if (projectModal) {
-        projectModal.classList.remove("hidden");
-        document.body.style.overflow = "hidden"; // Freeze scroll
-      }
-    });
+    // Show Modal
+    if (projectModal) {
+      projectModal.classList.remove("hidden");
+      document.body.style.overflow = "hidden"; // Freeze scroll
+    }
   });
 
   // Modal Closures
@@ -662,14 +652,15 @@ document.addEventListener("DOMContentLoaded", () => {
     playSound(clickBuffer, 0.5);
   });
 
-  // Play sound on flip card hover with stability check
+  /*
+  // Play sound on flat skill card hover with stability check
   let hoverSoundTimer = null;
 
   document.body.addEventListener('mouseover', (e) => {
-    const flipCard = e.target.closest('.flip-card');
-    if (flipCard) {
+    const skillCard = e.target.closest('.skill-card-flat');
+    if (skillCard) {
       // Check if we entered the card from outside
-      if (!flipCard.contains(e.relatedTarget)) {
+      if (!skillCard.contains(e.relatedTarget)) {
         if (hoverSoundTimer) clearTimeout(hoverSoundTimer);
 
         // Wait 150ms to ensure the cursor is actually resting on the card
@@ -681,51 +672,15 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.body.addEventListener('mouseout', (e) => {
-    const flipCard = e.target.closest('.flip-card');
-    if (flipCard) {
+    const skillCard = e.target.closest('.skill-card-flat');
+    if (skillCard) {
       // Check if we are leaving the card entirely
-      if (!flipCard.contains(e.relatedTarget)) {
+      if (!skillCard.contains(e.relatedTarget)) {
         if (hoverSoundTimer) clearTimeout(hoverSoundTimer);
       }
     }
   });
-
-  const questCard = document.querySelector('.quest-card');
-
-  // Logic to wait until scroll "rests" before animating
-  const inViewElements = new Set();
-
-  const visibilityObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        inViewElements.add(entry.target);
-      } else {
-        inViewElements.delete(entry.target);
-      }
-    });
-  }, { threshold: 0.2 });
-
-  if (questCard) visibilityObserver.observe(questCard);
-
-  let scrollRestTimeout = null;
-
-  const triggerRestAnimations = () => {
-    inViewElements.forEach(el => {
-      // Trigger quest card reveal
-      if (el.classList.contains('quest-card') && !el.classList.contains('revealed')) {
-        el.classList.add('revealed');
-      }
-    });
-  };
-
-  // Listen to scroll to detect when user stops
-  window.addEventListener('scroll', () => {
-    if (scrollRestTimeout) clearTimeout(scrollRestTimeout);
-    scrollRestTimeout = setTimeout(triggerRestAnimations, 400); // 400ms "rest" period
-  });
-
-  // Initial check in case they load directly into a section without scrolling
-  setTimeout(triggerRestAnimations, 1000);
+  */
 
   // --- Owner Security Dashboard Link Redirect ---
   const ownerSecretBtn = document.getElementById("owner-secret-btn");

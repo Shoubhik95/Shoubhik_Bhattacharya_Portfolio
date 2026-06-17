@@ -2,75 +2,68 @@
    Advanced HUD Modal Animations (hud-animations.css)
    ========================================================================== */
 
-/* 1. Modal Container Drop-in with 3D Rotate */
-@keyframes hudDropIn {
+/* 1. Modal Container Drop-in with Springy Scale */
+@keyframes neoModalOpen {
   0% {
     opacity: 0;
-    transform: perspective(1000px) rotateX(-15deg) scale(0.95) translateY(-20px);
-    filter: blur(10px);
+    transform: scale(0.92) translateY(30px) rotate(-1.5deg);
   }
-  50% {
-    opacity: 1;
-    transform: perspective(1000px) rotateX(5deg) scale(1.02) translateY(5px);
-    filter: blur(0px);
+  65% {
+    transform: scale(1.015) translateY(-5px) rotate(0.5deg);
   }
   100% {
-    transform: perspective(1000px) rotateX(0deg) scale(1) translateY(0);
+    opacity: 1;
+    transform: scale(1) translateY(0) rotate(0);
   }
 }
 
-.modal-overlay:not(.hidden) .modal-card {
-  animation: hudDropIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+.modal-overlay:not(.hidden) .minimalist-modal-card {
+  animation: neoModalOpen 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
   position: relative;
 }
 
-/* 2. CRT Scanline Global Overlay */
-.modal-overlay:not(.hidden) .modal-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%);
-  background-size: 100% 4px;
-  z-index: 100;
-  opacity: 0.8;
+/* 2. CRT Scanline Global Overlay disabled for minimalist card */
+.modal-overlay:not(.hidden) .minimalist-modal-card::before {
+  display: none;
 }
 
-/* 3. Cyberpunk Title Glitch & Chromatic Aberration */
-@keyframes chromaticGlitch {
-  0% { clip-path: inset(20% 0 80% 0); text-shadow: 2px 0 red, -2px 0 cyan; transform: translate(-2px, 2px); }
-  20% { clip-path: inset(60% 0 10% 0); text-shadow: -2px 0 red, 2px 0 cyan; transform: translate(2px, -2px); }
-  40% { clip-path: inset(40% 0 50% 0); text-shadow: 2px 0 red, -2px 0 cyan; transform: translate(-2px, -2px); }
-  60% { clip-path: inset(80% 0 5% 0); text-shadow: -2px 0 red, 2px 0 cyan; transform: translate(2px, 2px); }
-  80% { clip-path: inset(10% 0 70% 0); text-shadow: 2px 0 red, -2px 0 cyan; transform: translate(-1px, 1px); }
-  100% { clip-path: inset(0 0 0 0); text-shadow: 0 0 8px rgba(56, 189, 248, 0.5); transform: translate(0); }
+/* 3. Title Slide Up entrance for high contrast readability */
+@keyframes titleSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .modal-overlay:not(.hidden) .modal-title-text {
-  animation: chromaticGlitch 0.5s ease-out 0.2s forwards;
-  animation-fill-mode: both;
+  animation: titleSlideUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) 0.15s both;
+  text-shadow: none !important;
 }
 
 /* 4. Sequenced Fade-In for Left and Right Columns */
 @keyframes hudAssemble {
   from {
     opacity: 0;
-    transform: translateY(30px) scale(0.98);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
-.modal-overlay:not(.hidden) .hud-viewer-col {
+.modal-overlay:not(.hidden) .modal-desc-col {
   opacity: 0;
-  animation: hudAssemble 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s forwards;
+  animation: hudAssemble 0.45s cubic-bezier(0.25, 1, 0.5, 1) 0.2s forwards;
 }
 
-.modal-overlay:not(.hidden) .hud-details-col {
+.modal-overlay:not(.hidden) .modal-meta-col {
   opacity: 0;
-  animation: hudAssemble 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
+  animation: hudAssemble 0.45s cubic-bezier(0.25, 1, 0.5, 1) 0.3s forwards;
 }
 
 /* 5. Glowing Digital Scanline Over Image Slider */

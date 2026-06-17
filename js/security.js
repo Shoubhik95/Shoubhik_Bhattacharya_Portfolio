@@ -663,7 +663,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return `
           <div style="display: flex; flex-direction: column; align-items: center; flex-grow: 1; gap: 8px;">
             <span style="font-size: 10px; font-family: var(--font-mono); color: var(--text-muted);">${val}</span>
-            <div style="width: 24px; height: ${height}px; background: linear-gradient(to top, #1d4ed8, var(--primary)); border-radius: 4px; box-shadow: 0 0 10px var(--primary-glow); transition: height 0.5s ease-out;"></div>
+            <div style="width: 24px; height: ${height}px; background: linear-gradient(to top, var(--danger), var(--primary)); border-radius: 4px; box-shadow: 0 0 10px var(--primary-glow); transition: height 0.5s ease-out;"></div>
             <span style="font-size: 11px; font-weight: 600;">${labels[idx]}</span>
           </div>
         `;
@@ -691,11 +691,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const totalOther = totalSearch + totalRefer;
-      const totalAllReferrals = totalDirect + totalGithub + totalNetlify + totalOther;
+      const totalAllReferrals = totalGithub + totalNetlify + totalOther;
 
       const pctGithub = totalAllReferrals > 0 ? Math.round((totalGithub / totalAllReferrals) * 100) : 0;
       const pctNetlify = totalAllReferrals > 0 ? Math.round((totalNetlify / totalAllReferrals) * 100) : 0;
-      const pctDirect = totalAllReferrals > 0 ? Math.round((totalDirect / totalAllReferrals) * 100) : 0;
       const pctOther = totalAllReferrals > 0 ? Math.round((totalOther / totalAllReferrals) * 100) : 0;
 
       // Update Referrer Labels and Bars
@@ -837,7 +836,7 @@ document.addEventListener("DOMContentLoaded", () => {
       listContainer.innerHTML = `<div style="font-style:italic; color:var(--text-muted); padding:8px 0; text-align:center; font-size:13px; grid-column: 1 / -1;">No leads registered.</div>`;
     } else {
       listContainer.innerHTML = leads.map((lead, idx) => `
-        <div class="lead-card-premium" style="background: linear-gradient(135deg, rgba(30, 41, 59, 0.3) 0%, rgba(15, 23, 42, 0.6) 100%); border: 1px solid var(--border-color); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; position: relative; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+        <div class="lead-card-premium" style="background: linear-gradient(135deg, rgba(45, 15, 15, 0.35) 0%, rgba(15, 6, 6, 0.75) 100%); border: 1px solid var(--border-color); border-radius: 14px; padding: 22px; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; position: relative; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
           
           <!-- Top Row: Avatar icon + Delete button -->
           <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
@@ -863,7 +862,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div style="display: flex; align-items: center; gap: 10px; color: #cbd5e1;">
               <span style="color: var(--primary); font-weight: bold; width: 18px; text-align: center;">📧</span>
               <span style="font-weight: 600; color: #94a3b8;">Email:</span>
-              ${lead.email ? `<a href="mailto:${lead.email}" style="color: #38bdf8; text-decoration: underline; font-family: var(--font-mono); font-weight: 600;">${lead.email}</a>` : `<span style="color: var(--text-muted); font-style: italic;">Not Provided</span>`}
+              ${lead.email ? `<a href="mailto:${lead.email}" style="color: var(--primary); text-decoration: underline; font-family: var(--font-mono); font-weight: 600;">${lead.email}</a>` : `<span style="color: var(--text-muted); font-style: italic;">Not Provided</span>`}
             </div>
             
             <div style="display: flex; align-items: center; gap: 10px; color: #cbd5e1;">
@@ -960,9 +959,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const colors = {
       about: "#f97316",
       skills: "#ef4444",
-      education: "#22c55e",
-      projects: "#38bdf8",
-      certificates: "#6366f1"
+      education: "#f59e0b",
+      projects: "#ea580c",
+      certificates: "#b91c1c"
     };
 
     if (svgEl && legendEl) {
@@ -1161,7 +1160,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const icon = isCollapsed ? "▶" : "▼";
 
       html += `
-        <div class="data-card iplogs-date-card" style="padding: 0; overflow: hidden; border-color: var(--border-color); background: rgba(30, 41, 59, 0.25); margin-bottom: 12px;">
+        <div class="data-card iplogs-date-card" style="padding: 0; overflow: hidden; border-color: var(--border-color); background: rgba(45, 15, 15, 0.25); margin-bottom: 12px;">
           <!-- Collapsible Header -->
           <div class="iplogs-header-toggle" data-date="${date}" style="display: flex; justify-content: space-between; align-items: center; padding: 18px 24px; cursor: pointer; background: rgba(255,255,255,0.02); font-weight: 700; user-select: none;">
             <div style="display: flex; align-items: center; gap: 12px;">
@@ -1192,8 +1191,8 @@ document.addEventListener("DOMContentLoaded", () => {
                   const metrics = sess.metrics || { totalClicks: 0, skillsFlipped: 0, projectsOpened: 0, resumeDownloads: 0, externalClicks: 0 };
                   const interactionsText = `Clicks: ${metrics.totalClicks || 0} | Skills: ${metrics.skillsFlipped || 0} | Projects: ${metrics.projectsOpened || 0} | Download: ${metrics.resumeDownloads || 0}`;
                   return `
-                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03); transition: background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.01)'" onmouseout="this.style.background='transparent'">
-                      <td style="padding: 12px 16px; font-family: var(--font-mono); font-weight: 700; color: #38bdf8;">${sess.ip || "Unknown"}</td>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.03); transition: background 0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.03)'" onmouseout="this.style.background='transparent'">
+                      <td style="padding: 12px 16px; font-family: var(--font-mono); font-weight: 700; color: var(--primary);">${sess.ip || "Unknown"}</td>
                       <td style="padding: 12px 16px; font-family: var(--font-mono); color: #94a3b8;">${timeStr}</td>
                       <td style="padding: 12px 16px; color: #f1f5f9; font-weight: 600;">📍 ${sess.region || "Unknown Region"}</td>
                       <td style="padding: 12px 16px; color: var(--primary); font-weight: 600; font-family: var(--font-mono); font-size: 11px;">${sess.referrer || "Direct"}</td>

@@ -246,6 +246,22 @@
           return jsonResponse({ success: true });
         }
 
+        // --- 10.2. Telemetry GitHub Click Event ---
+        if (url === '/api/telemetry/github-click' && method === 'POST') {
+          const todayStr = new Date().toISOString().split('T')[0];
+          await dbRef().child(`historicalTelemetry/${todayStr}/github`).set(firebase.database.ServerValue.increment(1));
+          await dbRef().child(`historicalTelemetry/${todayStr}/actions`).set(firebase.database.ServerValue.increment(1));
+          return jsonResponse({ success: true });
+        }
+
+        // --- 10.3. Telemetry Netlify Click Event ---
+        if (url === '/api/telemetry/netlify-click' && method === 'POST') {
+          const todayStr = new Date().toISOString().split('T')[0];
+          await dbRef().child(`historicalTelemetry/${todayStr}/netlify`).set(firebase.database.ServerValue.increment(1));
+          await dbRef().child(`historicalTelemetry/${todayStr}/actions`).set(firebase.database.ServerValue.increment(1));
+          return jsonResponse({ success: true });
+        }
+
         // --- 10.5. Telemetry Share Event ---
         if (url === '/api/telemetry/share' && method === 'POST') {
           await dbRef().child('telemetry/sharesCount').set(firebase.database.ServerValue.increment(1));
