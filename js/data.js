@@ -219,6 +219,8 @@ const gameProjectsData = [
     longDesc: "Charming stylized character art featuring optimized game topology.|Meticulously unwrapped UV layout and hand-painted texturing mapping.|Rigged armature suitable for production game animation pipelines.",
     images: "public/pichku/pichku_3.png,public/pichku/pichku_0.png,public/pichku/pichku_1.png,public/pichku/pichku_2.png,public/pichku/pichku_4.png",
     tags: ["Blender", "3D Modeling", "Character Art", "Rendering"],
+    link: "https://gamedev_shoubhik2.artstation.com/projects/1L1NZo",
+    linkText: "Artstation",
     // HUD Stats
     engine: "Blender Cycles",
     complexity: "85%",

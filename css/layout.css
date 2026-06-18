@@ -547,3 +547,66 @@
   color: #ffffff;
   font-size: 14px;
 }
+
+/* ==========================================================================
+   Responsive Layout Overrides
+   ========================================================================== */
+@media (max-width: 768px) {
+  .main-content {
+    gap: 64px;
+    padding-top: 80px;
+    padding-bottom: 64px;
+  }
+  
+  .scroll-mt {
+    scroll-margin-top: 80px;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-header-group {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+  }
+  
+  .about-header-text {
+    align-items: center;
+  }
+  
+  .profile-name {
+    font-size: 28px;
+    text-align: center;
+  }
+  
+  .about-tagline {
+    font-size: 18px;
+    text-align: center;
+  }
+  
+  .about-desc {
+    font-size: 14px;
+    text-align: center;
+  }
+  
+  .primary-ctas {
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .primary-ctas .cta-btn {
+    width: 100%;
+    max-width: 320px;
+  }
+  
+  .secondary-socials {
+    justify-content: center;
+  }
+
+  .profile-avatar-container {
+    width: 240px;
+    height: 240px;
+  }
+}
+

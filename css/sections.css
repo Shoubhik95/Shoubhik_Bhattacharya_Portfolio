@@ -932,3 +932,45 @@
   color: #191a23 !important;
 }
 
+/* ==========================================================================
+   Responsive Overrides
+   ========================================================================== */
+@media (max-width: 640px) {
+  .projects-tabs-container {
+    justify-content: flex-start;
+    padding: 0 4px;
+    margin: 24px 0 32px;
+  }
+  
+  .projects-tabs {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    gap: 4px;
+  }
+  
+  .projects-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .tab-btn {
+    flex-shrink: 0;
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+
+  .education-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .edu-meta-group {
+    align-items: flex-start;
+    margin-top: 4px;
+  }
+}
+
+
