@@ -7,7 +7,7 @@
  */
 
 const firebaseConfig = {
-  apiKey: typeof FIREBASE_API_KEY !== 'undefined' ? FIREBASE_API_KEY : "YOUR_API_KEY_HERE",
+  apiKey: "AIzaSyBlf5OvAVufAO8SdPPZ16MYo7Rf50EGYcY",
   authDomain: "portfolio-a6e43.firebaseapp.com",
   projectId: "portfolio-a6e43",
   storageBucket: "portfolio-a6e43.firebasestorage.app",
