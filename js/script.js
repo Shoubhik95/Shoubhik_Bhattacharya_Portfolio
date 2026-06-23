@@ -87,7 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
         data-logs="${proj.logEntries ? proj.logEntries.join('|') : ''}"
         ${proj.link ? `data-link="${proj.link}"` : ''}
         ${proj.linkText ? `data-link-text="${proj.linkText}"` : ''}
-        ${proj.video ? `data-video="${proj.video}"` : ''}>
+        ${proj.video ? `data-video="${proj.video}"` : ''}
+        ${proj.github ? `data-github="${proj.github}"` : ''}>
         <div class="spotlight-card card-inner-padding">
           <div class="project-card-layout">
             <div class="project-image-box">
@@ -358,6 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const modalVisitBtn = document.getElementById("modal-visit-btn");
   const modalVideoBtn = document.getElementById("modal-video-btn");
+  const modalGithubBtn = document.getElementById("modal-github-btn");
 
   const modalSlidesWrapper = document.getElementById("modal-slides-wrapper");
   const modalDotsContainer = document.getElementById("modal-dots-container");
@@ -422,6 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const link = card.getAttribute("data-link") || "";
     const video = card.getAttribute("data-video");
+    const github = card.getAttribute("data-github") || "";
     const linkText = card.getAttribute("data-link-text") || "LAUNCH BUILD";
 
     // Bind data to modal elements
@@ -473,10 +476,22 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
+    // View Repository Button
+    if (github) {
+      if (modalGithubBtn) {
+        modalGithubBtn.classList.remove("hidden");
+        modalGithubBtn.href = github;
+      }
+    } else {
+      if (modalGithubBtn) {
+        modalGithubBtn.classList.add("hidden");
+      }
+    }
+
     // Show/Hide CTAs Container depending on if there are links
     const modalCtasContainer = document.getElementById("modal-ctas-container");
     if (modalCtasContainer) {
-      if (link || video) {
+      if (link || video || github) {
         modalCtasContainer.style.setProperty("display", "flex", "important");
       } else {
         modalCtasContainer.style.setProperty("display", "none", "important");

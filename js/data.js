@@ -281,6 +281,31 @@ const gameProjectsData = [
 
 const webProjectsData = [
   {
+    id: "littlebits",
+    category: "web-projects",
+    title: "LittleBits - College Club Hub",
+    subtitle: "COLLEGE CLUB PORTAL",
+    desc: "A digital campus hub to manage overcrowding, organize club events, facilitate student involvement, and streamline registration with easy-access entry passes.",
+    longDesc: "Designed to handle campus event overcrowding and boost student engagement.|Allows coordinators to contact students, publish events, and track active communities.|Provides quick, easily accessible entry passes and simple event registration flows.",
+    images: "public/littlebits.png",
+    tags: ["HTML+CSS", "JavaScript", "College Club Hub", "Event Management"],
+    link: "https://littlebitsclub.netlify.app/",
+    linkText: "Visit Website",
+    github: "https://github.com/amanrock1/LittleBits",
+    // HUD Stats
+    engine: "Web Browser",
+    complexity: "92%",
+    stage: "Live Production App",
+    tools: "HTML5, CSS3, Vanilla JS, Netlify",
+    logEntries: [
+      "Co-created by Shoubhik Bhattacharya and Aman Kumar Prabhat.",
+      "Designed dynamic grid-based community dashboard with modern gamified HUD theme.",
+      "Developed secure authorization panel and coordinator contact portal.",
+      "Implemented live event seating tracker and dynamic entry pass generation.",
+      "Successfully integrated Git version control and hosted on Netlify."
+    ]
+  },
+  {
     id: "virtual-tour",
     category: "web-projects",
     title: "Interactive 360 Virtual Tour",
@@ -315,6 +340,7 @@ const webProjectsData = [
     tags: ["HTML+CSS", "JavaScript", "Responsive Design"],
     link: "https://our-indiatourism-guider.netlify.app/",
     linkText: "Visit Website",
+    github: "https://github.com/Shoubhik95/Our-Chhattisgarh-tourist-website",
     // HUD Stats
     engine: "Web Browser",
     complexity: "80%",
