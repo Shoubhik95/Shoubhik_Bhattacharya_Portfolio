@@ -338,7 +338,7 @@ const webProjectsData = [
     longDesc: "Built with modern web standards, featuring high-definition panoramic images.|Dynamic interactive hot-spots that show detailed popups and audio descriptions.|Responsive layout ensuring smooth navigation on both mobile and desktop screens.",
     images: "public/web-project-screenshot.jpg",
     tags: ["HTML+CSS", "360 Tour", "Interactive"],
-    link: "https://interactive-360-virtual-tour.netlify.app/",
+    link: "https://360-virtual-campur-tour.vercel.app/",
     video: "public/virtual-tour-recording.mp4",
     linkText: "Visit Website",
     // HUD Stats
