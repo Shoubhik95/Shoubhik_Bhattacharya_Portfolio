@@ -336,10 +336,10 @@ const webProjectsData = [
     subtitle: "INTERACTIVE WEB",
     desc: "An immersive, web-based 360-degree virtual tour experience. Designed with interactivity in mind, allowing users to explore spaces seamlessly.",
     longDesc: "Built with modern web standards, featuring high-definition panoramic images.|Dynamic interactive hot-spots that show detailed popups and audio descriptions.|Responsive layout ensuring smooth navigation on both mobile and desktop screens.",
-    images: "public/web-project-screenshot.jpg",
+    images: "public/image copy.png",
     tags: ["HTML+CSS", "360 Tour", "Interactive"],
     link: "https://360-virtual-campur-tour.vercel.app/",
-    video: "public/virtual-tour-recording.mp4",
+    video: "public/newupdated_NSsxgv7k.mp4",
     linkText: "Visit Website",
     // HUD Stats
     engine: "Web Browser (Pannellum)",
