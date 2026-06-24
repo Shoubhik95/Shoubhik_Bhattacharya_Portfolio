@@ -276,6 +276,30 @@ const gameProjectsData = [
       "Crafted procedural glowing shader networks in Blender Node Editor.",
       "Set up dynamic studio cameras and Cycles rendering pipelines."
     ]
+  },
+  {
+    id: "car-driving-race",
+    category: "game-design",
+    title: "Car Driving Race",
+    subtitle: "WEB HTML GAME DEV",
+    desc: "A pixelated 2.5D environment car game where players collect coins. Easy to control with arrow keys (Only on desktop mode).",
+    longDesc: "Race through a pixelated 2.5D environment.|Collect coins while navigating a high-speed highway.|Easy control scheme using arrow keys, optimized specifically for desktop mode.",
+    images: "public/game dev and design/car_drive_racing.png",
+    tags: ["HTML+CSS", "JavaScript", "Game Dev", "2.5D"],
+    link: "https://car-game-html-css-js.vercel.app/",
+    linkText: "Play Online",
+    github: "https://github.com/Shoubhik95/Car-Game-HTML-CSS-JS",
+    // HUD Stats
+    engine: "HTML5 / JS",
+    complexity: "68%",
+    stage: "Playable Build",
+    tools: "HTML5, CSS3, JavaScript",
+    logEntries: [
+      "Designed pixelated 2.5D environment assets and road simulation graphics.",
+      "Developed keyboard arrow control mapping for responsive car steering.",
+      "Implemented coin spawning, score calculations, and collision mechanics.",
+      "Deployed project repository to GitHub and live build to Vercel."
+    ]
   }
 ];
 
