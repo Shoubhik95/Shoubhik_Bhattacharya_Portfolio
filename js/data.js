@@ -181,7 +181,7 @@ const gameProjectsData = [
     engine: "Unreal Engine 5",
     complexity: "90%",
     stage: "VR Demonstration",
-    tools: "UE5, VR Interaction Toolkit, Lumen",
+    tools: "UE5, VR Interaction Toolkit, 3D Models",
     logEntries: [
       "Stitched campus blueprints into layout reference grids.",
       "High-poly mesh modeling of main buildings inside Blender.",
@@ -202,7 +202,7 @@ const gameProjectsData = [
     engine: "Blender Pipeline",
     complexity: "75%",
     stage: "Complete Character Rig",
-    tools: "Blender, Substance Painter",
+    tools: "Blender",
     logEntries: [
       "Created character design sheets and reference alignment setups.",
       "Modeled low-poly meshes keeping clean edge loop topology.",
@@ -215,7 +215,7 @@ const gameProjectsData = [
     category: "game-art",
     title: "Pichku",
     subtitle: "CREATED IN BLENDER",
-    desc: "A whimsical, stylized character model of Pichku. Designed, modeled, and rendered entirely in Blender.",
+    desc: "A stylized character model of Pichku. Designed, modeled, and rendered entirely in Blender.",
     longDesc: "Charming stylized character art featuring optimized game topology.|Meticulously unwrapped UV layout and hand-painted texturing mapping.|Rigged armature suitable for production game animation pipelines.",
     images: "public/pichku/pichku_3.png,public/pichku/pichku_0.png,public/pichku/pichku_1.png,public/pichku/pichku_2.png,public/pichku/pichku_4.png",
     tags: ["Blender", "3D Modeling", "Character Art", "Rendering"],
@@ -225,7 +225,7 @@ const gameProjectsData = [
     engine: "Blender Cycles",
     complexity: "85%",
     stage: "Finished Model & Textures",
-    tools: "Blender, Substance Painter",
+    tools: "Blender,Rigging",
     logEntries: [
       "Sketched digital profile blueprints and reference setup grids.",
       "Sculpted clean stylized character mesh within Blender viewport.",
@@ -246,9 +246,9 @@ const gameProjectsData = [
     linkText: "ArtStation",
     // HUD Stats
     engine: "Blender Cycles",
-    complexity: "80%",
+    complexity: "82%",
     stage: "Fully Textured Rig",
-    tools: "Blender, Substance, Cycles",
+    tools: "Blender,Rigging , Cycles",
     logEntries: [
       "Sculpted base mesh and refined anatomical details.",
       "Painted hand-crafted textures in Substance Painter.",
@@ -311,7 +311,7 @@ const webProjectsData = [
     subtitle: "COLLEGE CLUB PORTAL",
     desc: "A digital campus hub to manage overcrowding, organize club events, facilitate student involvement, and streamline registration with easy-access entry passes.",
     longDesc: "Designed to handle campus event overcrowding and boost student engagement.|Allows coordinators to contact students, publish events, and track active communities.|Provides quick, easily accessible entry passes and simple event registration flows.",
-    images: "public/littlebits.png",
+    images: "public/image copy 3.png",
     tags: ["HTML+CSS", "JavaScript", "College Club Hub", "Event Management"],
     link: "https://littlebitsclub.netlify.app/",
     linkText: "Visit Website",
