@@ -78,7 +78,7 @@ I'm a B.Tech CSE (Gaming Technology) student combining a strong artistic eye wit
 | Ourchhattishgarhtourist  |Exploration , swachta abhiyan , tourist helper as well as guider web page where user easily to get all things what they want , all in one pages  |'HTML','  CSS','JS','FIREASE'|
 | Little Bits |Exploration of clubs in colleges ,take a participation on it , join , viewing details , activity , dashboard n admin portal etc  all in one pages  |'HTML','  CSS','JS','FIREASE'|
 
-****  SPECIAL GROUP PROJECTS *******
+### SPECIAL GROUP PROJECTS 
 | 360 CAMPUS TOUR  |VR 360 VIRTUAL TOUR OF VIT BHOPAL BASED ON REAL ESTATE BUIDING , USED PANNELUM TECHNIQUES FOR THIS , EXPALRE AND EASY TO UNDERSTAND THE PLACE WHERE PARENTS GIVE THEIR CHILDRENS WITHOUT ANY HESITATION , AI AVATAR FOR GUIDANCE , WHOLE WEBSITE IS READY TO SHOWCASE IF YOU WANT TO CHECK OUT , PLEASE VISIT MY PORTFOLIO |'HTML','  CSS','JS'|
 New Projects coming soon ...................
 
