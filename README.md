@@ -61,7 +61,26 @@ I'm a B.Tech CSE (Gaming Technology) student combining a strong artistic eye wit
 | **VR Campus Tour** | An immersive VR campus tour built in Unreal Engine, exploring university grounds with high-fidelity environments | `Unreal Engine 5` `VR/AR` `3D Modeling` |
 | **Car Driving Race** | A pixelated 2.5D car game where players collect coins, controlled with arrow keys (desktop only) | `HTML+CSS` `JavaScript` `Game Dev` |
 
-*3D Art & Animation and Web Projects tracks are also browsable on the live site.*
+### Model And Animation
+
+| Project | Description | Tags |
+|---|---|---|
+| AxeMan |Modelling on blender tool Created By Me , He takes the axe based on the situation|'Blender'|
+| Pichku |Modelling on blender tool Created By Me , Based on Cartoonistic character |'Blender','Rigged'|
+|Horror Toy |Modelling on blender tool Created By Me , Based on Horror Cartoonistic character , i will create a small playable game through this untold story theame  |'Blender','Rigged'|
+|Magic man  |Modelling on blender tool Created By Me , Based on Horror Cartoonistic , magician , playfull character  |'Blender','Rigged'|
+
+### websites dev 
+
+| Project | Description | Tags |
+|---|---|---|
+| PORTFOLIO |USED VS CODE , Showcase of my personal games and skills towards the new judges |'HTML','  CSS','JS','FIREASE'|
+| Ourchhattishgarhtourist  |Exploration , swachta abhiyan , tourist helper as well as guider web page where user easily to get all things what they want , all in one pages  |'HTML','  CSS','JS','FIREASE'|
+| Little Bits |Exploration of clubs in colleges ,take a participation on it , join , viewing details , activity , dashboard n admin portal etc  all in one pages  |'HTML','  CSS','JS','FIREASE'|
+
+****  SPECIAL GROUP PROJECTS *******
+| 360 CAMPUS TOUR  |VR 360 VIRTUAL TOUR OF VIT BHOPAL BASED ON REAL ESTATE BUIDING , USED PANNELUM TECHNIQUES FOR THIS , EXPALRE AND EASY TO UNDERSTAND THE PLACE WHERE PARENTS GIVE THEIR CHILDRENS WITHOUT ANY HESITATION , AI AVATAR FOR GUIDANCE , WHOLE WEBSITE IS READY TO SHOWCASE IF YOU WANT TO CHECK OUT , PLEASE VISIT MY PORTFOLIO |'HTML','  CSS','JS'|
+New Projects coming soon ...................
 
 ---
 
@@ -82,30 +101,7 @@ Shoubhik_Bhattacharya_Portfolio
 └── universalfield-computer-mouse-click-352734.mp3
 ```
 
----
-
-## 🚀 Running Locally
-
-This is a static HTML/CSS/JS site — no build step required.
-
-```bash
-git clone https://github.com/Shoubhik95/Shoubhik_Bhattacharya_Portfolio.git
-cd Shoubhik_Bhattacharya_Portfolio
-```
-
-Then either:
-- Open `index.html` directly in your browser, **or**
-- Serve it locally for full functionality (audio/page transitions):
-
-```bash
-npx serve .
-```
-
-### Deploying
-
-The project is configured for **Vercel** out of the box (`vercel.json`). Pushing to `main` redeploys automatically if the repo is linked to a Vercel project.
-
----
+----
 
 ## 🔗 Connect
 
