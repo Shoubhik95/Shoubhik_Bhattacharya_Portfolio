@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
   const passcodeScreen = document.getElementById("passcode-screen");
   const dashboardScreen = document.getElementById("dashboard-screen");
-  
+
   const ownerPasscodeInput = document.getElementById("owner-passcode-input");
   const ownerPasscodeSubmit = document.getElementById("owner-passcode-submit");
   const passcodeErrorMsg = document.getElementById("passcode-error-msg");
-  
+
   const ownerExportBtn = document.getElementById("owner-export-btn");
   const ownerResetDbBtn = document.getElementById("owner-reset-db-btn");
-  
+
   const logLegendTrigger = document.getElementById("log-legend-trigger");
   const logLegendBox = document.getElementById("log-legend-box");
   const graphTimeFilter = document.getElementById("graph-time-filter");
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const showPasscodeView = async () => {
     if (passcodeScreen) passcodeScreen.classList.remove("hidden");
     if (dashboardScreen) dashboardScreen.classList.add("hidden");
-    
+
     try {
       const res = await fetch('/api/lockout-state');
       if (res.ok) {
@@ -95,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const showDashboardView = () => {
     if (passcodeScreen) passcodeScreen.classList.add("hidden");
     if (dashboardScreen) dashboardScreen.classList.remove("hidden");
-    
+
     // Initial telemetries population
     populateStaticTelemetry();
     refreshDashboardTelemetry();
@@ -238,23 +238,23 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ type: 'lockout' })
       })
-      .then(response => {
-        if (response.ok) {
-          if (otpStatusMsg) {
-            otpStatusMsg.textContent = "Security verification OTP code sent directly to your Gmail.";
-            otpStatusMsg.style.color = "var(--success)";
+        .then(response => {
+          if (response.ok) {
+            if (otpStatusMsg) {
+              otpStatusMsg.textContent = "Security verification OTP code sent directly to your Gmail.";
+              otpStatusMsg.style.color = "var(--success)";
+            }
+          } else {
+            throw new Error("API failed");
           }
-        } else {
-          throw new Error("API failed");
-        }
-      })
-      .catch(error => {
-        console.error("Error sending OTP automatically:", error);
-        if (otpStatusMsg) {
-          otpStatusMsg.textContent = "Sending automatically failed. Please try again.";
-          otpStatusMsg.style.color = "var(--danger)";
-        }
-      });
+        })
+        .catch(error => {
+          console.error("Error sending OTP automatically:", error);
+          if (otpStatusMsg) {
+            otpStatusMsg.textContent = "Sending automatically failed. Please try again.";
+            otpStatusMsg.style.color = "var(--danger)";
+          }
+        });
 
       if (window.Telemetry) window.Telemetry.logEvent("OTP Generated and Sent to Owner", "highlight");
     });
@@ -269,31 +269,31 @@ document.addEventListener("DOMContentLoaded", () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ enteredOtp })
       })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          isAuthenticated = true;
-          if (otpStatusMsg) {
-            otpStatusMsg.classList.add("hidden");
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            isAuthenticated = true;
+            if (otpStatusMsg) {
+              otpStatusMsg.classList.add("hidden");
+            }
+            showDashboardView();
+            if (window.Telemetry) {
+              window.Telemetry.fetchLeads();
+              window.Telemetry.fetchStats();
+              window.Telemetry.logEvent("Owner Access Restored via OTP Verification", "highlight");
+            }
+          } else {
+            if (otpStatusMsg) {
+              otpStatusMsg.textContent = "INVALID SECURITY CODE. PLEASE TRY AGAIN.";
+              otpStatusMsg.style.color = "var(--danger)";
+              otpStatusMsg.classList.remove("hidden");
+            }
+            if (window.Telemetry) window.Telemetry.logEvent("Failed OTP Lockout Verification Attempt", "alert");
           }
-          showDashboardView();
-          if (window.Telemetry) {
-            window.Telemetry.fetchLeads();
-            window.Telemetry.fetchStats();
-            window.Telemetry.logEvent("Owner Access Restored via OTP Verification", "highlight");
-          }
-        } else {
-          if (otpStatusMsg) {
-            otpStatusMsg.textContent = "INVALID SECURITY CODE. PLEASE TRY AGAIN.";
-            otpStatusMsg.style.color = "var(--danger)";
-            otpStatusMsg.classList.remove("hidden");
-          }
-          if (window.Telemetry) window.Telemetry.logEvent("Failed OTP Lockout Verification Attempt", "alert");
-        }
-      })
-      .catch(err => {
-        console.error("Error verifying OTP:", err);
-      });
+        })
+        .catch(err => {
+          console.error("Error verifying OTP:", err);
+        });
     });
   }
 
@@ -317,7 +317,7 @@ document.addEventListener("DOMContentLoaded", () => {
           statusElement.style.color = "var(--success)";
         }
         if (window.Telemetry) window.Telemetry.logEvent("Firebase Password Reset Email Sent", "highlight");
-        
+
         // If locked out, unlock in local view after 3 seconds
         if (statusElement === otpStatusMsg) {
           setTimeout(() => {
@@ -369,22 +369,22 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch('/api/reset-database', {
           method: 'POST'
         })
-        .then(res => res.json())
-        .then(data => {
-          if (data.success) {
-            alert("Database reset successfully! All logs cleared.");
-            if (window.Telemetry) {
-              window.Telemetry.fetchStats();
-              window.Telemetry.fetchLeads();
+          .then(res => res.json())
+          .then(data => {
+            if (data.success) {
+              alert("Database reset successfully! All logs cleared.");
+              if (window.Telemetry) {
+                window.Telemetry.fetchStats();
+                window.Telemetry.fetchLeads();
+              }
+            } else {
+              alert("Failed to reset database: " + (data.message || "Unknown error"));
             }
-          } else {
-            alert("Failed to reset database: " + (data.message || "Unknown error"));
-          }
-        })
-        .catch(err => {
-          console.error("Error resetting database:", err);
-          alert("Error resetting database.");
-        });
+          })
+          .catch(err => {
+            console.error("Error resetting database:", err);
+            alert("Error resetting database.");
+          });
       }
     });
   }
@@ -413,28 +413,28 @@ document.addEventListener("DOMContentLoaded", () => {
   window.populateVisitorSessionsDropdown = () => {
     const selectEl = document.getElementById("visitor-session-select");
     if (!selectEl || !window.Telemetry) return;
-    
+
     const sessions = window.Telemetry.state.visitorSessions || [];
     const currentVal = selectEl.value;
-    
+
     if (sessions.length === 0) {
       selectEl.innerHTML = `<option value="">No Active Sessions</option>`;
       updateDeviceFields(window.Telemetry.state.deviceData);
       return;
     }
-    
+
     selectEl.innerHTML = sessions.map((sess, idx) => {
       const dateText = sess.timestamp ? sess.timestamp.split(',')[0] : '';
       const label = `${sess.ip} (${sess.region || 'Unknown'}) - ${dateText}`;
       return `<option value="${idx}">${label}</option>`;
     }).join("");
-    
+
     if (currentVal !== "" && selectEl.options[currentVal]) {
       selectEl.value = currentVal;
     } else {
       selectEl.value = "0";
     }
-    
+
     const activeIndex = parseInt(selectEl.value);
     if (!isNaN(activeIndex) && sessions[activeIndex]) {
       updateDeviceFields(sessions[activeIndex]);
@@ -463,10 +463,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (cookiesEl) cookiesEl.textContent = device.cookiesEnabled || "N/A";
     const dntEl = document.getElementById("dash-dnt");
     if (dntEl) dntEl.textContent = device.doNotTrack || "N/A";
-    
+
     const regionEl = document.getElementById("dash-region");
     if (regionEl) regionEl.textContent = device.region || "Unknown Region";
-    
+
     const onlineEl = document.getElementById("dash-online");
     if (onlineEl) onlineEl.textContent = device.onlineStatus || "N/A";
 
@@ -484,7 +484,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Browser Telemetry Retrieval
   const populateStaticTelemetry = () => {
     if (!window.Telemetry) return;
-    
+
     const selectEl = document.getElementById("visitor-session-select");
     if (selectEl && !selectEl.dataset.listenerBound) {
       selectEl.addEventListener("change", (e) => {
@@ -496,7 +496,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
       selectEl.dataset.listenerBound = "true";
     }
-    
+
     window.populateVisitorSessionsDropdown();
   };
 
@@ -504,13 +504,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const populateActivityFeed = () => {
     const dashLogContainer = document.getElementById("dash-activity-log");
     if (!dashLogContainer || !window.Telemetry) return;
-    
+
     const activeSegment = graphSegmentFilter ? graphSegmentFilter.value : "all";
     const logs = window.Telemetry.state.activityLogs.filter(log => {
       if (activeSegment === "all") return true;
       return log.type === activeSegment;
     });
-    
+
     dashLogContainer.innerHTML = logs.map(log => {
       const logClass = log.type === 'alert' ? 'alert-event' : (log.type === 'highlight' ? 'highlight-event' : '');
       return `<div class="feed-item ${logClass}">
@@ -544,11 +544,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const hrs = String(Math.floor(duration / 3600)).padStart(2, '0');
     const mins = String(Math.floor((duration % 3600) / 60)).padStart(2, '0');
     const secs = String(duration % 60).padStart(2, '0');
-    
+
     document.getElementById("dash-session-time").textContent = `${hrs}:${mins}:${secs}`;
     document.getElementById("dash-total-clicks").textContent = tState.totalClicks;
     document.getElementById("dash-active-level").textContent = tState.currentLevel;
-    
+
     document.getElementById("dash-scroll-depth").textContent = `${tState.maxScrollDepth}%`;
 
     const selectEl = document.getElementById("visitor-session-select");
@@ -638,8 +638,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const values = [];
     const labels = [];
 
-    const history = (window.Telemetry && window.Telemetry.state && window.Telemetry.state.historicalTelemetry) 
-      ? window.Telemetry.state.historicalTelemetry 
+    const history = (window.Telemetry && window.Telemetry.state && window.Telemetry.state.historicalTelemetry)
+      ? window.Telemetry.state.historicalTelemetry
       : {};
 
     for (let i = 6; i >= 0; i--) {
@@ -779,12 +779,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("graph-val-direct").textContent = `${data.direct}%`;
     document.getElementById("graph-val-search").textContent = `${data.search}%`;
     document.getElementById("graph-val-refer").textContent = `${data.refer}%`;
-    
+
     const c = 314.15; // Circumference (2 * pi * r) for R=50
     const segDirect = document.getElementById("graph-seg-direct");
     const segSearch = document.getElementById("graph-seg-search");
     const segRefer = document.getElementById("graph-seg-refer");
-    
+
     if (segDirect && segSearch && segRefer) {
       if (data.total === 0) {
         segDirect.style.strokeDashoffset = `${c}`;
@@ -794,13 +794,13 @@ document.addEventListener("DOMContentLoaded", () => {
         // Direct Slice
         segDirect.style.strokeDasharray = `${c}`;
         segDirect.style.strokeDashoffset = `${c * (1 - data.direct / 100)}`;
-        
+
         // Search Slice
         segSearch.style.strokeDasharray = `${c}`;
         segSearch.style.strokeDashoffset = `${c * (1 - data.search / 100)}`;
         const rotSearch = -90 + (360 * data.direct / 100);
         segSearch.setAttribute("transform", `rotate(${rotSearch} 70 70)`);
-        
+
         // Referral Slice
         segRefer.style.strokeDasharray = `${c}`;
         segRefer.style.strokeDashoffset = `${c * (1 - data.refer / 100)}`;
@@ -829,10 +829,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const listContainer = document.getElementById("dash-hire-list");
     const countEl = document.getElementById("dash-hire-count");
     if (!listContainer || !countEl || !window.Telemetry) return;
-    
+
     const leads = window.Telemetry.state.hiringLeads || [];
     countEl.textContent = leads.length;
-    
+
     if (leads.length === 0) {
       listContainer.innerHTML = `<div style="font-style:italic; color:var(--text-muted); padding:8px 0; text-align:center; font-size:13px; grid-column: 1 / -1;">No leads registered.</div>`;
     } else {
@@ -890,8 +890,8 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const updateClickbaitStats = () => {
-    const history = (window.Telemetry && window.Telemetry.state && window.Telemetry.state.historicalTelemetry) 
-      ? window.Telemetry.state.historicalTelemetry 
+    const history = (window.Telemetry && window.Telemetry.state && window.Telemetry.state.historicalTelemetry)
+      ? window.Telemetry.state.historicalTelemetry
       : {};
 
     const totalDurations = { about: 0, skills: 0, education: 0, projects: 0, certificates: 0 };
@@ -902,7 +902,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const dayData = history[dateStr];
       if (dayData && dayData.sectionMetrics) {
         const metrics = dayData.sectionMetrics;
-        
+
         if (metrics.durations) {
           for (const key in totalDurations) {
             totalDurations[key] += metrics.durations[key] || 0;
@@ -956,7 +956,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const svgEl = document.getElementById("clickbait-pie-chart");
     const legendEl = document.getElementById("clickbait-pie-legend");
-    
+
     const colors = {
       about: "#f97316",
       skills: "#ef4444",
@@ -972,7 +972,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const c = 376.99;
       let cumulativePercent = 0;
       const sectionKeys = ["about", "skills", "education", "projects", "certificates"];
-      
+
       sectionKeys.forEach(key => {
         const val = totalDurations[key] || 0;
         const pct = totalSecs > 0 ? (val / totalSecs) : 0;
@@ -994,7 +994,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const displayPct = Math.round(pct * 100);
         const displayLabel = key.charAt(0).toUpperCase() + key.slice(1);
-        
+
         const legendItem = document.createElement("div");
         legendItem.className = "legend-item";
         legendItem.style.display = "flex";
@@ -1039,12 +1039,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (clicksListEl) {
       clicksListEl.innerHTML = "";
       const sectionKeys = ["about", "skills", "education", "projects", "certificates"];
-      
+
       sectionKeys.forEach(key => {
         const clicks = totalClicks[key] || 0;
         const pct = sumSectionClicks > 0 ? Math.round((clicks / sumSectionClicks) * 100) : 0;
         const displayLabel = key.charAt(0).toUpperCase() + key.slice(1);
-        
+
         clicksListEl.innerHTML += `
           <div style="display: flex; flex-direction: column; gap: 4px;">
             <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600;">
@@ -1061,10 +1061,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const leaderboardBodyEl = document.getElementById("clickbait-leaderboard-body");
     const totalProjClicksEl = document.getElementById("clickbait-total-proj-clicks");
-    
+
     const sortedProjects = Object.entries(totalProjectClicks).sort((a, b) => b[1] - a[1]);
     const sumProjClicks = sortedProjects.reduce((sum, item) => sum + item[1], 0);
-    
+
     if (totalProjClicksEl) {
       totalProjClicksEl.textContent = sumProjClicks;
     }
@@ -1082,7 +1082,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (idx === 0) badge = "🥇";
           else if (idx === 1) badge = "🥈";
           else if (idx === 2) badge = "🥉";
-          
+
           return `
             <tr style="border-bottom: 1px solid rgba(255,255,255,0.03);">
               <td style="padding: 10px 8px; font-weight: 700;">${badge}</td>
@@ -1188,10 +1188,10 @@ document.addEventListener("DOMContentLoaded", () => {
               </thead>
               <tbody>
                 ${filtered.map(sess => {
-                  const timeStr = sess.timestamp ? (sess.timestamp.includes(',') ? sess.timestamp.split(',')[1].trim() : sess.timestamp) : "N/A";
-                  const metrics = sess.metrics || { totalClicks: 0, skillsFlipped: 0, projectsOpened: 0, resumeDownloads: 0, externalClicks: 0 };
-                  const interactionsText = `Clicks: ${metrics.totalClicks || 0} | Skills: ${metrics.skillsFlipped || 0} | Projects: ${metrics.projectsOpened || 0} | Download: ${metrics.resumeDownloads || 0}`;
-                  return `
+        const timeStr = sess.timestamp ? (sess.timestamp.includes(',') ? sess.timestamp.split(',')[1].trim() : sess.timestamp) : "N/A";
+        const metrics = sess.metrics || { totalClicks: 0, skillsFlipped: 0, projectsOpened: 0, resumeDownloads: 0, externalClicks: 0 };
+        const interactionsText = `Clicks: ${metrics.totalClicks || 0} | Skills: ${metrics.skillsFlipped || 0} | Projects: ${metrics.projectsOpened || 0} | Download: ${metrics.resumeDownloads || 0}`;
+        return `
                     <tr style="border-bottom: 1px solid rgba(255,255,255,0.03); transition: background 0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.03)'" onmouseout="this.style.background='transparent'">
                       <td style="padding: 12px 16px; font-family: var(--font-mono); font-weight: 700; color: var(--primary);">${sess.ip || "Unknown"}</td>
                       <td style="padding: 12px 16px; font-family: var(--font-mono); color: #94a3b8;">${timeStr}</td>
@@ -1206,7 +1206,7 @@ document.addEventListener("DOMContentLoaded", () => {
                       </td>
                     </tr>
                   `;
-                }).join("")}
+      }).join("")}
               </tbody>
             </table>
           </div>
@@ -1239,7 +1239,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const date = header.getAttribute("data-date");
         const body = document.getElementById(`iplogs-body-${date.replace(/\//g, '-')}`);
         const toggleIcon = header.querySelector(".iplogs-toggle-icon");
-        
+
         if (body) {
           body.classList.toggle("hidden");
           if (body.classList.contains("hidden")) {

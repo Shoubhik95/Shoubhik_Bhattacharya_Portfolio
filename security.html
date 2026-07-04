@@ -16,19 +16,19 @@
 
   <style>
     :root {
-      --bg-main: #050202;
-      --bg-sidebar: #0f0606;
-      --bg-card: rgba(31, 12, 12, 0.45);
-      --text-main: #fcf8f8;
-      --text-muted: #8c7373;
-      --border-color: rgba(239, 68, 68, 0.08);
-      --primary: #f97316;
-      --primary-glow: rgba(249, 115, 22, 0.12);
-      --success: #ef4444;
-      --success-glow: rgba(239, 68, 68, 0.12);
+      --bg-main: #07080b;
+      --bg-sidebar: #0b0c10;
+      --bg-card: rgba(15, 17, 26, 0.7);
+      --text-main: #e2e8f0;
+      --text-muted: #64748b;
+      --border-color: rgba(0, 240, 255, 0.12);
+      --primary: #00f0ff;
+      --primary-glow: rgba(0, 240, 255, 0.08);
+      --success: #00ff66;
+      --success-glow: rgba(0, 255, 102, 0.08);
       --warning: #f59e0b;
-      --danger: #b91c1c;
-      --danger-glow: rgba(185, 28, 28, 0.15);
+      --danger: #ff0055;
+      --danger-glow: rgba(255, 0, 85, 0.08);
       --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
       --font-mono: 'Space Mono', monospace;
     }
@@ -46,8 +46,8 @@
       min-height: 100vh;
       overflow-x: hidden;
       background-image:
-        radial-gradient(circle at 10% 20%, rgba(239, 68, 68, 0.04) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(249, 115, 22, 0.04) 0%, transparent 40%);
+        radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 0, 85, 0.03) 0%, transparent 40%);
     }
 
     .hidden {
@@ -127,16 +127,16 @@
       justify-content: center;
       min-height: 100vh;
       padding: 20px;
-      background: radial-gradient(circle at center, #140505 0%, #050202 100%);
+      background: radial-gradient(circle at center, #0e1017 0%, #07080b 100%);
     }
 
     .passcode-card {
       width: 100%;
       max-width: 420px;
-      background: rgba(15, 6, 6, 0.75);
+      background: rgba(11, 12, 20, 0.85);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(239, 68, 68, 0.12);
+      border: 1px solid var(--border-color);
       border-radius: 20px;
       padding: 40px 32px;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
@@ -328,7 +328,7 @@
     /* Header */
     .header-bar {
       height: 80px;
-      background-color: rgba(15, 6, 6, 0.75);
+      background-color: rgba(11, 12, 20, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-color);
@@ -462,23 +462,23 @@
     }
 
     .metric-card {
-      background: linear-gradient(135deg, rgba(45, 15, 15, 0.35) 0%, rgba(15, 6, 6, 0.75) 100%);
+      background: var(--bg-card);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-color);
-      border-radius: 16px;
+      border-radius: 12px;
       padding: 24px 28px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     }
 
     .metric-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(239, 68, 68, 0.35);
-      box-shadow: 0 15px 35px -5px rgba(239, 68, 68, 0.15);
+      transform: translateY(-2px);
+      border-color: rgba(0, 240, 255, 0.4);
+      box-shadow: 0 8px 24px rgba(0, 240, 255, 0.06);
     }
 
     .metric-details {
@@ -538,21 +538,21 @@
 
     /* Standard Card Container */
     .data-card {
-      background: linear-gradient(135deg, rgba(45, 15, 15, 0.3) 0%, rgba(15, 6, 6, 0.7) 100%);
+      background: var(--bg-card);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border-color);
-      border-radius: 16px;
+      border-radius: 12px;
       padding: 28px;
       display: flex;
       flex-direction: column;
       transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
 
     .data-card:hover {
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-      border-color: rgba(239, 68, 68, 0.15);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+      border-color: rgba(0, 240, 255, 0.3);
     }
 
     .card-header-row {
@@ -672,6 +672,7 @@
       overflow-y: visible;
       padding-top: 10px;
     }
+
     .lead-item-card {
       background-color: rgba(255, 255, 255, 0.01);
       border: 1px solid var(--border-color);
@@ -878,107 +879,107 @@
         radial-gradient(circle at 10% 20%, rgba(249, 115, 22, 0.02) 0%, transparent 40%),
         radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.02) 0%, transparent 40%);
     }
-    
+
     body.light-theme .passcode-container {
       background: radial-gradient(circle at center, #f1f5f9 0%, #e2e8f0 100%);
     }
-    
+
     body.light-theme .passcode-card {
       background: #ffffff;
       border-color: #cbd5e1;
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
     }
-    
+
     body.light-theme .passcode-card::before {
       opacity: 0.2;
     }
-    
+
     body.light-theme .passcode-card h4 {
       color: #0f172a;
     }
-    
+
     body.light-theme .passcode-card p {
       color: #64748b;
     }
-    
+
     body.light-theme .passcode-input-group input {
       background: #f8fafc;
       color: #0f172a;
       border: 1px solid #cbd5e1;
     }
-    
+
     body.light-theme .passcode-input-group input:focus {
       background: #ffffff;
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
     }
-    
+
     body.light-theme .decrypt-btn {
       color: #ffffff;
     }
-    
+
     body.light-theme .sidebar {
       background-color: #ffffff;
       border-right: 1px solid #cbd5e1;
     }
-    
+
     body.light-theme .header-bar {
       background-color: rgba(255, 255, 255, 0.85);
       border-bottom: 1px solid #cbd5e1;
     }
-    
+
     body.light-theme .metric-card {
       background: #ffffff;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.02);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.02);
       border: 1px solid #cbd5e1;
     }
-    
+
     body.light-theme .metric-card:hover {
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 10px 20px rgba(0,0,0,0.04);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0, 0, 0, 0.04);
       border-color: rgba(249, 115, 22, 0.3);
     }
-    
+
     body.light-theme .data-card {
       background: #ffffff;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.02);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 4px 12px rgba(0, 0, 0, 0.02);
       border: 1px solid #cbd5e1;
     }
-    
+
     body.light-theme .data-card:hover {
-      box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 10px 20px rgba(0,0,0,0.04);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0, 0, 0, 0.04);
       border-color: rgba(249, 115, 22, 0.3);
     }
-    
+
     body.light-theme .circle-bg {
       stroke: #cbd5e1;
       opacity: 0.5;
     }
-    
+
     body.light-theme .donut-chart-box svg circle:first-of-type {
       stroke: #cbd5e1;
       opacity: 0.5;
     }
-    
+
     body.light-theme .filter-select {
       background-color: #ffffff;
       border-color: #cbd5e1;
       color: #0f172a;
     }
-    
+
     body.light-theme .leads-list-row {
       background: #f8fafc;
       border: 1px solid #cbd5e1;
     }
-    
+
     body.light-theme .lead-detail-box {
       background: #ffffff;
       border-top: 1px solid #cbd5e1;
     }
-    
+
     body.light-theme .activity-item {
       border-left: 2px solid #cbd5e1;
     }
-    
+
     body.light-theme .activity-dot {
       background: #cbd5e1;
     }
@@ -990,25 +991,26 @@
   <!-- Passcode Verification Screen (Shown by default if not authenticated) -->
   <div id="passcode-screen" class="passcode-container">
     <div class="passcode-card"
-      style="border-color: rgba(239, 68, 68, 0.15); box-shadow: 0 20px 50px rgba(0,0,0,0.6); max-width: 440px;">
+      style="border-color: var(--border-color); box-shadow: 0 20px 50px rgba(0,0,0,0.6); max-width: 440px;">
       <div style="display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 24px;">
         <span
-          style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: #ef4444; box-shadow: 0 0 8px #ef4444; animation: pulse 1.5s infinite;"></span>
+          style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background-color: var(--primary); box-shadow: 0 0 8px var(--primary); animation: pulse 1.5s infinite;"></span>
         <span
-          style="font-size: 10px; font-weight: 800; font-family: var(--font-mono); color: var(--success); letter-spacing: 1.5px; text-transform: uppercase;">SECURE
+          style="font-size: 10px; font-weight: 800; font-family: var(--font-mono); color: var(--primary); letter-spacing: 1.5px; text-transform: uppercase;">SECURE
           LINK STATUS: SECURED</span>
       </div>
 
       <span class="passcode-icon" style="margin-bottom: 12px;">🛡️</span>
       <h4 style="letter-spacing: 0.5px; margin-bottom: 6px; font-size: 20px;">COMMAND DASHBOARD ACCESS</h4>
-      <p style="font-size: 12px; line-height: 1.5; color: #a38d8d; margin-bottom: 24px;">Please verify your identity key
+      <p style="font-size: 12px; line-height: 1.5; color: var(--text-muted); margin-bottom: 24px;">Please verify your
+        identity key
         to decrypt the database terminals.</p>
 
       <!-- Normal Authentication Section -->
       <div id="passcode-auth-section">
         <div class="passcode-input-group">
           <input type="password" id="owner-passcode-input" placeholder="ENTER ACCESS KEY" maxlength="12"
-            style="background: rgba(15, 23, 42, 0.9); font-size: 14px; padding: 14px; border-color: rgba(239, 68, 68, 0.15);">
+            style="background: rgba(11, 12, 20, 0.9); font-size: 14px; padding: 14px; border-color: var(--border-color);">
           <button id="owner-passcode-submit" class="decrypt-btn"
             style="background-color: var(--primary); color: #050202; font-weight: 800; text-transform: uppercase; font-size: 12px;">VERIFY
             ACCESS KEY</button>
@@ -1111,21 +1113,20 @@
           <p id="panel-subtitle">Real-time analytics and interaction logging feed.</p>
         </div>
         <div class="header-actions">
-          <a href="https://app.netlify.com/teams/shoubhik95/projects" target="_blank" class="action-btn btn-outline"
-            style="border-color: #00ad9f; color: #00ad9f; font-weight: 700;">
-            <span>⚡</span> Netlify Console
+          <a href="https://vercel.com/shoubhik-bhattacharyas-projects/shoubhik-bhattacharya-portfolio" target="_blank"
+            class="action-btn btn-outline" style="border-color: #00ad9f; color: #00ad9f; font-weight: 700;">
+            <span>⚡</span> Versel Console
           </a>
           <button id="owner-export-btn" class="action-btn btn-primary">
             <span>📥</span> Download Report
           </button>
-          <button id="owner-reset-db-btn" class="action-btn btn-outline" style="border-color: var(--danger); color: var(--danger); font-weight: 700;">
+          <button id="owner-reset-db-btn" class="action-btn btn-outline"
+            style="border-color: var(--danger); color: var(--danger); font-weight: 700;">
             <span>⚠️</span> Reset Data
           </button>
-          <button id="owner-logout-btn" class="action-btn btn-outline" style="border-color: var(--danger); color: var(--danger); font-weight: 700;">
+          <button id="owner-logout-btn" class="action-btn btn-outline"
+            style="border-color: var(--danger); color: var(--danger); font-weight: 700;">
             <span>🚪</span> Logout
-          </button>
-          <button id="theme-toggle-btn" class="action-btn btn-outline" aria-label="Toggle Theme" style="padding: 10px 14px;">
-            <span class="toggle-icon">🌙</span>
           </button>
           <a href="index.html" class="action-btn btn-outline">
             <span>←</span> Back to Website
@@ -1212,8 +1213,8 @@
               <div class="metric-circle-box">
                 <svg class="metric-circle-graph" viewBox="0 0 36 36">
                   <circle class="circle-bg" cx="18" cy="18" r="16" fill="none" stroke-width="3"></circle>
-                  <circle class="circle-fill" cx="18" cy="18" r="16" fill="none" stroke="var(--primary)" stroke-width="3"
-                    stroke-dasharray="60, 100" stroke-linecap="round"></circle>
+                  <circle class="circle-fill" cx="18" cy="18" r="16" fill="none" stroke="var(--primary)"
+                    stroke-width="3" stroke-dasharray="60, 100" stroke-linecap="round"></circle>
                 </svg>
               </div>
             </div>
@@ -1392,7 +1393,8 @@
               <div class="telemetry-rows" style="gap: 16px;">
                 <div style="display: flex; flex-direction: column; gap: 4px;">
                   <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600;">
-                    <a href="https://github.com/Shoubhik95/Shoubhik_Bhattacharya_Portfolio" target="_blank" style="color: #ffffff; text-decoration: underline;">GitHub Referrals</a>
+                    <a href="https://github.com/Shoubhik95/Shoubhik_Bhattacharya_Portfolio" target="_blank"
+                      style="color: #ffffff; text-decoration: underline;">GitHub Referrals</a>
                     <span id="referrer-count-github">0 visits</span>
                   </div>
                   <div
@@ -1404,13 +1406,15 @@
 
                 <div style="display: flex; flex-direction: column; gap: 4px;">
                   <div style="display: flex; justify-content: space-between; font-size: 13px; font-weight: 600;">
-                    <a href="https://shoubhikbhattacharyaportfoliogame.netlify.app/" target="_blank" style="color: var(--primary); text-decoration: underline;">Netlify Referrals</a>
+                    <a href="https://shoubhikbhattacharyaportfoliogame.netlify.app/" target="_blank"
+                      style="color: var(--primary); text-decoration: underline;">Netlify Referrals</a>
                     <span id="referrer-count-netlify">0 visits</span>
                   </div>
                   <div
                     style="width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden;">
                     <div id="referrer-bar-netlify"
-                      style="width: 0%; height: 100%; background: var(--primary); transition: width 0.5s ease-out;"></div>
+                      style="width: 0%; height: 100%; background: var(--primary); transition: width 0.5s ease-out;">
+                    </div>
                   </div>
                 </div>
 
@@ -1562,39 +1566,44 @@
 
         <!-- IP Tracker Panel (Hidden by default) -->
         <div id="iplogs-panel" class="hidden" style="display: flex; flex-direction: column; gap: 24px; width: 100%;">
-          
+
           <!-- Summary Metrics Cards -->
           <div class="metrics-grid">
             <div class="metric-card">
               <div class="metric-details" style="width: 100%;">
                 <span class="metric-title">Total Logged Sessions</span>
                 <span id="iplogs-total-count" class="metric-value" style="font-size: 28px;">0</span>
-                <span style="font-size: 11px; color: var(--primary); font-weight: 600; margin-top: 4px;">Across all recorded days</span>
+                <span style="font-size: 11px; color: var(--primary); font-weight: 600; margin-top: 4px;">Across all
+                  recorded days</span>
               </div>
             </div>
             <div class="metric-card">
               <div class="metric-details" style="width: 100%;">
                 <span class="metric-title">Unique IP Addresses</span>
                 <span id="iplogs-unique-count" class="metric-value" style="font-size: 28px;">0</span>
-                <span style="font-size: 11px; color: var(--success); font-weight: 600; margin-top: 4px;">Distinct devices identified</span>
+                <span style="font-size: 11px; color: var(--success); font-weight: 600; margin-top: 4px;">Distinct
+                  devices identified</span>
               </div>
             </div>
             <div class="metric-card">
               <div class="metric-details" style="width: 100%;">
                 <span class="metric-title">Active Dates Tracked</span>
                 <span id="iplogs-dates-count" class="metric-value" style="font-size: 28px;">0</span>
-                <span style="font-size: 11px; color: #6366f1; font-weight: 600; margin-top: 4px;">Days with activity logs</span>
+                <span style="font-size: 11px; color: #6366f1; font-weight: 600; margin-top: 4px;">Days with activity
+                  logs</span>
               </div>
             </div>
           </div>
 
           <!-- Search & Filter Strip -->
           <div class="filters-bar" style="justify-content: space-between; align-items: center; display: flex;">
-            <div class="filter-group" style="flex-grow: 1; max-width: 400px; display: flex; align-items: center; gap: 10px;">
+            <div class="filter-group"
+              style="flex-grow: 1; max-width: 400px; display: flex; align-items: center; gap: 10px;">
               <span class="filter-label">Search:</span>
-              <input type="text" id="iplogs-search-input" placeholder="Search IP, Region, Browser, Referrer..." 
+              <input type="text" id="iplogs-search-input" placeholder="Search IP, Region, Browser, Referrer..."
                 style="flex-grow: 1; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 8px 14px; font-size: 13px; color: var(--text-main); outline: none; transition: border-color 0.3s;"
-                onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='rgba(255, 255, 255, 0.08)'">
+                onfocus="this.style.borderColor='var(--primary)'"
+                onblur="this.style.borderColor='rgba(255, 255, 255, 0.08)'">
             </div>
           </div>
 
