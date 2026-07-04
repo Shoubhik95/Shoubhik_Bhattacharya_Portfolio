@@ -244,7 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
      3. Canvas Pixelation Transition
      ========================================================================== */
   const photoPaths = [
-    "public/my photos/IMG_1506.jpg"
+    "public/my photos/IMG_1506.webp"
   ];
 
   const profileCanvas = document.getElementById("profile-canvas");

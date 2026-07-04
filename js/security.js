@@ -1291,6 +1291,33 @@ document.addEventListener("DOMContentLoaded", () => {
   window.updateDashboardHiringUI = updateDashboardHiringUI;
   window.populateActivityFeed = populateActivityFeed;
 
+  // --- Lightweight Dashboard Theme System ---
+  const dashboardThemeToggle = document.getElementById("theme-toggle-btn");
+  const dashboardToggleIcon = dashboardThemeToggle ? dashboardThemeToggle.querySelector(".toggle-icon") : null;
+
+  const setDashboardTheme = (isLight) => {
+    if (isLight) {
+      document.body.classList.add("light-theme");
+      if (dashboardToggleIcon) dashboardToggleIcon.textContent = "☀️";
+      localStorage.setItem("portfolio_theme", "light");
+    } else {
+      document.body.classList.remove("light-theme");
+      if (dashboardToggleIcon) dashboardToggleIcon.textContent = "🌙";
+      localStorage.setItem("portfolio_theme", "dark");
+    }
+  };
+
+  // Initialize theme from localStorage
+  const currentSavedTheme = localStorage.getItem("portfolio_theme");
+  setDashboardTheme(currentSavedTheme === "light");
+
+  if (dashboardThemeToggle) {
+    dashboardThemeToggle.addEventListener("click", () => {
+      const isLight = document.body.classList.contains("light-theme");
+      setDashboardTheme(!isLight);
+    });
+  }
+
   // Run Auth Check
   checkAuth();
 

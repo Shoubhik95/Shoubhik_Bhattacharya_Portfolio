@@ -853,6 +853,135 @@
       font-size: 12px;
       line-height: 1.6;
     }
+
+    /* ==========================================================================
+       Light Weight Theme Variables & Overrides
+       ========================================================================== */
+    body.light-theme {
+      --bg-main: #f8fafc;
+      --bg-sidebar: #ffffff;
+      --bg-card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #cbd5e1;
+      --primary: #f97316;
+      --primary-glow: rgba(249, 115, 22, 0.08);
+      --success: #10b981;
+      --success-glow: rgba(16, 185, 129, 0.08);
+      --warning: #eab308;
+      --danger: #ef4444;
+      --danger-glow: rgba(239, 68, 68, 0.08);
+    }
+
+    body.light-theme {
+      background-image:
+        radial-gradient(circle at 10% 20%, rgba(249, 115, 22, 0.02) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.02) 0%, transparent 40%);
+    }
+    
+    body.light-theme .passcode-container {
+      background: radial-gradient(circle at center, #f1f5f9 0%, #e2e8f0 100%);
+    }
+    
+    body.light-theme .passcode-card {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    }
+    
+    body.light-theme .passcode-card::before {
+      opacity: 0.2;
+    }
+    
+    body.light-theme .passcode-card h4 {
+      color: #0f172a;
+    }
+    
+    body.light-theme .passcode-card p {
+      color: #64748b;
+    }
+    
+    body.light-theme .passcode-input-group input {
+      background: #f8fafc;
+      color: #0f172a;
+      border: 1px solid #cbd5e1;
+    }
+    
+    body.light-theme .passcode-input-group input:focus {
+      background: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+    }
+    
+    body.light-theme .decrypt-btn {
+      color: #ffffff;
+    }
+    
+    body.light-theme .sidebar {
+      background-color: #ffffff;
+      border-right: 1px solid #cbd5e1;
+    }
+    
+    body.light-theme .header-bar {
+      background-color: rgba(255, 255, 255, 0.85);
+      border-bottom: 1px solid #cbd5e1;
+    }
+    
+    body.light-theme .metric-card {
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.02);
+      border: 1px solid #cbd5e1;
+    }
+    
+    body.light-theme .metric-card:hover {
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 10px 20px rgba(0,0,0,0.04);
+      border-color: rgba(249, 115, 22, 0.3);
+    }
+    
+    body.light-theme .data-card {
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 12px rgba(0,0,0,0.02);
+      border: 1px solid #cbd5e1;
+    }
+    
+    body.light-theme .data-card:hover {
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 10px 20px rgba(0,0,0,0.04);
+      border-color: rgba(249, 115, 22, 0.3);
+    }
+    
+    body.light-theme .circle-bg {
+      stroke: #cbd5e1;
+      opacity: 0.5;
+    }
+    
+    body.light-theme .donut-chart-box svg circle:first-of-type {
+      stroke: #cbd5e1;
+      opacity: 0.5;
+    }
+    
+    body.light-theme .filter-select {
+      background-color: #ffffff;
+      border-color: #cbd5e1;
+      color: #0f172a;
+    }
+    
+    body.light-theme .leads-list-row {
+      background: #f8fafc;
+      border: 1px solid #cbd5e1;
+    }
+    
+    body.light-theme .lead-detail-box {
+      background: #ffffff;
+      border-top: 1px solid #cbd5e1;
+    }
+    
+    body.light-theme .activity-item {
+      border-left: 2px solid #cbd5e1;
+    }
+    
+    body.light-theme .activity-dot {
+      background: #cbd5e1;
+    }
   </style>
 </head>
 
@@ -994,6 +1123,9 @@
           </button>
           <button id="owner-logout-btn" class="action-btn btn-outline" style="border-color: var(--danger); color: var(--danger); font-weight: 700;">
             <span>🚪</span> Logout
+          </button>
+          <button id="theme-toggle-btn" class="action-btn btn-outline" aria-label="Toggle Theme" style="padding: 10px 14px;">
+            <span class="toggle-icon">🌙</span>
           </button>
           <a href="index.html" class="action-btn btn-outline">
             <span>←</span> Back to Website
