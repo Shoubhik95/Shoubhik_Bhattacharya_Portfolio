@@ -1,6 +1,7 @@
 const skillsData = [
   {
     name: "Unity",
+    group: "game-design",
     status: "Active",
     statusClass: "border-emerald-text",
     bulletClass: "emerald",
@@ -10,10 +11,11 @@ const skillsData = [
       border: "rgba(16, 185, 129, 0.2)",
       text: "#6ee7b7"
     },
-    subskills: ["C# Programming", "2.5D/3D Gameplay", "Level Prototyping"]
+    subskills: ["C# Programming", "2.5D/3D Gameplay & VR/AR", "Environment & Level Design"]
   },
   {
     name: "Unreal Engine 5",
+    group: "game-design",
     status: "Active",
     statusClass: "border-amber-text",
     bulletClass: "amber",
@@ -23,36 +25,11 @@ const skillsData = [
       border: "rgba(245, 158, 11, 0.2)",
       text: "#fde047"
     },
-    subskills: ["Blueprint Scripting", "Sequencer Cinematics", "Niagara VFX", "Metahuman"]
+    subskills: ["Blueprint Scripting", "VR/AR & OpenXR Integration", "Environment & Lighting Design", "Niagara VFX & MetaHuman"]
   },
   {
-    name: "Environment Design",
-    status: "Active",
-    statusClass: "border-sky-text",
-    bulletClass: "sky",
-    style: {
-      from: "rgba(14, 165, 233, 0.1)",
-      to: "rgba(8, 47, 73, 0.3)",
-      border: "rgba(14, 165, 233, 0.2)",
-      text: "#7dd3fc"
-    },
-    subskills: ["High-Fidelity Worlds", "Atmospheric Lighting", "Material Shading"]
-  },
-  {
-    name: "Animation & Cinematics",
-    status: "Active",
-    statusClass: "border-pink-text",
-    bulletClass: "pink",
-    style: {
-      from: "rgba(236, 72, 153, 0.1)",
-      to: "rgba(131, 24, 67, 0.3)",
-      border: "rgba(236, 72, 153, 0.2)",
-      text: "#fbcfe8"
-    },
-    subskills: ["Sequencer Camera Cuts", "MetaHuman Setup", "Timeline Keyframing"]
-  },
-  {
-    name: "3D Modelling",
+    name: "Blender",
+    group: "game-design",
     status: "Active",
     statusClass: "border-indigo-text",
     bulletClass: "indigo",
@@ -62,36 +39,15 @@ const skillsData = [
       border: "rgba(99, 102, 241, 0.2)",
       text: "#c7d2fe"
     },
-    subskills: ["Stylized Low-Poly", "Asset Sculpting", "Blender Pipeline"]
-  },
-  {
-    name: "VR/AR",
-    status: "Active",
-    statusClass: "border-teal-text",
-    bulletClass: "teal",
-    style: {
-      from: "rgba(20, 184, 166, 0.1)",
-      to: "rgba(19, 78, 74, 0.3)",
-      border: "rgba(20, 184, 166, 0.2)",
-      text: "#99f6e4"
-    },
-    subskills: ["Locomotion", "XR Interaction Toolkit", "Spatial UI/UX"]
-  },
-  {
-    name: "Rigging",
-    status: "Active",
-    statusClass: "border-rose-text",
-    bulletClass: "rose",
-    style: {
-      from: "rgba(244, 63, 94, 0.1)",
-      to: "rgba(136, 19, 55, 0.3)",
-      border: "rgba(244, 63, 94, 0.2)",
-      text: "#fecdd3"
-    },
-    subskills: ["Skeletal Weighting", "IK/FK Controls", "Blendshapes"]
+    subskills: [
+      "3D Modelling & Asset Sculpting",
+      "Skeletal Rigging (IK/FK & Weighting)",
+      "Keyframe Animation & Blendshapes"
+    ]
   },
   {
     name: "Python",
+    group: "programming",
     status: "Active",
     statusClass: "border-yellow-text",
     bulletClass: "yellow",
@@ -105,6 +61,7 @@ const skillsData = [
   },
   {
     name: "C++",
+    group: "programming",
     status: "Active",
     statusClass: "border-blue-text",
     bulletClass: "blue",
@@ -118,6 +75,7 @@ const skillsData = [
   },
   {
     name: "C#",
+    group: "programming",
     status: "Active",
     statusClass: "border-violet-text",
     bulletClass: "violet",
@@ -131,6 +89,7 @@ const skillsData = [
   },
   {
     name: "HTML+CSS",
+    group: "web",
     status: "Active",
     statusClass: "border-orange-text",
     bulletClass: "orange",
@@ -141,6 +100,34 @@ const skillsData = [
       text: "#fed7aa"
     },
     subskills: ["Modern Layouts", "Aesthetic UI Design", "Responsive Sites"]
+  },
+  {
+    name: "Figma",
+    group: "web",
+    status: "Active",
+    statusClass: "border-pink-text",
+    bulletClass: "pink",
+    style: {
+      from: "rgba(236, 72, 153, 0.1)",
+      to: "rgba(131, 24, 67, 0.3)",
+      border: "rgba(236, 72, 153, 0.25)",
+      text: "#fbcfe8"
+    },
+    subskills: ["Interface Design", "High-Fidelity Prototyping", "UI/UX Layouts"]
+  },
+  {
+    name: "Firebase & APIs",
+    group: "web",
+    status: "Active",
+    statusClass: "border-sky-text",
+    bulletClass: "sky",
+    style: {
+      from: "rgba(14, 165, 233, 0.1)",
+      to: "rgba(8, 47, 73, 0.3)",
+      border: "rgba(14, 165, 233, 0.2)",
+      text: "#7dd3fc"
+    },
+    subskills: ["Realtime Database", "API Integration", "Authentication Systems"]
   }
 ];
 

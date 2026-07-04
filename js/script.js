@@ -49,22 +49,32 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Render dynamic components from data.js
+  // Render dynamic components from data.js
   const renderSkills = () => {
-    const skillsGrid = document.getElementById("skills-grid");
-    if (!skillsGrid) return;
+    const gridGame = document.getElementById("skills-grid-game");
+    const gridProgramming = document.getElementById("skills-grid-programming");
+    const gridWeb = document.getElementById("skills-grid-web");
 
-    skillsGrid.innerHTML = skillsData.map(skill => `
-      <div class="skill-card-flat"
-        style="--skill-color-from: ${skill.style.from}; --skill-color-to: ${skill.style.to}; --skill-border: ${skill.style.border}; --skill-text: ${skill.style.text};">
-        <div class="skill-card-header">
-          <h4 class="skill-name">${skill.name}</h4>
-          <span class="skill-status ${skill.statusClass}">${skill.status}</span>
+    const renderGroup = (container, groupName) => {
+      if (!container) return;
+      const filtered = skillsData.filter(skill => skill.group === groupName);
+      container.innerHTML = filtered.map(skill => `
+        <div class="skill-card-flat"
+          style="--skill-color-from: ${skill.style.from}; --skill-color-to: ${skill.style.to}; --skill-border: ${skill.style.border}; --skill-text: ${skill.style.text};">
+          <div class="skill-card-header">
+            <h4 class="skill-name">${skill.name}</h4>
+            <span class="skill-status ${skill.statusClass}">${skill.status}</span>
+          </div>
+          <ul class="subskills-list">
+            ${skill.subskills.map(sub => `<li><span class="bullet ${skill.bulletClass}"></span>${sub}</li>`).join('')}
+          </ul>
         </div>
-        <ul class="subskills-list">
-          ${skill.subskills.map(sub => `<li><span class="bullet ${skill.bulletClass}"></span>${sub}</li>`).join('')}
-        </ul>
-      </div>
-    `).join('');
+      `).join('');
+    };
+
+    renderGroup(gridGame, "game-design");
+    renderGroup(gridProgramming, "programming");
+    renderGroup(gridWeb, "web");
   };
 
   const renderProjects = (category = "game-design") => {
@@ -75,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const createProjectCard = (proj) => `
       <div class="project-card-wrapper" 
+        data-category="${proj.category}"
         data-title="${proj.title}" 
         data-subtitle="${proj.subtitle}"
         data-desc="${proj.desc}" 
@@ -133,6 +144,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Set active class and indicator positioning
     const activeBtn = tabsContainer.querySelector(".tab-btn.active");
     if (activeBtn) {
+      const initialCategory = activeBtn.getAttribute("data-category");
+      tabsContainer.setAttribute("data-active-category", initialCategory);
       setTimeout(() => updateTabIndicator(activeBtn), 100);
     }
 
@@ -142,6 +155,10 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.classList.add("active");
         updateTabIndicator(btn);
         const category = btn.getAttribute("data-category");
+        
+        // Update container theme attribute
+        tabsContainer.setAttribute("data-active-category", category);
+        
         renderProjects(category);
       });
     });
@@ -318,27 +335,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // setInterval(triggerProfileTransition, 6000); // Disabled auto profile transition
 
   /* ==========================================================================
-     4. Spotlight Card Hover Effect
+     4. Spotlight Card Hover Effect (Event Delegation for Dynamic Cards)
      ========================================================================== */
-  const spotlightCards = document.querySelectorAll(".spotlight-card");
-
-  spotlightCards.forEach(card => {
-    card.addEventListener("mousemove", (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      card.style.setProperty("--mouse-x", x);
-      card.style.setProperty("--mouse-y", y);
-    });
-
-    card.addEventListener("mouseenter", () => {
-      card.classList.add("hovered");
-    });
-
-    card.addEventListener("mouseleave", () => {
-      card.classList.remove("hovered");
-    });
+  document.addEventListener("mousemove", (e) => {
+    const card = e.target.closest(".project-card-wrapper");
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    card.style.setProperty("--mouse-x", `${x}px`);
+    card.style.setProperty("--mouse-y", `${y}px`);
   });
 
 
@@ -412,6 +418,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!card) return;
 
     // Pull dataset attributes
+    const category = card.getAttribute("data-category") || "";
     const title = card.getAttribute("data-title") || "";
     const subtitle = card.getAttribute("data-subtitle") || "";
     const desc = card.getAttribute("data-desc") || "";
@@ -427,6 +434,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const github = card.getAttribute("data-github") || "";
     const linkText = card.getAttribute("data-link-text") || "LAUNCH BUILD";
 
+    // Set category theme attribute on the modal wrapper
+    if (projectModal) {
+      projectModal.setAttribute("data-theme-category", category);
+    }
+
     // Bind data to modal elements
     if (modalTitle) modalTitle.textContent = title;
     if (modalSubtitle) modalSubtitle.textContent = subtitle;
@@ -436,6 +448,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (modalStatComplexity) modalStatComplexity.textContent = complexity;
     if (modalStatStage) modalStatStage.textContent = stage;
     if (modalStatTools) modalStatTools.textContent = tools;
+
+    // Update complexity progress bar fill
+    const complexityFill = document.getElementById("modal-complexity-fill");
+    if (complexityFill) {
+      complexityFill.style.width = complexity.includes('%') ? complexity : `${complexity}%`;
+    }
 
     // Populate Logs
     if (modalLogTimeline) {

@@ -945,35 +945,59 @@ body::before {
   border-top-color: #f97316 !important;
 }
 
-/* Minimalist Modal Styling */
+/* Minimalist Modal Styling - Futuristic Cyber Console */
 .minimalist-modal-card {
   width: 95%;
   max-width: 900px;
   background-color: var(--card-bg);
   border: var(--border-thick);
-  border-radius: 12px;
+  border-radius: 16px;
   box-shadow: var(--neo-shadow-large);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   position: relative;
   max-height: 90vh;
-  animation: modalOpen 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: modalOpen 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s ease;
+}
+
+body.dark-theme .minimalist-modal-card {
+  background: rgba(15, 23, 42, 0.85) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Category Specific Theme Accents on the Modal Container */
+.modal-overlay[data-theme-category="game-design"] .minimalist-modal-card {
+  border-color: var(--accent-green) !important;
+}
+.modal-overlay[data-theme-category="game-art"] .minimalist-modal-card {
+  border-color: #ff81df !important;
+}
+.modal-overlay[data-theme-category="web-projects"] .minimalist-modal-card {
+  border-color: var(--accent-blue) !important;
 }
 
 @keyframes modalOpen {
-  from { transform: scale(0.96) translateY(10px); opacity: 0; }
+  from { transform: scale(0.95) translateY(15px); opacity: 0; }
   to { transform: scale(1) translateY(0); opacity: 1; }
 }
 
 .modal-header {
   height: 72px;
   border-bottom: var(--border-primary);
-  background-color: var(--card-bg);
+  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
+}
+
+body.dark-theme .modal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .modal-header-left {
@@ -995,10 +1019,33 @@ body::before {
   background-color: var(--accent-green);
   color: #191a23;
   border: 1px solid #191a23;
-  padding: 4px 10px;
-  border-radius: 4px;
+  padding: 4px 12px;
+  border-radius: 6px;
   text-transform: uppercase;
   font-weight: 700;
+  box-shadow: 2px 2px 0px #191a23;
+  transition: all 0.3s ease;
+}
+
+/* Dynamic Badge Colors */
+.modal-overlay[data-theme-category="game-design"] .modal-badge {
+  background-color: var(--accent-green) !important;
+  color: #11151f !important;
+  box-shadow: 2px 2px 0px var(--accent-green);
+}
+.modal-overlay[data-theme-category="game-art"] .modal-badge {
+  background-color: #ff81df !important;
+  color: #11151f !important;
+  box-shadow: 2px 2px 0px #ff81df;
+}
+.modal-overlay[data-theme-category="web-projects"] .modal-badge {
+  background-color: var(--accent-blue) !important;
+  color: #11151f !important;
+  box-shadow: 2px 2px 0px var(--accent-blue);
+}
+
+body.dark-theme .modal-badge {
+  border: none !important;
 }
 
 .modal-close-btn {
@@ -1006,7 +1053,7 @@ body::before {
   border: var(--border-primary);
   color: var(--foreground);
   cursor: pointer;
-  transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out, background-color 0.15s ease-in-out;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease;
   padding: 8px;
   border-radius: 8px;
   display: flex;
@@ -1015,16 +1062,25 @@ body::before {
   box-shadow: 2px 2px 0px var(--foreground);
 }
 
+body.dark-theme .modal-close-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
 .modal-close-btn:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 3px 3px 0px var(--foreground);
-  background-color: var(--accent-green);
-  color: #191a23;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(239, 68, 68, 0.3) !important;
+  background-color: #ef4444 !important;
+  color: #ffffff !important;
+}
+
+body.dark-theme .modal-close-btn:hover {
+  border-color: #ef4444 !important;
 }
 
 .modal-close-btn:active {
-  transform: translate(1px, 1px);
-  box-shadow: 1px 1px 0px var(--foreground);
+  transform: translateY(1px);
 }
 
 .close-icon-svg {
@@ -1038,7 +1094,7 @@ body::before {
   grid-template-columns: 1fr;
   padding: 24px;
   gap: 24px;
-  background-color: var(--card-bg);
+  background-color: transparent;
   overflow-y: auto;
 }
 
@@ -1066,6 +1122,12 @@ body::before {
   align-items: center;
   justify-content: center;
   box-shadow: 3px 3px 0px var(--foreground);
+}
+
+body.dark-theme .modal-slider-box {
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background-color: rgba(11, 15, 25, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
 .modal-slides-wrapper {
@@ -1110,14 +1172,32 @@ body::before {
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   border-radius: 50%;
+}
+
+body.dark-theme .slider-nav-btn {
+  background-color: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
 }
 
 .slider-nav-btn:hover {
   background-color: #ffffff;
-  color: var(--sky-400);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  transform: translateY(-50%) scale(1.15);
+}
+
+.modal-overlay[data-theme-category="game-design"] .slider-nav-btn:hover {
+  box-shadow: 0 0 15px var(--accent-green);
+  border-color: var(--accent-green);
+}
+.modal-overlay[data-theme-category="game-art"] .slider-nav-btn:hover {
+  box-shadow: 0 0 15px #ff81df;
+  border-color: #ff81df;
+}
+.modal-overlay[data-theme-category="web-projects"] .slider-nav-btn:hover {
+  box-shadow: 0 0 15px var(--accent-blue);
+  border-color: var(--accent-blue);
 }
 
 .slider-nav-btn.prev-btn { left: 16px; }
@@ -1131,6 +1211,34 @@ body::before {
   display: flex;
   gap: 8px;
   z-index: 10;
+}
+
+.slider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.slider-dot.active {
+  background: var(--accent-green);
+  transform: scale(1.3);
+  box-shadow: 0 0 8px var(--accent-green);
+}
+
+.modal-overlay[data-theme-category="game-design"] .slider-dot.active {
+  background: var(--accent-green);
+  box-shadow: 0 0 8px var(--accent-green);
+}
+.modal-overlay[data-theme-category="game-art"] .slider-dot.active {
+  background: #ff81df;
+  box-shadow: 0 0 8px #ff81df;
+}
+.modal-overlay[data-theme-category="web-projects"] .slider-dot.active {
+  background: var(--accent-blue);
+  box-shadow: 0 0 8px var(--accent-blue);
 }
 
 .modal-desc-section {
@@ -1153,6 +1261,10 @@ body::before {
   opacity: 0.9;
 }
 
+body.dark-theme .modal-desc-text {
+  color: #cbd5e1;
+}
+
 .modal-meta-col {
   display: flex;
   flex-direction: column;
@@ -1165,6 +1277,12 @@ body::before {
   border-radius: 12px;
   padding: 16px;
   color: var(--foreground);
+  transition: all 0.3s ease;
+}
+
+body.dark-theme .modal-meta-section {
+  background-color: rgba(22, 30, 46, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 .meta-label {
@@ -1175,27 +1293,86 @@ body::before {
   margin-bottom: 12px;
 }
 
+/* Diagnostic Progress Bar for Complexity */
+.hud-stat-bar-container {
+  background: rgba(25, 26, 35, 0.08);
+  border: 1px solid rgba(25, 26, 35, 0.1);
+  border-radius: 6px;
+  height: 8px;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  margin-top: 4px;
+}
+
+body.dark-theme .hud-stat-bar-container {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.hud-stat-bar-fill {
+  background: var(--accent-green);
+  height: 100%;
+  transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  border-radius: 6px;
+  box-shadow: 0 0 8px rgba(185, 255, 129, 0.5);
+}
+
+.modal-overlay[data-theme-category="game-design"] .hud-stat-bar-fill {
+  background: var(--accent-green);
+  box-shadow: 0 0 8px rgba(185, 255, 129, 0.5);
+}
+.modal-overlay[data-theme-category="game-art"] .hud-stat-bar-fill {
+  background: #ff81df;
+  box-shadow: 0 0 8px rgba(255, 129, 223, 0.5);
+}
+.modal-overlay[data-theme-category="web-projects"] .hud-stat-bar-fill {
+  background: var(--accent-blue);
+  box-shadow: 0 0 8px rgba(128, 226, 255, 0.5);
+}
+
+/* Development Timeline */
 .hud-log-timeline {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .hud-log-item {
   display: flex;
   gap: 12px;
   position: relative;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.hud-log-item:hover {
+  transform: translateX(4px);
 }
 
 .hud-log-item::before {
   content: '';
   position: absolute;
-  top: 16px;
+  top: 18px;
   left: 5px;
   bottom: -16px;
   width: 2px;
   background-color: var(--foreground);
   opacity: 0.25;
+}
+
+body.dark-theme .hud-log-item::before {
+  background: linear-gradient(to bottom, var(--accent-green), transparent);
+  opacity: 0.3;
+}
+
+.modal-overlay[data-theme-category="game-design"] .hud-log-item::before {
+  background: linear-gradient(to bottom, var(--accent-green), transparent);
+}
+.modal-overlay[data-theme-category="game-art"] .hud-log-item::before {
+  background: linear-gradient(to bottom, #ff81df, transparent);
+}
+.modal-overlay[data-theme-category="web-projects"] .hud-log-item::before {
+  background: linear-gradient(to bottom, var(--accent-blue), transparent);
 }
 
 .hud-log-item:last-child::before {
@@ -1207,37 +1384,84 @@ body::before {
   height: 12px;
   border-radius: 50%;
   background-color: var(--background);
-  border: 2px solid var(--sky-400);
+  border: 2px solid var(--accent-green);
   margin-top: 4px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+body.dark-theme .hud-log-dot {
+  background-color: #0b0f19;
+}
+
+.modal-overlay[data-theme-category="game-design"] .hud-log-dot {
+  border-color: var(--accent-green);
+  box-shadow: 0 0 6px var(--accent-green);
+}
+.modal-overlay[data-theme-category="game-art"] .hud-log-dot {
+  border-color: #ff81df;
+  box-shadow: 0 0 6px #ff81df;
+}
+.modal-overlay[data-theme-category="web-projects"] .hud-log-dot {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 6px var(--accent-blue);
+}
+
+.hud-log-item:hover .hud-log-dot {
+  transform: scale(1.2);
 }
 
 .hud-log-text {
   font-size: 13px;
   color: var(--foreground);
   line-height: 1.4;
-  opacity: 0.9;
+  opacity: 0.85;
+  transition: color 0.25s ease;
 }
 
-/* CTA buttons inside modal */
-.hud-panel-ctas {
-  display: flex;
-  gap: 16px;
+.hud-log-item:hover .hud-log-text {
+  opacity: 1;
 }
 
-.hud-cta-btn {
-  flex: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 44px;
-  border-radius: 6px;
-  font-family: var(--font-display);
-  font-size: 13px;
+/* Modal Action Button Upgrades */
+#modal-ctas-container .cta-btn {
+  position: relative;
+  overflow: hidden;
+  font-family: var(--font-mono);
   font-weight: 700;
   letter-spacing: 0.05em;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  border-radius: 8px !important;
+  box-shadow: 3px 3px 0px var(--foreground) !important;
+}
+
+body.dark-theme #modal-ctas-container .cta-btn {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+#modal-ctas-container .cta-btn:hover {
+  transform: translateY(-4px) !important;
+}
+
+/* Category Specific Button Hover Themes */
+.modal-overlay[data-theme-category="game-design"] #modal-ctas-container .cta-btn.btn-blue {
+  background-color: var(--accent-green) !important;
+  color: #11151f !important;
+  box-shadow: 0 8px 20px rgba(185, 255, 129, 0.3) !important;
+  border-color: var(--accent-green) !important;
+}
+.modal-overlay[data-theme-category="game-art"] #modal-ctas-container .cta-btn.btn-blue {
+  background-color: #ff81df !important;
+  color: #11151f !important;
+  box-shadow: 0 8px 20px rgba(255, 129, 223, 0.3) !important;
+  border-color: #ff81df !important;
+}
+.modal-overlay[data-theme-category="web-projects"] #modal-ctas-container .cta-btn.btn-blue {
+  background-color: var(--accent-blue) !important;
+  color: #11151f !important;
+  box-shadow: 0 8px 20px rgba(128, 226, 255, 0.3) !important;
+  border-color: var(--accent-blue) !important;
 }
 
 .launch-btn {
@@ -1672,4 +1896,184 @@ body::before {
     height: 32px;
     font-size: 10px;
   }
+}
+
+/* ==========================================================================
+   Hiring Interest Terminal Console UI
+   ========================================================================== */
+.new-hire-hud-card {
+  max-width: 460px !important;
+  background: rgba(10, 15, 26, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid var(--accent-green) !important;
+  box-shadow: 0 0 30px rgba(185, 255, 129, 0.25) !important;
+  padding: 24px !important;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* CRT Screen Scanline pattern for gaming vibes */
+.new-hire-hud-card::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 10;
+  background-size: 100% 4px, 6px 100%;
+  pointer-events: none;
+  opacity: 0.45;
+}
+
+.new-hire-hud-card .hud-header {
+  border-bottom: 1px solid rgba(185, 255, 129, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  z-index: 11;
+  position: relative;
+}
+
+.new-hire-hud-card .hud-title {
+  color: var(--accent-green) !important;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 8px rgba(185, 255, 129, 0.4);
+}
+
+.new-hire-hud-card .hud-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 11;
+  position: relative;
+}
+
+.new-hire-hud-card .passcode-instruction {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #e2e8f0;
+  letter-spacing: 0.05em;
+  text-align: left;
+  opacity: 0.9;
+}
+
+.new-hire-hud-card .hud-sub-instruction {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #94a3b8;
+  line-height: 1.4;
+  margin: -6px 0 10px;
+}
+
+.hud-input-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hud-input-group {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(185, 255, 129, 0.2);
+  border-radius: 6px;
+  padding: 8px 12px;
+  transition: all 0.3s ease;
+}
+
+.hud-input-group:focus-within {
+  border-color: var(--accent-green);
+  box-shadow: 0 0 12px rgba(185, 255, 129, 0.3);
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.hud-input-prompt {
+  color: var(--accent-green);
+  font-family: var(--font-mono);
+  font-weight: 800;
+  margin-right: 8px;
+  text-shadow: 0 0 6px var(--accent-green);
+}
+
+.hud-input-label {
+  color: var(--accent-green);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.hud-input-group input {
+  flex: 1;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  color: #ffffff !important;
+  font-family: var(--font-mono) !important;
+  font-size: 13px !important;
+  padding: 4px 0 !important;
+}
+
+.hud-input-group input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.hud-form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.hud-btn-action {
+  flex: 1;
+  height: 40px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hud-btn-action.submit-btn {
+  background: var(--accent-green) !important;
+  color: #11151f !important;
+  border: 1px solid var(--accent-green) !important;
+  box-shadow: 0 0 10px rgba(185, 255, 129, 0.3);
+}
+
+.hud-btn-action.submit-btn:hover {
+  background: #a3ff5c !important;
+  box-shadow: 0 0 20px var(--accent-green);
+  transform: translateY(-2px);
+}
+
+.hud-btn-action.cancel-btn {
+  background: rgba(255, 255, 255, 0.03) !important;
+  color: #94a3b8 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.hud-btn-action.cancel-btn:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  transform: translateY(-2px);
+}
+
+.new-hire-hud-card .passcode-error {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #ef4444;
+  text-align: center;
+  margin-top: 8px;
+  text-shadow: 0 0 6px rgba(239, 68, 68, 0.3);
 }

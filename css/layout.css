@@ -230,6 +230,7 @@
 /* Primary CTA buttons */
 .primary-ctas {
   display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -238,60 +239,74 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 48px;
-  padding: 0 28px;
+  height: 46px;
+  padding: 0 24px;
   border-radius: 8px;
-  font-family: var(--font-display);
-  font-size: 15px;
+  font-family: var(--font-mono);
+  font-size: 13px;
   font-weight: 800;
   text-decoration: none;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  transition: all 0.15s ease-in-out;
+  letter-spacing: 0.1em;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
-  border: var(--border-primary);
-  box-shadow: var(--neo-shadow);
-  transform: translate(0px, 0px);
+  position: relative;
+  overflow: hidden;
 }
 
-.cta-btn:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px var(--foreground);
-}
-
-.cta-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px var(--foreground);
-}
-
+/* PROJECTS button (btn-blue) */
 .btn-blue {
-  background-color: var(--accent-green) !important;
-  color: #191a23 !important;
+  background: #3b82f6 !important;
+  color: #ffffff !important;
+  border: 1px solid #3b82f6 !important;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.2) !important;
 }
-
 .btn-blue:hover {
-  background-color: var(--accent-green) !important;
+  transform: translateY(-4px);
+  background: #2563eb !important;
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5) !important;
 }
 
+/* CONTACT button (btn-dark) */
 .btn-dark {
-  background-color: var(--card-bg) !important;
-  color: var(--foreground) !important;
+  background: rgba(15, 23, 42, 0.6) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: none !important;
 }
-
 .btn-dark:hover {
-  background-color: var(--card-bg) !important;
+  transform: translateY(-4px);
+  border-color: #ffffff !important;
+  background: rgba(15, 23, 42, 0.8) !important;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.15) !important;
 }
 
+/* HIRING INTEREST button (btn-outline-green) */
 .btn-outline-green {
-  border: var(--border-primary) !important;
-  color: #191a23 !important;
+  background: transparent !important;
+  color: var(--accent-green) !important;
+  border: 1px solid var(--accent-green) !important;
+  box-shadow: none !important;
+}
+.btn-outline-green:hover {
+  transform: translateY(-4px);
   background: var(--accent-green) !important;
+  color: #11151f !important;
+  box-shadow: 0 0 20px var(--accent-green) !important;
 }
 
+/* SHARE button (btn-outline-blue) */
 .btn-outline-blue {
-  border: var(--border-primary) !important;
-  color: #191a23 !important;
+  background: transparent !important;
+  color: var(--accent-blue) !important;
+  border: 1px solid var(--accent-blue) !important;
+  box-shadow: none !important;
+}
+.btn-outline-blue:hover {
+  transform: translateY(-4px);
   background: var(--accent-blue) !important;
+  color: #11151f !important;
+  box-shadow: 0 0 20px var(--accent-blue) !important;
 }
 
 .cta-icon {
@@ -309,23 +324,46 @@
 .social-badge {
   display: inline-flex;
   align-items: center;
-  background-color: var(--card-bg);
-  border: var(--border-primary);
-  color: var(--foreground);
-  padding: 6px 14px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #94a3b8 !important;
+  padding: 8px 16px;
   border-radius: 8px;
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 12px;
   font-weight: 700;
   text-decoration: none;
-  box-shadow: 3px 3px 0px var(--foreground);
-  transition: all 0.15s ease-in-out;
+  box-shadow: none !important;
+  transition: all 0.3s ease;
 }
 
-.social-badge:hover {
-  transform: translate(-1px, -1px);
-  box-shadow: 4px 4px 0px var(--foreground);
-  color: #191a23;
-  background-color: var(--accent-green);
+/* Individual hover effects */
+.social-badge[href*="Resume"]:hover, .social-badge[href*="docx"]:hover {
+  background: var(--accent-green) !important;
+  color: #11151f !important;
+  border-color: var(--accent-green) !important;
+  box-shadow: 0 0 15px var(--accent-green) !important;
+}
+
+.social-badge[href*="artstation"]:hover {
+  background: #ff81df !important;
+  color: #11151f !important;
+  border-color: #ff81df !important;
+  box-shadow: 0 0 15px #ff81df !important;
+}
+
+.social-badge[href*="github"]:hover {
+  background: #ffffff !important;
+  color: #11151f !important;
+  border-color: #ffffff !important;
+  box-shadow: 0 0 15px #ffffff !important;
+}
+
+.social-badge[href*="linkedin"]:hover {
+  background: #0077b5 !important;
+  color: #ffffff !important;
+  border-color: #0077b5 !important;
+  box-shadow: 0 0 15px #0077b5 !important;
 }
 
 /* Fancy Conic Border Buttons */
@@ -488,13 +526,25 @@
 
 .profile-avatar-container {
   position: relative;
-  width: 280px;
-  height: 280px;
-  border-radius: 24px;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 3 / 4;
+  border-radius: 20px;
   overflow: hidden;
-  border: var(--border-thick);
-  box-shadow: var(--neo-shadow-large);
-  background-color: var(--accent-green);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+body.dark-theme .profile-avatar-container {
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.profile-avatar-container:hover {
+  border-color: var(--accent-green) !important;
+  box-shadow: 0 12px 36px rgba(185, 255, 129, 0.2);
+  transform: translateY(-4px);
 }
 
 .profile-canvas {
@@ -605,8 +655,9 @@
   }
 
   .profile-avatar-container {
-    width: 240px;
-    height: 240px;
+    width: 100%;
+    max-width: 240px;
+    aspect-ratio: 3 / 4;
   }
 }
 

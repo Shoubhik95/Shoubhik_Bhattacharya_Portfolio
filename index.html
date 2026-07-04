@@ -92,19 +92,40 @@
               </p>
             </div>
 
+            <!-- Academic Diagnostics Widget -->
+            <div class="education-hud-widget">
+              <div class="edu-widget-header">
+                <span class="edu-widget-icon">🎓</span>
+                <span class="edu-widget-title">ACADEMIC STATUS</span>
+              </div>
+              <div class="edu-widget-body">
+                <div class="edu-widget-row">
+                  <span class="edu-label">DEGREE:</span>
+                  <span class="edu-value font-highlight">B.Tech CSE (Gaming Technology)</span>
+                </div>
+                <div class="edu-widget-row">
+                  <span class="edu-label">INSTITUTION:</span>
+                  <span class="edu-value">VIT Bhopal University</span>
+                </div>
+                <div class="edu-widget-row">
+                  <span class="edu-label">CGPA:</span>
+                  <span class="edu-value">
+                    <span class="edu-gpa-badge">8.08 CGPA</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+
             <!-- Primary CTAs -->
             <div class="primary-ctas" style="display: flex; flex-wrap: wrap; gap: 12px;">
               <a href="#projects" class="cta-btn btn-blue">
                 PROJECTS
               </a>
-              <a href="mailto:shoubhikbhattacharya06@gmail.com" class="cta-btn btn-dark">
+              <a href="mailto:shoubhikbhattacharya100@gmail.com" class="cta-btn btn-dark">
                 CONTACT
               </a>
               <button id="hire-interest-btn" class="cta-btn btn-dark btn-outline-green">
                 HIRING INTEREST
-              </button>
-              <button id="share-portfolio-btn" class="cta-btn btn-dark btn-outline-blue">
-                SHARE
               </button>
             </div>
 
@@ -142,31 +163,44 @@
     <!-- Core Skills Section -->
     <section id="skills" class="scroll-mt border-divider">
       <h3 class="section-title">Core Skills</h3>
-      <div id="skills-grid" class="skills-grid">
-        <!-- Dynamically populated from data.js -->
+      <div class="skills-columns-container">
+        <!-- Column 1: Game Dev & Art -->
+        <div class="skills-column-col">
+          <h4 class="skills-column-title"><span class="title-icon">🎮</span> GAME DEV & DESIGN</h4>
+          <div id="skills-grid-game" class="skills-column-grid"></div>
+        </div>
+        <!-- Column 2: Programming -->
+        <div class="skills-column-col">
+          <h4 class="skills-column-title"><span class="title-icon">💻</span> PROGRAMMING</h4>
+          <div id="skills-grid-programming" class="skills-column-grid"></div>
+        </div>
+        <!-- Column 3: Web & UI/UX -->
+        <div class="skills-column-col">
+          <h4 class="skills-column-title"><span class="title-icon">🎨</span> WEB & UI/UX</h4>
+          <div id="skills-grid-web" class="skills-column-grid"></div>
+        </div>
       </div>
     </section>
 
-    <!-- Education Section -->
-    <section id="education" class="scroll-mt border-divider">
-      <h3 class="section-title">Education</h3>
-      <div class="education-card">
-        <div class="education-header">
-          <div class="edu-degree-group">
-            <h4 class="edu-degree">B.Tech CSE (Gaming Technology)</h4>
-            <p class="edu-institution">VIT Bhopal University</p>
+    <!-- Showcase Reel Section -->
+    <section id="showcase-reel" class="scroll-mt border-divider">
+      <h3 class="section-title">Showcase Reel</h3>
+      <div class="showcase-card">
+        <div class="showcase-hud-header">
+          <div class="hud-header-left">
+            <span class="hud-console-title">SIGNAL ACQUIRED: GAME DEV SHOWCASE REEL</span>
           </div>
-          <div class="edu-meta-group">
-            <span class="edu-status">In Progress</span>
-            <span class="edu-grade">8.08 CGPA</span>
+          <span class="hud-system-status">v1.4.2 // ONLINE</span>
+        </div>
+        <div class="showcase-video-container">
+          <video class="showcase-video" controls preload="metadata">
+            <source src="public/SHOUBHIK.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="video-cyber-overlay">
+            <span class="scanner-line"></span>
           </div>
         </div>
-
-        <p class="edu-details-text">
-          Focusing on advanced gaming technology curricula to master computer systems, algorithmic complexity,
-          skeletal animation rigging, and immersive spatial environments. Specializing in Unity & UE5 pipelines
-          alongside advanced 3D asset rigging and animation.
-        </p>
       </div>
     </section>
 
@@ -213,7 +247,10 @@
 
     <!-- Footer -->
     <footer class="main-footer">
-      <p>© 2026 Shoubhik Bhattacharya</p>
+      <div class="footer-glow"></div>
+      <div class="footer-content">
+        <p class="footer-copyright">© 2026 Shoubhik Bhattacharya. All rights reserved.</p>
+      </div>
     </footer>
 
   </main>
@@ -264,7 +301,15 @@
             <h5 class="meta-label">Project Specs</h5>
             <div class="meta-stats-list" style="display: flex; flex-direction: column; gap: 12px; font-size: 14px;">
               <div><strong>Engine:</strong> <span id="modal-stat-engine">Unity</span></div>
-              <div><strong>Complexity:</strong> <span id="modal-stat-complexity">85%</span></div>
+              <div class="complexity-stat-row" style="display: flex; flex-direction: column; gap: 4px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                  <strong>Complexity:</strong>
+                  <span id="modal-stat-complexity" style="font-family: var(--font-mono); font-weight: 700;">85%</span>
+                </div>
+                <div class="hud-stat-bar-container">
+                  <div id="modal-complexity-fill" class="hud-stat-bar-fill" style="width: 85%;"></div>
+                </div>
+              </div>
               <div><strong>Status:</strong> <span id="modal-stat-stage">Completed</span></div>
               <div><strong>Tools:</strong> <span id="modal-stat-tools">Blender, C#</span></div>
             </div>
@@ -318,43 +363,48 @@
 
   <!-- Custom Hire Interest Modal -->
   <div id="hire-interest-modal" class="modal-overlay hidden">
-    <div class="gamer-hud-card passcode-card"
-      style="border-color: #22c55e !important; box-shadow: 0 0 25px rgba(34, 197, 94, 0.2) !important; max-width: 440px !important;"
-      onclick="event.stopPropagation()">
-      <div class="hud-header"
-        style="border-bottom: 1px solid rgba(34, 197, 94, 0.2); display: flex; align-items: center; justify-content: space-between;">
-        <div class="hud-header-left" style="display: flex; align-items: center;">
-          <span class="badge-emoji" style="margin-right: 10px;">💼</span>
-          <h4 class="hud-title" style="color: #22c55e;">REGISTER HIRING INTEREST</h4>
+    <div class="gamer-hud-card passcode-card new-hire-hud-card" onclick="event.stopPropagation()">
+      <div class="hud-header">
+        <div class="hud-header-left">
+          <span class="badge-emoji">💼</span>
+          <h4 class="hud-title">[ SYSTEM INGESTION: REGISTRATION ]</h4>
         </div>
         <button id="hire-close-btn" class="hud-close-btn" aria-label="Close modal">&times;</button>
       </div>
       <div class="hud-body passcode-body">
-        <p class="passcode-instruction" style="color: #a3a3a3; text-align: center; margin-bottom: 4px;">PLEASE ENTER
-          YOUR NAME OR ORGANIZATION TO REGISTER YOUR HIRING PROFILE</p>
-        <p class="passcode-instruction"
-          style="color: #94a3b8; font-size: 10px; text-align: center; margin-top: 0; font-style: italic; line-height: 1.3;">
-          (Note: If you are unable to contact me via Gmail, please enter your name/username or organization name here so
-          I can reach out)</p>
-        <div class="passcode-input-container" style="flex-direction: column; gap: 12px; width: 100%;">
-          <input type="text" id="hire-name-input" placeholder="Name or Organization (e.g. Google HR)"
-            style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 6px; padding: 10px 14px; color: #ffffff; font-family: var(--font-mono); font-size: 14px; outline: none; transition: all 0.3s; width: 100%; box-sizing: border-box;"
-            autocomplete="off">
-          <input type="email" id="hire-email-input" placeholder="Email Address (e.g. recruiter@google.com)"
-            style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 6px; padding: 10px 14px; color: #ffffff; font-family: var(--font-mono); font-size: 14px; outline: none; transition: all 0.3s; width: 100%; box-sizing: border-box;"
-            autocomplete="off">
-          <input type="text" id="hire-link-input" placeholder="Company Link (e.g. google.com)"
-            style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(34, 197, 94, 0.2); border-radius: 6px; padding: 10px 14px; color: #ffffff; font-family: var(--font-mono); font-size: 14px; outline: none; transition: all 0.3s; width: 100%; box-sizing: border-box;"
-            autocomplete="off">
-          <div style="display: flex; gap: 12px; width: 100%;">
-            <button id="hire-submit-btn" class="hud-cta-btn launch-btn"
-              style="background-color: #22c55e; box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3); flex: 1; border: none; cursor: pointer; color: #ffffff;">SUBMIT</button>
-            <button id="hire-cancel-btn" class="hud-cta-btn trailer-btn"
-              style="flex: 1; border: 1px solid rgba(255, 255, 255, 0.1); cursor: pointer; color: #ffffff;">CANCEL</button>
+        <p class="passcode-instruction">ENTER CLIENT PARAMETERS TO REGISTER YOUR PROFILE</p>
+        <p class="hud-sub-instruction">Note: If you cannot contact me via Gmail, register here so I can sync and respond.</p>
+        
+        <div class="hud-input-fields">
+          <div class="hud-input-group">
+            <span class="hud-input-prompt">&gt;</span>
+            <span class="hud-input-label">/NAME:</span>
+            <input type="text" id="hire-name-input" placeholder="e.g. Google HR" autocomplete="off">
+          </div>
+
+          <div class="hud-input-group">
+            <span class="hud-input-prompt">&gt;</span>
+            <span class="hud-input-label">/EMAIL:</span>
+            <input type="email" id="hire-email-input" placeholder="e.g. recruiter@google.com" autocomplete="off">
+          </div>
+
+          <div class="hud-input-group">
+            <span class="hud-input-prompt">&gt;</span>
+            <span class="hud-input-label">/LINK:</span>
+            <input type="text" id="hire-link-input" placeholder="e.g. google.com" autocomplete="off">
+          </div>
+
+          <div class="hud-form-actions">
+            <button id="hire-submit-btn" class="hud-btn-action submit-btn">
+              [ INITIATE UPLOAD ]
+            </button>
+            <button id="hire-cancel-btn" class="hud-btn-action cancel-btn">
+              [ ABORT ]
+            </button>
           </div>
         </div>
-        <p id="hire-error-msg" class="passcode-error hidden" style="color: #ef4444; font-size: 10px; margin-top: 4px;">
-          PLEASE ENTER A VALID NAME</p>
+        
+        <p id="hire-error-msg" class="passcode-error hidden">❌ VALUE INGESTION ERROR: INVALID NAME</p>
       </div>
     </div>
   </div>
