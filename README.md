@@ -48,8 +48,8 @@ I'm a B.Tech CSE (Gaming Technology) student combining a strong artistic eye wit
 | **C++** | OOP Fundamentals, Unreal API Programming, Data Structures |
 | **C#** | Unity API Scripting, Design Patterns, DotNet Architecture |
 | **HTML + CSS** | Modern Layouts, Aesthetic UI Design, Responsive Sites |
-| **Figma ** | Modern Prototypes , Aesthetic UI Design, Responsive Sites |
-| **Firebase Database ** | Backend data , Realtime database Rules |
+| **Figma** | Modern Prototypes , Aesthetic UI Design, Responsive Sites |
+| **Firebase Database** | Backend data , Realtime database Rules |
 ---
 
 ## 🎮 Featured Projects
