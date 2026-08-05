@@ -382,6 +382,8 @@ body.dark-theme .bullet {
   z-index: 1;
   flex: 0 0 100%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (min-width: 640px) {
@@ -561,6 +563,10 @@ body.dark-theme .project-card-wrapper:hover {
 
 .card-inner-padding {
   padding: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1;
 }
 
 @media (min-width: 640px) {
@@ -573,13 +579,14 @@ body.dark-theme .project-card-wrapper:hover {
   display: flex;
   flex-direction: column;
   height: 100%;
+  flex: 1;
   position: relative;
   z-index: 4;
 }
 
 .project-image-box {
   position: relative;
-  height: 128px;
+  height: 200px;
   border-radius: 12px;
   border: 1px solid rgba(25, 26, 35, 0.08);
   margin-bottom: 16px;
@@ -589,6 +596,7 @@ body.dark-theme .project-card-wrapper:hover {
   overflow: hidden;
   background-color: rgba(25, 26, 35, 0.03);
   transition: border-color 0.3s ease;
+  flex-shrink: 0;
 }
 
 body.dark-theme .project-image-box {
@@ -602,13 +610,13 @@ body.dark-theme .project-image-box {
 
 @media (min-width: 640px) {
   .project-image-box {
-    height: 176px;
+    height: 200px;
   }
 }
 
 @media (min-width: 768px) {
   .project-image-box {
-    height: 224px;
+    height: 200px;
   }
 }
 
@@ -677,6 +685,7 @@ body.dark-theme .project-image-box {
   line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  height: 24px;
 }
 
 .project-card-wrapper:hover .project-card-title {
@@ -702,6 +711,7 @@ body.dark-theme .project-image-box {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   transition: color 0.3s ease;
+  height: 16px;
 }
 
 body.dark-theme .project-card-subtitle {
@@ -725,11 +735,12 @@ body.dark-theme .project-card-subtitle {
   margin-bottom: 16px;
   flex-grow: 1;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   transition: color 0.3s ease;
+  min-height: 60px;
 }
 
 body.dark-theme .project-card-desc {
@@ -745,7 +756,17 @@ body.dark-theme .project-card-desc {
     font-size: 13px;
     -webkit-line-clamp: 3;
     line-clamp: 3;
+    min-height: 62px;
   }
+}
+
+.project-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 16px;
+  min-height: 28px;
+  align-items: center;
 }
 
 .project-tags-row {
