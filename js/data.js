@@ -177,6 +177,29 @@ const gameProjectsData = [
     ]
   },
   {
+    id: "the-royal-king",
+    category: "game-design",
+    title: "The Royal King",
+    subtitle: "ENDLESS RUNNER (UNITY 6)",
+    desc: "A fast-paced 3D endless runner game built completely in Unity 6, inspired by Subway Surfers.",
+    longDesc: "Endless runner mechanics built ground-up in Unity 6 inspired by Subway Surfers.|Dynamic procedural track chunk spawner with smooth continuous level generation.|Custom collectable scripts, modern New Input System integration, and sound design.|High performance graphics optimization for smooth gameplay and stylized environment design.",
+    images: "public/game dev and design/royal_king.png",
+    tags: ["Unity 6", "Endless Runner", "C#", "Graphics Optimization", "Sound Artist"],
+    // HUD Stats
+    engine: "Unity 6",
+    complexity: "88%",
+    stage: "Playable Build",
+    tools: "Unity 6, C#, New Input System",
+    logEntries: [
+      "Chunks Spawner: Built dynamic continuous level chunk generation and pooling.",
+      "Collective Scripts: Programmed item collection logic, coins, and score multipliers.",
+      "Player Inputs New: Integrated Unity 6 New Input System for responsive swipe and lane movement.",
+      "Graphics Optimization: Optimized low-poly shaders, mesh batching, and performance metrics.",
+      "Environment Design: Crafted medieval castle runway and environment assets.",
+      "Sound Artist: Produced audio soundscapes, footsteps, and coin pickup sound effects."
+    ]
+  },
+  {
     id: "axe-man",
     category: "game-art",
     title: "Axe Man",
@@ -389,6 +412,8 @@ const webProjectsData = [
 ];
 
 const certificatesData = [
+  { src: "public/certificates/unity6_csharp_certificate.jpg", alt: "Complete C# Unity 3D Game Development in Unity 6" },
+  { src: "public/certificates/unreal5_filmmaking_certificate.jpg", alt: "Master Filmmaking in Unreal Engine 5: A Complete Guide" },
   { src: "public/certificates/UC-67865291-b780-4726-a4e3-e0e2f13653da.jpg.webp", alt: "Unreal Engine 5 Modeling" },
   { src: "public/certificates/Screenshot_20260407_001427.jpg.webp", alt: "C++ Programming" },
   { src: "public/certificates/Screenshot_20260407_001439.jpg.webp", alt: "Python Essentials" },
