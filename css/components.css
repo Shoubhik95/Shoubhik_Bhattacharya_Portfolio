@@ -2033,40 +2033,57 @@ body.dark-theme #modal-ctas-container .cta-btn {
 
 .hud-btn-action {
   flex: 1;
-  height: 40px;
-  border-radius: 6px;
+  height: 44px;
+  border-radius: 8px;
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 800;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
 }
 
 .hud-btn-action.submit-btn {
-  background: var(--accent-green) !important;
-  color: #11151f !important;
-  border: 1px solid var(--accent-green) !important;
-  box-shadow: 0 0 10px rgba(185, 255, 129, 0.3);
+  background: linear-gradient(135deg, #b9ff81 0%, #22c55e 100%) !important;
+  color: #0b0f19 !important;
+  border: 1px solid #b9ff81 !important;
+  box-shadow: 0 0 15px rgba(185, 255, 129, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .hud-btn-action.submit-btn:hover {
-  background: #a3ff5c !important;
-  box-shadow: 0 0 20px var(--accent-green);
-  transform: translateY(-2px);
+  background: linear-gradient(135deg, #d2ffab 0%, #4ade80 100%) !important;
+  box-shadow: 0 0 25px rgba(185, 255, 129, 0.8), 0 0 40px rgba(34, 197, 94, 0.4);
+  transform: translateY(-3px) scale(1.02);
+}
+
+.hud-btn-action.submit-btn:active {
+  transform: translateY(-1px) scale(0.98);
 }
 
 .hud-btn-action.cancel-btn {
-  background: rgba(255, 255, 255, 0.03) !important;
+  background: rgba(15, 23, 42, 0.7) !important;
   color: #94a3b8 !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(8px);
 }
 
 .hud-btn-action.cancel-btn:hover {
-  background: rgba(255, 255, 255, 0.08) !important;
-  color: #ffffff !important;
-  border-color: rgba(255, 255, 255, 0.3) !important;
-  transform: translateY(-2px);
+  background: rgba(239, 68, 68, 0.15) !important;
+  color: #f87171 !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+  transform: translateY(-3px) scale(1.02);
+}
+
+.hud-btn-action.cancel-btn:active {
+  transform: translateY(-1px) scale(0.98);
 }
 
 .new-hire-hud-card .passcode-error {
