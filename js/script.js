@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (dotsContainer) {
       const totalPages = maxIndex + 1;
       dotsContainer.innerHTML = Array.from({ length: totalPages }, (_, i) => `
-        <span class="carousel-dot ${i === currentCarouselIndex ? 'active' : ''}" data-index="${i}"></span>
+        <span class="carousel-dot dot-color-${i % 6} ${i === currentCarouselIndex ? 'active' : ''}" data-index="${i}"></span>
       `).join('');
 
       dotsContainer.querySelectorAll(".carousel-dot").forEach(dot => {
@@ -132,21 +132,59 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  let projectAutoTimer = null;
+
+  const startProjectAutoSlide = () => {
+    stopProjectAutoSlide();
+    projectAutoTimer = setInterval(() => {
+      let itemsPerView = 1;
+      if (window.innerWidth >= 992) itemsPerView = 3;
+      else if (window.innerWidth >= 640) itemsPerView = 2;
+
+      const maxIndex = Math.max(0, currentFilteredProjects.length - itemsPerView);
+      if (maxIndex > 0) {
+        const track = document.getElementById("projects-grid");
+        if (currentCarouselIndex >= maxIndex) {
+          currentCarouselIndex = 0;
+        } else {
+          currentCarouselIndex++;
+        }
+        updateCarouselTrack();
+      }
+    }, 1500);
+  };
+
+  const stopProjectAutoSlide = () => {
+    if (projectAutoTimer) {
+      clearInterval(projectAutoTimer);
+      projectAutoTimer = null;
+    }
+  };
+
   const setupCarouselNav = () => {
     const prevBtn = document.getElementById("proj-prev-btn");
     const nextBtn = document.getElementById("proj-next-btn");
+    const carouselWrapper = document.querySelector(".projects-carousel-wrapper");
 
     if (prevBtn) {
       prevBtn.addEventListener("click", () => {
+        stopProjectAutoSlide();
         if (currentCarouselIndex > 0) {
           currentCarouselIndex--;
-          updateCarouselTrack();
+        } else {
+          let itemsPerView = 1;
+          if (window.innerWidth >= 992) itemsPerView = 3;
+          else if (window.innerWidth >= 640) itemsPerView = 2;
+          currentCarouselIndex = Math.max(0, currentFilteredProjects.length - itemsPerView);
         }
+        updateCarouselTrack();
+        startProjectAutoSlide();
       });
     }
 
     if (nextBtn) {
       nextBtn.addEventListener("click", () => {
+        stopProjectAutoSlide();
         let itemsPerView = 1;
         if (window.innerWidth >= 992) itemsPerView = 3;
         else if (window.innerWidth >= 640) itemsPerView = 2;
@@ -154,14 +192,28 @@ document.addEventListener("DOMContentLoaded", () => {
         const maxIndex = Math.max(0, currentFilteredProjects.length - itemsPerView);
         if (currentCarouselIndex < maxIndex) {
           currentCarouselIndex++;
-          updateCarouselTrack();
+        } else {
+          currentCarouselIndex = 0;
         }
+        updateCarouselTrack();
+        startProjectAutoSlide();
+      });
+    }
+
+    if (carouselWrapper) {
+      carouselWrapper.addEventListener("mouseenter", () => {
+        stopProjectAutoSlide();
+      });
+      carouselWrapper.addEventListener("mouseleave", () => {
+        startProjectAutoSlide();
       });
     }
 
     window.addEventListener("resize", () => {
       updateCarouselTrack();
     });
+
+    startProjectAutoSlide();
   };
 
   const renderProjects = (category = "game-design") => {
@@ -232,7 +284,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!tabsContainer) return;
 
     const tabButtons = tabsContainer.querySelectorAll(".tab-btn");
-    
+
     // Set active class and indicator positioning
     const activeBtn = tabsContainer.querySelector(".tab-btn.active");
     if (activeBtn) {
@@ -247,10 +299,10 @@ document.addEventListener("DOMContentLoaded", () => {
         btn.classList.add("active");
         updateTabIndicator(btn);
         const category = btn.getAttribute("data-category");
-        
+
         // Update container theme attribute
         tabsContainer.setAttribute("data-active-category", category);
-        
+
         renderProjects(category);
       });
     });

@@ -4,19 +4,19 @@
    Design System & Base Custom Styles
    ========================================================================== */
 :root {
-  --background: #ffffff;
-  --foreground: #191a23;
-  --accent-green: #b9ff81;
-  --accent-blue: #80e2ff;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --accent-green: #22c55e;
+  --accent-blue: #0284c7;
   --font-sans: 'Inter', sans-serif;
   --font-display: 'Outfit', sans-serif;
   --font-mono: 'Space Mono', monospace;
-  --border-primary: 2px solid #191a23;
-  --border-thick: 3px solid #191a23;
-  --neo-shadow: 4px 4px 0px #191a23;
-  --neo-shadow-large: 6px 6px 0px #191a23;
-  --card-bg: #ffffff;
-  --card-border: 2px solid #191a23;
+  --border-primary: 1px solid rgba(15, 23, 42, 0.12);
+  --border-thick: 1px solid rgba(15, 23, 42, 0.18);
+  --neo-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  --neo-shadow-large: 0 20px 40px rgba(0, 0, 0, 0.12);
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-border: 1px solid rgba(15, 23, 42, 0.1);
 
   /* Retain fallback colors for tags and highlights */
   --sky-400: #0284c7;
@@ -27,14 +27,16 @@
 }
 
 body.dark-theme {
-  --background: #0b0f19;
-  --foreground: #ffffff;
-  --border-primary: 2px solid #ffffff;
-  --border-thick: 3px solid #ffffff;
-  --neo-shadow: 4px 4px 0px #ffffff;
-  --neo-shadow-large: 6px 6px 0px #ffffff;
-  --card-bg: #161e2e;
-  --card-border: 2px solid #ffffff;
+  --background: #070a12;
+  --foreground: #f8fafc;
+  --accent-green: #b9ff81;
+  --accent-blue: #80e2ff;
+  --border-primary: 1px solid rgba(255, 255, 255, 0.1);
+  --border-thick: 1px solid rgba(255, 255, 255, 0.12);
+  --neo-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  --neo-shadow-large: 0 20px 50px rgba(0, 0, 0, 0.5);
+  --card-bg: rgba(15, 23, 42, 0.4);
+  --card-border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 * {
@@ -51,15 +53,23 @@ body {
   font-family: var(--font-sans);
   color: var(--foreground);
   background-color: var(--background);
-  background-image: radial-gradient(rgba(25, 26, 35, 0.08) 1.5px, transparent 1.5px);
-  background-size: 24px 24px;
+  background-image: 
+    radial-gradient(circle at 15% 20%, rgba(34, 197, 94, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 85% 60%, rgba(2, 132, 199, 0.04) 0%, transparent 40%),
+    radial-gradient(rgba(15, 23, 42, 0.08) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 28px 28px;
   overflow-x: hidden;
   position: relative;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.35s ease, color 0.35s ease;
 }
 
 body.dark-theme {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.12) 1.5px, transparent 1.5px);
+  background-color: #070a12;
+  background-image: 
+    radial-gradient(circle at 15% 20%, rgba(185, 255, 129, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 85% 60%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
+    radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 28px 28px;
 }
 
 body::before {
@@ -131,7 +141,7 @@ body::before {
 }
 
 /* ==========================================================================
-   Neo-Brutalist Theme Toggle Button
+   Glassmorphic Theme Toggle Button
    ========================================================================== */
 .theme-toggle-btn {
   position: fixed;
@@ -140,27 +150,34 @@ body::before {
   z-index: 9999;
   width: 44px;
   height: 44px;
-  border-radius: 8px;
-  background-color: var(--background);
-  color: var(--foreground);
-  border: var(--border-primary);
-  box-shadow: var(--neo-shadow);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  color: #0f172a;
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   font-size: 20px;
-  transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out, background-color 0.15s ease-in-out;
+  backdrop-filter: blur(12px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body.dark-theme .theme-toggle-btn {
+  background: rgba(15, 23, 42, 0.6);
+  color: #f8fafc;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .theme-toggle-btn:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px var(--foreground);
-  background-color: var(--accent-green);
-  color: #191a23;
+  transform: scale(1.08);
+  border-color: var(--accent-green);
+  box-shadow: 0 6px 20px rgba(34, 197, 94, 0.3);
 }
 
-.theme-toggle-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px var(--foreground);
+body.dark-theme .theme-toggle-btn:hover {
+  border-color: #b9ff81;
+  box-shadow: 0 6px 20px rgba(185, 255, 129, 0.3);
 }
