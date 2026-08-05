@@ -187,7 +187,7 @@ const gameProjectsData = [
     tags: ["Unity 6", "Endless Runner", "C#", "Graphics Optimization", "Sound Artist"],
     // HUD Stats
     engine: "Unity 6",
-    complexity: "88%",
+    complexity: "58%",
     stage: "Playable Build",
     tools: "Unity 6, C#, New Input System",
     logEntries: [

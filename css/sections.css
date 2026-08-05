@@ -348,23 +348,25 @@ body.dark-theme .bullet {
   margin-bottom: 24px;
 }
 
-.project-grid-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+.projects-carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
 }
 
-@media (min-width: 640px) {
-  .project-grid-row {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.projects-carousel-track-container {
+  overflow: hidden;
+  width: 100%;
+  padding: 15px 5px 25px 5px;
 }
 
-@media (min-width: 768px) {
-  .project-grid-row {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
+.project-carousel-track {
+  display: flex;
+  gap: 20px;
+  transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: transform;
 }
 
 .project-card-wrapper {
@@ -378,6 +380,87 @@ body.dark-theme .bullet {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   overflow: hidden;
   z-index: 1;
+  flex: 0 0 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .project-card-wrapper {
+    flex: 0 0 calc(50% - 10px);
+  }
+}
+
+@media (min-width: 992px) {
+  .project-card-wrapper {
+    flex: 0 0 calc(33.333% - 13.33px);
+  }
+}
+
+/* Carousel Control Buttons */
+.carousel-nav-btn {
+  background: rgba(25, 26, 35, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  z-index: 10;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  flex-shrink: 0;
+}
+
+body.dark-theme .carousel-nav-btn {
+  background: rgba(15, 23, 42, 0.8);
+  border-color: rgba(185, 255, 129, 0.2);
+  color: #b9ff81;
+}
+
+.carousel-nav-btn:hover {
+  background: #b9ff81;
+  color: #0b0f19;
+  box-shadow: 0 0 15px rgba(185, 255, 129, 0.6);
+  transform: scale(1.1);
+}
+
+.carousel-nav-btn:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.carousel-dots-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+body.dark-theme .carousel-dot {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.carousel-dot.active {
+  width: 28px;
+  border-radius: 12px;
+  background: #b9ff81;
+  box-shadow: 0 0 10px rgba(185, 255, 129, 0.6);
 }
 
 body.dark-theme .project-card-wrapper {

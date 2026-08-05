@@ -77,11 +77,100 @@ document.addEventListener("DOMContentLoaded", () => {
     renderGroup(gridWeb, "web");
   };
 
+  let currentCarouselIndex = 0;
+  let currentFilteredProjects = [];
+
+  const updateCarouselTrack = () => {
+    const track = document.getElementById("projects-grid");
+    const prevBtn = document.getElementById("proj-prev-btn");
+    const nextBtn = document.getElementById("proj-next-btn");
+    const dotsContainer = document.getElementById("projects-carousel-dots");
+    if (!track) return;
+
+    const cards = track.querySelectorAll(".project-card-wrapper");
+    if (cards.length === 0) return;
+
+    // Calculate items visible per view
+    let itemsPerView = 1;
+    if (window.innerWidth >= 992) {
+      itemsPerView = 3;
+    } else if (window.innerWidth >= 640) {
+      itemsPerView = 2;
+    }
+
+    const maxIndex = Math.max(0, cards.length - itemsPerView);
+    if (currentCarouselIndex > maxIndex) {
+      currentCarouselIndex = maxIndex;
+    }
+    if (currentCarouselIndex < 0) {
+      currentCarouselIndex = 0;
+    }
+
+    // Calculate translation percentage or pixel distance
+    const cardWidth = cards[0].offsetWidth;
+    const gap = 20;
+    const translateX = currentCarouselIndex * (cardWidth + gap);
+    track.style.transform = `translateX(-${translateX}px)`;
+
+    // Update Nav Buttons State
+    if (prevBtn) prevBtn.disabled = currentCarouselIndex === 0;
+    if (nextBtn) nextBtn.disabled = currentCarouselIndex >= maxIndex;
+
+    // Update Pagination Dots
+    if (dotsContainer) {
+      const totalPages = maxIndex + 1;
+      dotsContainer.innerHTML = Array.from({ length: totalPages }, (_, i) => `
+        <span class="carousel-dot ${i === currentCarouselIndex ? 'active' : ''}" data-index="${i}"></span>
+      `).join('');
+
+      dotsContainer.querySelectorAll(".carousel-dot").forEach(dot => {
+        dot.addEventListener("click", () => {
+          currentCarouselIndex = parseInt(dot.getAttribute("data-index"));
+          updateCarouselTrack();
+        });
+      });
+    }
+  };
+
+  const setupCarouselNav = () => {
+    const prevBtn = document.getElementById("proj-prev-btn");
+    const nextBtn = document.getElementById("proj-next-btn");
+
+    if (prevBtn) {
+      prevBtn.addEventListener("click", () => {
+        if (currentCarouselIndex > 0) {
+          currentCarouselIndex--;
+          updateCarouselTrack();
+        }
+      });
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener("click", () => {
+        let itemsPerView = 1;
+        if (window.innerWidth >= 992) itemsPerView = 3;
+        else if (window.innerWidth >= 640) itemsPerView = 2;
+
+        const maxIndex = Math.max(0, currentFilteredProjects.length - itemsPerView);
+        if (currentCarouselIndex < maxIndex) {
+          currentCarouselIndex++;
+          updateCarouselTrack();
+        }
+      });
+    }
+
+    window.addEventListener("resize", () => {
+      updateCarouselTrack();
+    });
+  };
+
   const renderProjects = (category = "game-design") => {
     const projectsGrid = document.getElementById("projects-grid");
     if (!projectsGrid) return;
 
     const allProjects = [...gameProjectsData, ...webProjectsData];
+    currentFilteredProjects = allProjects.filter(proj => proj.category === category);
+    currentCarouselIndex = 0;
 
     const createProjectCard = (proj) => `
       <div class="project-card-wrapper" 
@@ -122,10 +211,13 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
-    projectsGrid.innerHTML = allProjects
-      .filter(proj => proj.category === category)
+    projectsGrid.innerHTML = currentFilteredProjects
       .map(createProjectCard)
       .join('');
+
+    setTimeout(() => {
+      updateCarouselTrack();
+    }, 50);
   };
 
   const updateTabIndicator = (activeBtn) => {
@@ -188,6 +280,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderSkills();
   renderProjects("game-design");
   setupProjectsTabs();
+  setupCarouselNav();
   renderCertificates();
 
 

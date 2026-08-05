@@ -224,10 +224,25 @@
         </div>
       </div>
 
-      <!-- Unified Dynamic Projects Grid -->
-      <div id="projects-grid" class="project-grid-row">
-        <!-- Dynamically populated from data.js -->
+      <!-- Unified Dynamic Projects Carousel Container -->
+      <div class="projects-carousel-wrapper">
+        <button class="carousel-nav-btn prev-btn" id="proj-prev-btn" aria-label="Previous Projects">
+          <span>&#10094;</span>
+        </button>
+
+        <div class="projects-carousel-track-container">
+          <div id="projects-grid" class="project-carousel-track">
+            <!-- Dynamically populated from data.js -->
+          </div>
+        </div>
+
+        <button class="carousel-nav-btn next-btn" id="proj-next-btn" aria-label="Next Projects">
+          <span>&#10095;</span>
+        </button>
       </div>
+
+      <!-- Carousel Pagination Dots -->
+      <div id="projects-carousel-dots" class="carousel-dots-container"></div>
     </section>
 
     <!-- Certificates & Achievements Section -->
