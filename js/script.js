@@ -226,6 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const createProjectCard = (proj) => `
       <div class="project-card-wrapper" 
+        data-id="${proj.id}"
         data-category="${proj.category}"
         data-title="${proj.title}" 
         data-subtitle="${proj.subtitle}"
@@ -590,14 +591,46 @@ document.addEventListener("DOMContentLoaded", () => {
     if (modalDescription) modalDescription.textContent = desc;
 
     if (modalStatEngine) modalStatEngine.textContent = engine;
-    if (modalStatComplexity) modalStatComplexity.textContent = complexity;
     if (modalStatStage) modalStatStage.textContent = stage;
     if (modalStatTools) modalStatTools.textContent = tools;
 
-    // Update complexity progress bar fill
-    const complexityFill = document.getElementById("modal-complexity-fill");
-    if (complexityFill) {
-      complexityFill.style.width = complexity.includes('%') ? complexity : `${complexity}%`;
+    // Populate Dynamic Expert Designer Review Breakdown
+    const modalExpertSection = document.getElementById("modal-expert-section");
+    if (modalExpertSection) {
+      const projId = card.getAttribute("data-id");
+      const allProjects = [...gameProjectsData, ...webProjectsData];
+      const projectObj = allProjects.find(p => p.id === projId);
+
+      let expertHtml = "";
+      if (projectObj && projectObj.expertPillars && projectObj.expertMetrics) {
+        const titleText = category === "game-design" ? "Design Philosophy & Production Quality" 
+                        : category === "game-art" ? "Art Direction & Asset Production"
+                        : "Frontend Design & Architectural Quality";
+        
+        expertHtml = `
+          <h5 class="modal-section-title">${titleText}</h5>
+          <div class="expert-block">
+            ${projectObj.expertPillars.map(p => `
+              <div class="expert-pillar-item">
+                <span class="expert-pillar-icon">${p.icon}</span>
+                <div>
+                  <strong class="expert-pillar-title">${p.title}</strong>
+                  <p class="expert-pillar-desc">${p.desc}</p>
+                </div>
+              </div>
+            `).join('')}
+            <div class="expert-metrics-row">
+              ${projectObj.expertMetrics.map(m => `
+                <div class="expert-metric-badge">
+                  <span class="metric-val">${m.val}</span>
+                  <span class="metric-lbl">${m.lbl}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+      modalExpertSection.innerHTML = expertHtml;
     }
 
     // Populate Logs
@@ -885,7 +918,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <div style="display:flex; flex-direction:column; gap:2px; max-width:85%;">
             <div style="font-weight:bold; color:#22c55e; word-break:break-all;">${lead.name}</div>
             ${lead.email ? `<div style="font-size:9px; color:#38bdf8; word-break:break-all;">📧 ${lead.email}</div>` : ''}
-            ${lead.companyLink ? `<div style="font-size:9px; color:#fbbf24; word-break:break-all;">🔗 <a href="${lead.companyLink.startsWith('http') ? lead.companyLink : 'https://' + lead.companyLink}" target="_blank" rel="noopener noreferrer" style="color:#fbbf24; text-decoration:underline;">${lead.companyLink}</a></div>` : ''}
+            ${lead.message ? `<div style="font-size:9px; color:#cbd5e1; word-break:break-all; background:rgba(0,0,0,0.15); padding:4px 6px; border-radius:4px; margin-top:2px; border-left:2px solid #22c55e;">💬 ${lead.message}</div>` : ''}
             <div style="font-size:8px; color:#94a3b8;">${lead.timestamp}</div>
           </div>
           <button onclick="window.Telemetry.deleteHiringLead(${idx})" style="background:transparent; border:none; color:#ef4444; font-size:11px; cursor:pointer; padding:4px;" title="Delete Lead">🗑️</button>
@@ -903,6 +936,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const hireNameInput = document.getElementById("hire-name-input");
   const hireEmailInput = document.getElementById("hire-email-input");
   const hireLinkInput = document.getElementById("hire-link-input");
+  const hireMessageInput = document.getElementById("hire-message-input");
   const hireErrorMsg = document.getElementById("hire-error-msg");
 
   const openHireModal = () => {
@@ -915,6 +949,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
       if (hireEmailInput) hireEmailInput.value = "";
       if (hireLinkInput) hireLinkInput.value = "";
+      if (hireMessageInput) hireMessageInput.value = "";
       if (hireErrorMsg) hireErrorMsg.classList.add("hidden");
     }
   };
@@ -928,14 +963,42 @@ document.addEventListener("DOMContentLoaded", () => {
     const val = hireNameInput ? hireNameInput.value.trim() : "";
     const emailVal = hireEmailInput ? hireEmailInput.value.trim() : "";
     const linkVal = hireLinkInput ? hireLinkInput.value.trim() : "";
+    const messageVal = hireMessageInput ? hireMessageInput.value.trim() : "";
     if (!val) {
       if (hireErrorMsg) hireErrorMsg.classList.remove("hidden");
       return;
     }
 
     if (window.Telemetry && typeof window.Telemetry.addHiringLead === 'function') {
-      window.Telemetry.addHiringLead(val, emailVal, linkVal);
+      window.Telemetry.addHiringLead(val, emailVal, linkVal, messageVal);
       window.updateDashboardHiringUI();
+    }
+
+    // Web3Forms integration - Sends form details directly to your email
+    const web3FormsKey = "YOUR_ACCESS_KEY_HERE"; // <-- Yahan apni Web3Forms key dalein
+    if (web3FormsKey && web3FormsKey !== "YOUR_ACCESS_KEY_HERE") {
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({
+          access_key: web3FormsKey,
+          name: val,
+          email: emailVal,
+          link: linkVal,
+          subject: `New Lead: ${val} wants to connect!`,
+          from_name: "Shoubhik's Portfolio"
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Web3Forms Success:", data);
+      })
+      .catch(error => {
+        console.error("Web3Forms Error:", error);
+      });
     }
 
     closeHireModal();

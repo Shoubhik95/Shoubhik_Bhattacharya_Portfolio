@@ -520,11 +520,11 @@ window.Telemetry = (() => {
     });
 
     // 6. Hiring Interest Helper
-    window.Telemetry.addHiringLead = (name, email = '', companyLink = '') => {
+    window.Telemetry.addHiringLead = (name, email = '', companyLink = '', message = '') => {
       fetch('/api/hiring-lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, companyLink })
+        body: JSON.stringify({ name, email, companyLink, message })
       })
       .then(res => {
         if (res.ok) {

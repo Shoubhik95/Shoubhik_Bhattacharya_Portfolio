@@ -153,7 +153,7 @@
 
         // --- 6. Add Hiring Lead ---
         if (url === '/api/hiring-lead' && method === 'POST') {
-          const { name, email, companyLink } = body;
+          const { name, email, companyLink, message } = body;
           if (!name || name.trim() === '') {
             return jsonResponse({ error: 'Name is required' }, 400);
           }
@@ -162,6 +162,7 @@
             name: name.trim(),
             email: (email || '').trim(),
             companyLink: (companyLink || '').trim(),
+            message: (message || '').trim(),
             timestamp: new Date().toLocaleString()
           };
 

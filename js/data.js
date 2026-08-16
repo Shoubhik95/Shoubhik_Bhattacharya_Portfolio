@@ -153,6 +153,15 @@ const gameProjectsData = [
       "Custom C# player controller and inventory scripting complete.",
       "Integrated 2D/3D dynamic lighting and dark ambient audio.",
       "Final game compilation and publishing live on Itch.io."
+    ],
+    expertPillars: [
+      { icon: "🎯", title: "Survival Systems & Loop Balance", desc: "Balanced real-time survival variables (health, stamina, hunger) against enemy spawning parameters to create a challenging gameplay loop." },
+      { icon: "⚡", title: "Lighting & Audio Atmosphere", desc: "Designed dynamic lighting overlays combined with ambient sound loops inside ProBuilder to build a high-tension forest experience." }
+    ],
+    expertMetrics: [
+      { val: "60 FPS", lbl: "Target Frame Rate" },
+      { val: "Custom C#", lbl: "Player Controller" },
+      { val: "ProBuilder", lbl: "Scene Modeling" }
     ]
   },
   {
@@ -171,20 +180,31 @@ const gameProjectsData = [
     tools: "UE5, VR Interaction Toolkit, 3D Models",
     logEntries: [
       "Stitched campus blueprints into layout reference grids.",
-      "High-poly mesh modeling of main buildings inside Blender.",
+      "High-poly mesh modeling of main buildings directly inside Unreal Engine using built-in modeling tools.",
       "Configured Lumen lighting environment for outdoor and indoor consistency.",
       "Coded smooth teleport locomotion controls and interactive nodes."
+    ],
+    expertPillars: [
+      { icon: "🕶️", title: "Locomotion Comfort Mechanics", desc: "Programmed precise teleport navigation interfaces inside VR Interaction Toolkit to eliminate simulator sickness." },
+      { icon: "📐", title: "High-Fidelity CAD Scaling", desc: "Constructed detailed structures directly within Unreal Engine using built-in modeling toolsets mapped to real university coordinate blueprints for complete scale accuracy." }
+    ],
+    expertMetrics: [
+      { val: "Lumen GI", lbl: "Unreal Engine Lighting" },
+      { val: "Comfort", lbl: "VR Motion Comfort" },
+      { val: "1:1 blueprints", lbl: "Spatial Fidelity" }
     ]
   },
   {
     id: "the-royal-king",
     category: "game-design",
-    title: "The Royal King",
+    title: "King Runner",
     subtitle: "ENDLESS RUNNER (UNITY 6)",
     desc: "A fast-paced 3D endless runner game built completely in Unity 6, inspired by Subway Surfers.",
     longDesc: "Endless runner mechanics built ground-up in Unity 6 inspired by Subway Surfers.|Dynamic procedural track chunk spawner with smooth continuous level generation.|Custom collectable scripts, modern New Input System integration, and sound design.|High performance graphics optimization for smooth gameplay and stylized environment design.",
     images: "public/game dev and design/royal_king.png",
     tags: ["Unity 6", "Endless Runner", "C#", "Graphics Optimization", "Sound Artist"],
+    link: "https://shoubhik-bhattacharya.itch.io/king-runner",
+    linkText: "Play Itch.io",
     // HUD Stats
     engine: "Unity 6",
     complexity: "58%",
@@ -197,6 +217,15 @@ const gameProjectsData = [
       "Graphics Optimization: Optimized low-poly shaders, mesh batching, and performance metrics.",
       "Environment Design: Crafted medieval castle runway and environment assets.",
       "Sound Artist: Produced audio soundscapes, footsteps, and coin pickup sound effects."
+    ],
+    expertPillars: [
+      { icon: "⚡", title: "Procedural Spawner Pooling", desc: "Engineered object pooling algorithms that instantiate obstacles dynamically ahead of the runner without causing garbage collection spikes." },
+      { icon: "🎯", title: "Fluid Gesture Integration", desc: "Utilized Unity's New Input System to build swipe and lane-shifting movements, achieving responsive controls." }
+    ],
+    expertMetrics: [
+      { val: "Zero GC", lbl: "Pooling Performance" },
+      { val: "New Input", lbl: "Controls Stack" },
+      { val: "Stylized", lbl: "Visual Aesthetic" }
     ]
   },
   {
@@ -218,6 +247,15 @@ const gameProjectsData = [
       "Modeled low-poly meshes keeping clean edge loop topology.",
       "Unwrapped UV map projections and painted detailed color maps.",
       "Constructed complete armature bones with IK/FK constraints."
+    ],
+    expertPillars: [
+      { icon: "🎨", title: "Stylized Deformation Topology", desc: "Sculpted clean model geometry inside Blender, organizing edge loops to support rig movements and joints." },
+      { icon: "🖌️", title: "Hand-Painted Asset Texturing", desc: "Authored specialized diffuse overlays with hand-painted shading details to highlight asset depth." }
+    ],
+    expertMetrics: [
+      { val: "Clean Quads", lbl: "Topology Standard" },
+      { val: "IK / FK", lbl: "Rig Controls" },
+      { val: "Low-Poly", lbl: "GPU Optimized" }
     ]
   },
   {
@@ -241,6 +279,15 @@ const gameProjectsData = [
       "Sculpted clean stylized character mesh within Blender viewport.",
       "Generated detailed texture overlays inside Substance Painter.",
       "Assembled skeleton armature constraints and compiled final render shots."
+    ],
+    expertPillars: [
+      { icon: "🐰", title: "Charming Character Design", desc: "Created whimsical asset outlines emphasizing clean facial and body features optimized for layout reads." },
+      { icon: "🎨", title: "Substance Texturing Pipeline", desc: "Designed roughness-metallic shader layouts to define stylistic character appeal." }
+    ],
+    expertMetrics: [
+      { val: "Blender Texture", lbl: "Texturing Pipeline" },
+      { val: "Cycles 4K", lbl: "Render Quality" },
+      { val: "Armature", lbl: "Rig Controls" }
     ]
   },
   {
@@ -264,6 +311,15 @@ const gameProjectsData = [
       "Painted hand-crafted textures in Substance Painter.",
       "Rigged facial expressions and body mechanics.",
       "Rendered final beauty shots in Blender Cycles."
+    ],
+    expertPillars: [
+      { icon: "👹", title: "Character Design & Appeals", desc: "Structured visual curves with squash-and-stretch capabilities to deliver dynamic expressions." },
+      { icon: "🎬", title: "Cinematic Lighting Setup", desc: "Authored multi-point studio light layers in Cycles to highlight material textures." }
+    ],
+    expertMetrics: [
+      { val: "Cycles Render", lbl: "Engine Selection" },
+      { val: "Rig Controls", lbl: "Animation Ready" },
+      { val: "Stylized", lbl: "Creative Theme" }
     ]
   },
   {
@@ -285,6 +341,15 @@ const gameProjectsData = [
       "Re-topologized meshes for production-ready model limits.",
       "Crafted procedural glowing shader networks in Blender Node Editor.",
       "Set up dynamic studio cameras and Cycles rendering pipelines."
+    ],
+    expertPillars: [
+      { icon: "✨", title: "Emissive Shader Workflows", desc: "Programmed specialized pulsing emission nodes to illuminate baby visual elements organically." },
+      { icon: "📐", title: "Model Optimization Scale", desc: "Designed stylized proportions while keeping polygon limits low for real-time engines." }
+    ],
+    expertMetrics: [
+      { val: "Emission", lbl: "Shader Type" },
+      { val: "Low-Poly", lbl: "Real-time Target" },
+      { val: "Cycles", lbl: "Visual Pipeline" }
     ]
   },
   {
@@ -309,6 +374,15 @@ const gameProjectsData = [
       "Developed keyboard arrow control mapping for responsive car steering.",
       "Implemented coin spawning, score calculations, and collision mechanics.",
       "Deployed project repository to GitHub and live build to Vercel."
+    ],
+    expertPillars: [
+      { icon: "🏎️", title: "Lightweight Game Loop", desc: "Built dynamic animation framing loops managing velocity thresholds and coin collection triggers." },
+      { icon: "⌨️", title: "Sleek Controller Listening", desc: "Programmed active keyboard arrow listeners to handle vehicle horizontal steering." }
+    ],
+    expertMetrics: [
+      { val: "Vanilla JS", lbl: "Zero Framework Load" },
+      { val: "Arrow keys", lbl: "Control Format" },
+      { val: "Sleek CSS", lbl: "Layout Stack" }
     ]
   }
 ];
@@ -337,6 +411,15 @@ const webProjectsData = [
       "Developed secure authorization panel and coordinator contact portal.",
       "Implemented live event seating tracker and dynamic entry pass generation.",
       "Successfully integrated Git version control and hosted on Netlify."
+    ],
+    expertPillars: [
+      { icon: "💼", title: "Complex Campus Telemetry", desc: "Built comprehensive hub components displaying club details, seating limits, and dynamic pass generation." },
+      { icon: "⚡", title: "Responsive Grid Hierarchy", desc: "Designed layout templates using flexible CSS components to ensure readability across all devices." }
+    ],
+    expertMetrics: [
+      { val: "Sub-1s Paint", lbl: "Performance Score" },
+      { val: "Vanilla JS", lbl: "Scripting Core" },
+      { val: "100% Flex", lbl: "Layout Architecture" }
     ]
   },
   {
@@ -360,6 +443,15 @@ const webProjectsData = [
       "Built semantic core web structure supporting desktop/mobile viewports.",
       "Coded click hotspot coordinates to load spatial context cards.",
       "Hosted production builds via Netlify CI/CD pipeline integrations."
+    ],
+    expertPillars: [
+      { icon: "🌐", title: "Pannellum Alignments", desc: "Structured seamless panoramic coordinate maps using the Pannellum API for full interactive views." },
+      { icon: "📍", title: "Interactive Coordinates", desc: "Coded coordinate markers that prompt detailed popup context badges on cursor activation." }
+    ],
+    expertMetrics: [
+      { val: "Pannellum", lbl: "API Platform" },
+      { val: "Seamless", lbl: "Panoramic Stitch" },
+      { val: "Adaptive", lbl: "Viewport Layout" }
     ]
   },
   {
@@ -384,6 +476,15 @@ const webProjectsData = [
       "Implemented interactive navigation and destination search system.",
       "Optimized image assets and UI transitions for smooth browsing.",
       "Deployed to Netlify and performed cross-device testing."
+    ],
+    expertPillars: [
+      { icon: "🕌", title: "Responsive Destination Grids", desc: "Developed intuitive filter-enabled menus matching user searches to locations." },
+      { icon: "🖼️", title: "Media Optimization Layers", desc: "Optimized tourist location images and combined them with smooth styling states." }
+    ],
+    expertMetrics: [
+      { val: "Sub-800ms", lbl: "Load Speed" },
+      { val: "Mobile-First", lbl: "Layout Grid" },
+      { val: "Zero Frame", lbl: "DOM Overhead" }
     ]
   },
   {
@@ -407,6 +508,15 @@ const webProjectsData = [
       "Configured dynamic project cards and details modal with image sliders.",
       "Implemented custom Web Audio sound system and typing effect animations.",
       "Integrated telemetry logger dashboard with real-time analytics tracking."
+    ],
+    expertPillars: [
+      { icon: "🎮", title: "Interactive UI Modules", desc: "Constructed custom audio-feedback engines and gamified HUD grids for responsive player actions." },
+      { icon: "⚙️", title: "Dynamic Local Analytics", desc: "Wrote lightweight local telemetry logging scripts that store viewer session parameters." }
+    ],
+    expertMetrics: [
+      { val: "Web Audio", lbl: "Sound System" },
+      { val: "Firebase", lbl: "Data Sync Score" },
+      { val: "Vanilla", lbl: "Development Tech" }
     ]
   }
 ];
