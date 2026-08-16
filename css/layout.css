@@ -145,7 +145,7 @@
   border-radius: 24px;
   padding: 32px;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   transition: all 0.4s ease;
 }
 
@@ -394,6 +394,20 @@ body.dark-theme .highlight-green {
   color: #ffffff !important;
   border-color: #0077b5 !important;
   box-shadow: 0 0 15px #0077b5 !important;
+}
+
+.social-badge[href*="mailto"]:hover {
+  background: #fbbf24 !important;
+  color: #11151f !important;
+  border-color: #fbbf24 !important;
+  box-shadow: 0 0 15px #fbbf24 !important;
+}
+
+.dropdown-badge:hover .social-badge {
+  background: linear-gradient(135deg, #ff81df 0%, #fa5c5c 100%) !important;
+  color: #11151f !important;
+  border-color: #ff81df !important;
+  box-shadow: 0 0 15px rgba(255, 129, 223, 0.6) !important;
 }
 
 /* Fancy Conic Border Buttons */
@@ -689,5 +703,83 @@ body.dark-theme .profile-avatar-container {
     max-width: 240px;
     aspect-ratio: 3 / 4;
   }
+}
+
+/* Dropdown Menu for ArtStation / Itch.io Portfolios */
+.dropdown-badge {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-badge .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 8px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  z-index: 100;
+  min-width: 160px;
+  overflow: visible; /* Changed to visible to let pseudo-element work */
+  backdrop-filter: blur(12px);
+  flex-direction: column;
+}
+
+/* Pseudo-element bridge to prevent hover loss between button and menu */
+.dropdown-badge .dropdown-menu::before {
+  content: '';
+  position: absolute;
+  top: -12px;
+  left: 0;
+  right: 0;
+  height: 12px;
+  background: transparent;
+}
+
+/* Keep dropdown open when user hovers over trigger or menu */
+.dropdown-badge:hover .dropdown-menu,
+.dropdown-badge:focus-within .dropdown-menu {
+  display: flex;
+}
+
+.dropdown-badge .dropdown-item {
+  padding: 10px 16px;
+  color: #94a3b8 !important;
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+  transition: all 0.2s ease;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: block;
+}
+
+.dropdown-badge .dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.dropdown-badge .dropdown-item.artstation-item:hover {
+  color: #ff81df !important;
+}
+
+.dropdown-badge .dropdown-item.itch-item:hover {
+  color: #fa5c5c !important;
+}
+
+.dropdown-badge .dropdown-item:first-of-type {
+  border-top-left-radius: 9px;
+  border-top-right-radius: 9px;
+}
+
+.dropdown-badge .dropdown-item:last-of-type {
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
 }
 

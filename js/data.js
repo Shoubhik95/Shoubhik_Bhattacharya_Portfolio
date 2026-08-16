@@ -463,7 +463,7 @@ const webProjectsData = [
     longDesc: "A comprehensive guide designed to help travelers discover top locations, attractions, and cultural details.|Built using modern responsive design patterns and dynamic navigation.|Includes immersive galleries and curated travel information.",
     images: "public/tourism/tourism_0.webp,public/tourism/tourism_1.webp,public/tourism/tourism_2.webp,public/tourism/tourism_3.webp",
     tags: ["HTML+CSS", "JavaScript", "Responsive Design"],
-    link: "https://our-indiatourism-guider.netlify.app/",
+    link: "https://ourchhattisgarhtourist.netlify.app/",
     linkText: "Visit Website",
     github: "https://github.com/Shoubhik95/Our-Chhattisgarh-tourist-website",
     // HUD Stats
