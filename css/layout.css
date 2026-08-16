@@ -754,23 +754,26 @@ body.dark-theme .profile-avatar-container {
   font-size: 12px;
   font-weight: 700;
   text-align: left;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   background: transparent;
   border: none;
+  border-left: 3px solid transparent;
   cursor: pointer;
   display: block;
 }
 
-.dropdown-badge .dropdown-item:hover {
-  background: rgba(255, 255, 255, 0.05);
-}
-
 .dropdown-badge .dropdown-item.artstation-item:hover {
+  background: rgba(255, 129, 223, 0.15) !important;
   color: #ff81df !important;
+  border-left-color: #ff81df;
+  padding-left: 19px; /* Smooth shift to the right */
 }
 
 .dropdown-badge .dropdown-item.itch-item:hover {
+  background: rgba(250, 92, 92, 0.15) !important;
   color: #fa5c5c !important;
+  border-left-color: #fa5c5c;
+  padding-left: 19px; /* Smooth shift to the right */
 }
 
 .dropdown-badge .dropdown-item:first-of-type {
