@@ -603,10 +603,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       let expertHtml = "";
       if (projectObj && projectObj.expertPillars && projectObj.expertMetrics) {
-        const titleText = category === "game-design" ? "Design Philosophy & Production Quality" 
-                        : category === "game-art" ? "Art Direction & Asset Production"
-                        : "Frontend Design & Architectural Quality";
-        
+        const titleText = category === "game-design" ? "Design Philosophy & Production Quality"
+          : category === "game-art" ? "Art Direction & Asset Production"
+            : "Frontend Design & Architectural Quality";
+
         expertHtml = `
           <h5 class="modal-section-title">${titleText}</h5>
           <div class="expert-block">
@@ -975,7 +975,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Web3Forms integration - Sends form details directly to your email
-    const web3FormsKey = "YOUR_ACCESS_KEY_HERE"; // <-- Yahan apni Web3Forms key dalein
+    const web3FormsKey = "df88249e-ff86-42b9-88b0-c3dd4e281d24";
     if (web3FormsKey && web3FormsKey !== "YOUR_ACCESS_KEY_HERE") {
       fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -992,13 +992,13 @@ document.addEventListener("DOMContentLoaded", () => {
           from_name: "Shoubhik's Portfolio"
         })
       })
-      .then(response => response.json())
-      .then(data => {
-        console.log("Web3Forms Success:", data);
-      })
-      .catch(error => {
-        console.error("Web3Forms Error:", error);
-      });
+        .then(response => response.json())
+        .then(data => {
+          console.log("Web3Forms Success:", data);
+        })
+        .catch(error => {
+          console.error("Web3Forms Error:", error);
+        });
     }
 
     closeHireModal();
