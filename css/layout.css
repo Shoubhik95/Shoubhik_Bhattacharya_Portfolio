@@ -46,7 +46,9 @@
 }
 
 @keyframes ping {
-  75%, 100% {
+
+  75%,
+  100% {
     transform: scale(2);
     opacity: 0;
   }
@@ -145,7 +147,7 @@
   border-radius: 24px;
   padding: 32px;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   transition: all 0.4s ease;
 }
 
@@ -153,6 +155,23 @@ body.dark-theme .about-card {
   background: rgba(11, 17, 30, 0.5) !important;
   border: 1px solid rgba(255, 255, 255, 0.08) !important;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5) !important;
+}
+
+.about-video-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.15;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+body.light-theme .about-video-bg {
+  opacity: 0.06;
 }
 
 @media (min-width: 768px) {
@@ -165,11 +184,15 @@ body.dark-theme .about-card {
   display: grid;
   grid-template-columns: 1fr;
   gap: 48px;
+  position: relative;
+  z-index: 1;
 }
 
 @media (min-width: 768px) {
   .about-grid {
     grid-template-columns: 1.2fr 0.8fr;
+    position: relative;
+    z-index: 1;
   }
 }
 
@@ -291,6 +314,7 @@ body.dark-theme .highlight-green {
   border: 1px solid #3b82f6 !important;
   box-shadow: 0 0 10px rgba(59, 130, 246, 0.2) !important;
 }
+
 .btn-blue:hover {
   transform: translateY(-4px);
   background: #2563eb !important;
@@ -304,6 +328,7 @@ body.dark-theme .highlight-green {
   border: 1px solid rgba(255, 255, 255, 0.15) !important;
   box-shadow: none !important;
 }
+
 .btn-dark:hover {
   transform: translateY(-4px);
   border-color: #ffffff !important;
@@ -318,6 +343,7 @@ body.dark-theme .highlight-green {
   border: 1px solid var(--accent-green) !important;
   box-shadow: none !important;
 }
+
 .btn-outline-green:hover {
   transform: translateY(-4px);
   background: var(--accent-green) !important;
@@ -332,6 +358,7 @@ body.dark-theme .highlight-green {
   border: 1px solid var(--accent-blue) !important;
   box-shadow: none !important;
 }
+
 .btn-outline-blue:hover {
   transform: translateY(-4px);
   background: var(--accent-blue) !important;
@@ -368,11 +395,13 @@ body.dark-theme .highlight-green {
 }
 
 /* Individual hover effects */
-.social-badge[href*="Resume"]:hover, .social-badge[href*="docx"]:hover {
+.social-badge[href*="Resume"]:hover,
+.social-badge[href*="docx"]:hover {
   background: var(--accent-green) !important;
   color: #11151f !important;
   border-color: var(--accent-green) !important;
   box-shadow: 0 0 15px var(--accent-green) !important;
+  transform: translateY(-2px) scale(1.05);
 }
 
 .social-badge[href*="artstation"]:hover {
@@ -380,6 +409,15 @@ body.dark-theme .highlight-green {
   color: #11151f !important;
   border-color: #ff81df !important;
   box-shadow: 0 0 15px #ff81df !important;
+  transform: translateY(-2px) scale(1.05);
+}
+
+.social-badge[href*="itch"]:hover {
+  background: #fa5c5c !important;
+  color: #ffffff !important;
+  border-color: #fa5c5c !important;
+  box-shadow: 0 0 15px rgba(250, 92, 92, 0.6) !important;
+  transform: translateY(-2px) scale(1.05);
 }
 
 .social-badge[href*="github"]:hover {
@@ -387,6 +425,7 @@ body.dark-theme .highlight-green {
   color: #11151f !important;
   border-color: #ffffff !important;
   box-shadow: 0 0 15px #ffffff !important;
+  transform: translateY(-2px) scale(1.05);
 }
 
 .social-badge[href*="linkedin"]:hover {
@@ -394,6 +433,7 @@ body.dark-theme .highlight-green {
   color: #ffffff !important;
   border-color: #0077b5 !important;
   box-shadow: 0 0 15px #0077b5 !important;
+  transform: translateY(-2px) scale(1.05);
 }
 
 .social-badge[href*="mailto"]:hover {
@@ -401,6 +441,7 @@ body.dark-theme .highlight-green {
   color: #11151f !important;
   border-color: #fbbf24 !important;
   box-shadow: 0 0 15px #fbbf24 !important;
+  transform: translateY(-2px) scale(1.05);
 }
 
 .dropdown-badge:hover .social-badge {
@@ -651,7 +692,7 @@ body.dark-theme .profile-avatar-container {
     padding-top: 80px;
     padding-bottom: 64px;
   }
-  
+
   .scroll-mt {
     scroll-margin-top: 80px;
   }
@@ -664,36 +705,36 @@ body.dark-theme .profile-avatar-container {
     text-align: center;
     gap: 16px;
   }
-  
+
   .about-header-text {
     align-items: center;
   }
-  
+
   .profile-name {
     font-size: 28px;
     text-align: center;
   }
-  
+
   .about-tagline {
     font-size: 18px;
     text-align: center;
   }
-  
+
   .about-desc {
     font-size: 14px;
     text-align: center;
   }
-  
+
   .primary-ctas {
     justify-content: center;
     width: 100%;
   }
-  
+
   .primary-ctas .cta-btn {
     width: 100%;
     max-width: 320px;
   }
-  
+
   .secondary-socials {
     justify-content: center;
   }
@@ -705,84 +746,32 @@ body.dark-theme .profile-avatar-container {
   }
 }
 
-/* Dropdown Menu for ArtStation / Itch.io Portfolios */
-.dropdown-badge {
-  position: relative;
+
+
+/* Inline Interactive Link for About Bio */
+.about-studio-link {
+  color: #38bdf8 !important;
+  text-decoration: none;
+  font-weight: 700;
+  border-bottom: 1px dashed rgba(56, 189, 248, 0.4);
+  transition: all 0.2s ease;
   display: inline-block;
 }
 
-.dropdown-badge .dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: 8px;
-  background: rgba(15, 23, 42, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-  z-index: 100;
-  min-width: 160px;
-  overflow: visible; /* Changed to visible to let pseudo-element work */
-  backdrop-filter: blur(12px);
-  flex-direction: column;
+.about-studio-link:hover {
+  color: #00f0ff !important;
+  border-bottom-style: solid;
+  border-bottom-color: #00f0ff;
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.4);
 }
 
-/* Pseudo-element bridge to prevent hover loss between button and menu */
-.dropdown-badge .dropdown-menu::before {
-  content: '';
-  position: absolute;
-  top: -12px;
-  left: 0;
-  right: 0;
-  height: 12px;
-  background: transparent;
+body.light-theme .about-studio-link {
+  color: #0284c7 !important;
+  border-bottom: 1px dashed rgba(2, 132, 199, 0.4);
 }
 
-/* Keep dropdown open when user hovers over trigger or menu */
-.dropdown-badge:hover .dropdown-menu,
-.dropdown-badge:focus-within .dropdown-menu {
-  display: flex;
+body.light-theme .about-studio-link:hover {
+  color: #2563eb !important;
+  border-bottom-color: #2563eb;
+  text-shadow: none;
 }
-
-.dropdown-badge .dropdown-item {
-  padding: 10px 16px;
-  color: #94a3b8 !important;
-  text-decoration: none;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  font-weight: 700;
-  text-align: left;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  background: transparent;
-  border: none;
-  border-left: 3px solid transparent;
-  cursor: pointer;
-  display: block;
-}
-
-.dropdown-badge .dropdown-item.artstation-item:hover {
-  background: rgba(255, 129, 223, 0.15) !important;
-  color: #ff81df !important;
-  border-left-color: #ff81df;
-  padding-left: 19px; /* Smooth shift to the right */
-}
-
-.dropdown-badge .dropdown-item.itch-item:hover {
-  background: rgba(250, 92, 92, 0.15) !important;
-  color: #fa5c5c !important;
-  border-left-color: #fa5c5c;
-  padding-left: 19px; /* Smooth shift to the right */
-}
-
-.dropdown-badge .dropdown-item:first-of-type {
-  border-top-left-radius: 9px;
-  border-top-right-radius: 9px;
-}
-
-.dropdown-badge .dropdown-item:last-of-type {
-  border-bottom-left-radius: 9px;
-  border-bottom-right-radius: 9px;
-}
-

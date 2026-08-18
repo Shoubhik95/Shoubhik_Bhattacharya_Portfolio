@@ -18,18 +18,66 @@
   <!-- Modular CSS Stylesheets -->
   <link rel="stylesheet" href="./css/globals.css">
   <link rel="stylesheet" href="./css/layout.css">
-  <link rel="stylesheet" href="./css/components.css">
-  <link rel="stylesheet" href="./css/sections.css">
+  <link rel="stylesheet" href="./css/components/navbar.css">
+  <link rel="stylesheet" href="./css/components/buttons.css">
+  <link rel="stylesheet" href="./css/components/modals.css">
+  <link rel="stylesheet" href="./css/sections/about.css">
+  <link rel="stylesheet" href="./css/sections/skills.css">
+  <link rel="stylesheet" href="./css/sections/projects.css">
+  <link rel="stylesheet" href="./css/sections/experience.css">
+  <link rel="stylesheet" href="./css/sections/credentials.css">
+  <link rel="stylesheet" href="./css/sections/footer.css">
   <link rel="stylesheet" href="./css/hud-animations.css">
   <link rel="stylesheet" href="./css/core-animations.css">
 </head>
 
 <body>
 
-  <!-- Dark/Light Theme Toggle -->
-  <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle Theme">
-    <span class="toggle-icon">🌙</span>
-  </button>
+  <!-- High-Tech Cyber Navbar -->
+  <header class="cyber-header">
+    <div class="nav-container">
+      <a href="#about" class="nav-logo">
+        <span class="logo-accent">//</span> SHOUBHIK BHATTACHARYA
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="nav-links-desktop">
+        <a href="#about" class="nav-link active">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#experience" class="nav-link">Experience</a>
+        <a href="#certificates" class="nav-link">Credentials</a>
+      </nav>
+
+      <!-- Right Action Panel -->
+      <div class="nav-actions">
+        <!-- Dark/Light Theme Toggle inside Nav -->
+        <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle Theme">
+          <span class="toggle-icon">🌙</span>
+        </button>
+        <button id="nav-hire-btn" class="nav-cta-btn">HIRE ME</button>
+
+        <!-- Hamburger Menu Button -->
+        <button class="hamburger-menu-btn" id="hamburger-btn" aria-label="Toggle menu">
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+          <span class="hamburger-line"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobile-nav-overlay">
+      <div class="mobile-nav-content">
+        <a href="#about" class="mobile-nav-link">About</a>
+        <a href="#skills" class="mobile-nav-link">Skills</a>
+        <a href="#projects" class="mobile-nav-link">Projects</a>
+        <a href="#experience" class="mobile-nav-link">Experience</a>
+        <a href="#certificates" class="mobile-nav-link">Credentials</a>
+        <button id="mobile-nav-hire-btn" class="nav-cta-btn">HIRE ME</button>
+      </div>
+    </div>
+  </header>
 
   <!-- Gamified Emoji Background -->
   <div class="emoji-bg-container">
@@ -69,6 +117,9 @@
     <section id="about" class="scroll-mt">
       <h3 class="section-title">About</h3>
       <div class="about-card">
+        <video class="about-video-bg" autoplay loop muted playsinline>
+          <source src="public/SHOUBHIK.mp4" type="video/mp4">
+        </video>
         <div class="about-grid">
           <div class="about-info">
             <div class="about-header-group">
@@ -89,6 +140,11 @@
               <p class="about-desc">
                 Leveraging UE5, Unity, Blender, MetaHuman, and Sequencer to design cohesive, atmospheric, and
                 player-focused interactive experiences.
+              </p>
+              <p class="about-desc">
+                Also serving as the <strong>Founder of <a href="#experience" class="about-studio-link">Astrayuga
+                    Interactive</a></strong>, a small indie studio where our first major, highly-anticipated game
+                project is currently under active development.
               </p>
             </div>
 
@@ -126,19 +182,12 @@
                 class="social-badge" title="Download Resume">
                 Resume
               </a>
-              <div class="dropdown-badge">
-                <button class="social-badge" title="ArtStation / Itch.io" style="cursor: pointer;">
-                  ArtStation / Itch ▾
-                </button>
-                <div class="dropdown-menu">
-                  <a href="https://www.artstation.com/gamedev_shoubhik2" target="_blank" rel="noopener noreferrer" class="dropdown-item artstation-item">
-                    🎨 ArtStation
-                  </a>
-                  <a href="https://shoubhik-bhattacharya.itch.io/" target="_blank" rel="noopener noreferrer" class="dropdown-item itch-item">
-                    🎮 Itch.io
-                  </a>
-                </div>
-              </div>
+              <a href="https://www.artstation.com/gamedev_shoubhik2" target="_blank" rel="noopener noreferrer" class="social-badge" title="ArtStation">
+                ArtStation
+              </a>
+              <a href="https://shoubhik-bhattacharya.itch.io/" target="_blank" rel="noopener noreferrer" class="social-badge" title="Itch.io">
+                Itch.io
+              </a>
               <a href="https://github.com/Shoubhik95" target="_blank" rel="noopener noreferrer" class="social-badge"
                 title="GitHub">
                 GitHub
@@ -182,27 +231,7 @@
       </div>
     </section>
 
-    <!-- Showcase Reel Section -->
-    <section id="showcase-reel" class="scroll-mt border-divider">
-      <h3 class="section-title">Showcase Reel</h3>
-      <div class="showcase-card">
-        <div class="showcase-hud-header">
-          <div class="hud-header-left">
-            <span class="hud-console-title">SIGNAL ACQUIRED: GAME DEV SHOWCASE REEL</span>
-          </div>
-          <span class="hud-system-status">v1.4.2 // ONLINE</span>
-        </div>
-        <div class="showcase-video-container">
-          <video class="showcase-video" controls preload="metadata">
-            <source src="public/SHOUBHIK.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-          </video>
-          <div class="video-cyber-overlay">
-            <span class="scanner-line"></span>
-          </div>
-        </div>
-      </div>
-    </section>
+
 
     <!-- Project Portfolio Section -->
     <section id="projects" class="scroll-mt border-divider">
@@ -212,13 +241,13 @@
       <div class="projects-tabs-container">
         <div class="projects-tabs">
           <button class="tab-btn active" data-category="game-design">
-            <span class="tab-icon">🎮</span> Game Dev & Design
+            Game Dev & Design
           </button>
           <button class="tab-btn" data-category="game-art">
-            <span class="tab-icon">🎨</span> 3D Art & Animation
+            3D Art & Animation
           </button>
           <button class="tab-btn" data-category="web-projects">
-            <span class="tab-icon">💻</span> Web Projects
+            Web Projects
           </button>
           <div class="tab-slider-indicator"></div>
         </div>
@@ -249,111 +278,30 @@
     <section id="experience" class="scroll-mt border-divider">
       <div class="exp-section-header">
         <h3 class="section-title">Work & Project Experience</h3>
-        <div class="cyber-disclaimer-pill">
-          <span class="disclaimer-text">Focused on <strong>Independent & Academic Projects</strong> (No Corporate
-            Employment Yet)</span>
-        </div>
       </div>
 
       <div class="experience-timeline-container">
-        <!-- Experience 0: King Runner -->
-        <div class="exp-timeline-item">
+        <!-- Primary Experience Card: Astrayuga Interactive -->
+        <div class="exp-timeline-item primary-exp-item">
           <div class="exp-timeline-badge">
-            <span class="exp-year">2026 (3 Months)</span>
-            <span class="exp-type-badge badge-personal">Personal Project</span>
+            <span class="exp-year">2024 - PRESENT</span>
+            <span class="exp-type-badge badge-studio">Own Indie Studio</span>
           </div>
-          <div class="exp-card">
+          <div class="exp-card primary-exp-card">
             <div class="exp-header">
-              <div class="exp-role-title">Lead Game Developer & Technical Designer</div>
-              <div class="exp-company">King Runner (Unity 6)</div>
+              <div class="exp-company">Astrayuga Interactive</div>
+              <div class="exp-role-title">Founder of Astrayuga</div>
             </div>
             <p class="exp-desc">
-              Spent 3 months in 2026 developing "King Runner" ground-up as an independent personal project in Unity
-              6. Engineered chunk spawner
-              algorithms, collectible scripts, player inputs, low-poly graphics optimization, environment design, and
-              sound production.
+              Founded and spearheaded Astrayuga Interactive to conceptualize gameplay mechanics, build technical art
+              assets, and manage pipelines. Directed creative vision, game architecture, and project deployment across
+              multiple releases.
             </p>
-            <div class="exp-tags-row">
-              <span class="exp-tag tag-highlight">Unity 6</span>
-              <span class="exp-tag">Endless Runner</span>
-              <span class="exp-tag">Chunk Spawner</span>
-              <span class="exp-tag">Graphics Optimization</span>
-              <span class="exp-tag">Sound Artist</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Experience 1: The Endless Runner -->
-        <div class="exp-timeline-item">
-          <div class="exp-timeline-badge">
-            <span class="exp-year">2024 - 2025</span>
-            <span class="exp-type-badge badge-personal">Personal Project</span>
-          </div>
-          <div class="exp-card">
-            <div class="exp-header">
-              <div class="exp-role-title">Game Designer, Artist & Developer</div>
-              <div class="exp-company">The Endless Runner (Unity)</div>
-            </div>
-            <p class="exp-desc">
-              Designed and developed dynamic endless runner mechanics ground-up as an independent personal project in
-              Unity. Spearheaded player movement,
-              chunk spawner algorithms, collectible scripting, environment design, and audio production.
-            </p>
-            <div class="exp-tags-row">
-              <span class="exp-tag tag-highlight">Unity 3D</span>
-              <span class="exp-tag">C# Scripting</span>
-              <span class="exp-tag">Level Design</span>
-              <span class="exp-tag">Game Artist</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Experience 2: VR Campus Tour -->
-        <div class="exp-timeline-item">
-          <div class="exp-timeline-badge">
-            <span class="exp-year">2024 - 2025</span>
-            <span class="exp-type-badge badge-academic">Academic Group Project</span>
-          </div>
-          <div class="exp-card">
-            <div class="exp-header">
-              <div class="exp-role-title">Environment Designer & 3D Artist</div>
-              <div class="exp-company">VR Campus Tour (Unreal Engine 5)</div>
-            </div>
-            <p class="exp-desc">
-              Served as Environment Designer in a collaborative academic group project in Unreal Engine at VIT Bhopal.
-              Crafted high-fidelity 3D
-              building models, realistic lighting, and interactive spatial nodes for an immersive campus tour.
-            </p>
-            <div class="exp-tags-row">
-              <span class="exp-tag tag-highlight">Unreal Engine 5</span>
-              <span class="exp-tag">Environment Design</span>
-              <span class="exp-tag">3D Modeling</span>
-              <span class="exp-tag">Team Collaboration</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Experience 3: 3D Stylized Art & MetaHuman -->
-        <div class="exp-timeline-item">
-          <div class="exp-timeline-badge">
-            <span class="exp-year">2024 - 2026</span>
-            <span class="exp-type-badge badge-personal">Personal Art R&D</span>
-          </div>
-          <div class="exp-card">
-            <div class="exp-header">
-              <div class="exp-role-title">3D Character Artist & Technical Animator</div>
-              <div class="exp-company">Blender Stylized Art & MetaHuman</div>
-            </div>
-            <p class="exp-desc">
-              Extensive 2+ years experience sculpting stylized 3D characters, rigging armatures, and staging cinematic
-              lighting in Blender. Actively leveraging Unreal Engine MetaHuman and Sequencer for personal project work
-              like "The Untold Story".
-            </p>
-            <div class="exp-tags-row">
-              <span class="exp-tag tag-highlight">Blender 3D</span>
-              <span class="exp-tag">MetaHuman</span>
-              <span class="exp-tag">Character Sculpting</span>
-              <span class="exp-tag">Rigging & Animation</span>
+            <div class="exp-action-buttons">
+              <a href="https://astrayuga-interactive-official-deve.vercel.app/" target="_blank"
+                rel="noopener noreferrer" class="exp-btn-primary">
+                Visit Official Site <span class="arrow-up-right">↗</span>
+              </a>
             </div>
           </div>
         </div>
@@ -400,13 +348,8 @@
             <a href="public/Shoubhik_Bhattacharya_Resume_FinalUpdatedNew.pdf" target="_blank" download
               class="social-badge">Resume</a>
             <a href="mailto:shoubhikbhattacharya100@gmail.com" class="social-badge">Email</a>
-            <div class="dropdown-badge">
-              <button class="social-badge" style="cursor: pointer;">ArtStation / Itch ▾</button>
-              <div class="dropdown-menu">
-                <a href="https://www.artstation.com/gamedev_shoubhik2" target="_blank" rel="noopener noreferrer" class="dropdown-item artstation-item">🎨 ArtStation</a>
-                <a href="https://shoubhik-bhattacharya.itch.io/" target="_blank" rel="noopener noreferrer" class="dropdown-item itch-item">🎮 Itch.io</a>
-              </div>
-            </div>
+            <a href="https://www.artstation.com/gamedev_shoubhik2" target="_blank" rel="noopener noreferrer" class="social-badge">ArtStation</a>
+            <a href="https://shoubhik-bhattacharya.itch.io/" target="_blank" rel="noopener noreferrer" class="social-badge">Itch.io</a>
             <a href="https://github.com/Shoubhik95" target="_blank" rel="noopener noreferrer"
               class="social-badge">GitHub</a>
             <a href="https://www.linkedin.com/in/shoubhik-bhattacharya-8b4099324" target="_blank"
@@ -541,25 +484,28 @@
         </div>
 
         <p class="passcode-instruction" style="font-weight: 700; margin-bottom: 4px;">OR REGISTER HIRING PARAMETERS</p>
-        <p class="hud-sub-instruction">Alternatively, you can also reach out to me directly by entering your details below.</p>
+        <p class="hud-sub-instruction">Alternatively, you can also reach out to me directly by entering your details
+          below.</p>
 
         <div class="hud-input-fields">
-          <div class="hud-input-group">
-            <span class="hud-input-prompt">&gt;</span>
-            <span class="hud-input-label">/NAME:</span>
-            <input type="text" id="hire-name-input" placeholder="e.g. Google HR" autocomplete="off">
-          </div>
+          <div class="hud-inputs-row">
+            <div class="hud-input-group">
+              <span class="hud-input-prompt">&gt;</span>
+              <span class="hud-input-label">/NAME:</span>
+              <input type="text" id="hire-name-input" placeholder="e.g. Google HR" autocomplete="off">
+            </div>
 
-          <div class="hud-input-group">
-            <span class="hud-input-prompt">&gt;</span>
-            <span class="hud-input-label">/EMAIL:</span>
-            <input type="email" id="hire-email-input" placeholder="e.g. recruiter@google.com" autocomplete="off">
-          </div>
+            <div class="hud-input-group">
+              <span class="hud-input-prompt">&gt;</span>
+              <span class="hud-input-label">/EMAIL:</span>
+              <input type="email" id="hire-email-input" placeholder="e.g. recruiter@google.com" autocomplete="off">
+            </div>
 
-          <div class="hud-input-group">
-            <span class="hud-input-prompt">&gt;</span>
-            <span class="hud-input-label">/LINK:</span>
-            <input type="text" id="hire-link-input" placeholder="e.g. google.com" autocomplete="off">
+            <div class="hud-input-group">
+              <span class="hud-input-prompt">&gt;</span>
+              <span class="hud-input-label">/LINK:</span>
+              <input type="text" id="hire-link-input" placeholder="e.g. google.com" autocomplete="off">
+            </div>
           </div>
 
 
@@ -607,6 +553,12 @@
   <script src="./js/mock-backend.js"></script>
   <script src="./js/data.js"></script>
   <script src="./js/telemetry.js"></script>
+  <script src="./js/modules/theme.js"></script>
+  <script src="./js/modules/navigation.js"></script>
+  <script src="./js/modules/skills.js"></script>
+  <script src="./js/modules/projects.js"></script>
+  <script src="./js/modules/modal.js"></script>
+  <script src="./js/modules/dashboard.js"></script>
   <script src="./js/script.js"></script>
 </body>
 

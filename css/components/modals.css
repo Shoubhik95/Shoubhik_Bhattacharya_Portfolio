@@ -1,0 +1,863 @@
+/* ==========================================================================
+   Popup Modals (Glassmorphism & Spring Animations)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.modal-overlay:not(.hidden) {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Deprecated Glassmorphism modal styles removed to fix Neo-Brutalist layout conflicts */
+
+.meta-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.meta-tags-row span {
+  background-color: rgba(56, 189, 248, 0.1);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  color: var(--sky-300);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.meta-link-anchor {
+  font-size: 12px;
+  color: var(--sky-400);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  display: block;
+  transition: color 0.3s;
+}
+
+.meta-link-anchor:hover {
+  color: #ffffff;
+}
+
+/* Zoom Lightbox Modal */
+.lightbox-close-btn {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  padding: 12px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+  z-index: 110;
+}
+
+.lightbox-close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.lightbox-img-box {
+  position: relative;
+  max-width: 896px;
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform: scale(0.9) translateY(15px);
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-overlay:not(.hidden) .lightbox-img-box {
+  transform: scale(1) translateY(0);
+}
+
+.lightbox-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ==========================================================================
+   Instagram Style Project Modal
+   ========================================================================== */
+.insta-post-card {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  max-height: 95vh;
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  border: 1px solid #262626;
+  background-color: #000000;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  transform: scale(0.95);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+.modal-overlay:not(.hidden) .insta-post-card {
+  transform: scale(1);
+}
+
+/* Insta Header */
+.insta-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #262626;
+  background-color: #000000;
+}
+
+.insta-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.insta-avatar-ring {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  padding: 2px;
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.insta-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #000000;
+}
+
+.insta-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.insta-username-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.insta-username {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f5f5f5;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.verified-svg {
+  width: 14px;
+  height: 14px;
+  color: #0095f6;
+  fill: #0095f6;
+}
+
+.insta-location {
+  font-size: 11px;
+  color: #a8a8a8;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.insta-close-btn {
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: 50%;
+  transition: opacity 0.2s;
+}
+
+.insta-close-btn:hover {
+  opacity: 0.7;
+}
+
+/* Media Box */
+.insta-media-box {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  /* Instagram post square aspect ratio */
+  background-color: #050505;
+  overflow: hidden;
+}
+
+.insta-slides-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Reusing slides classes with overrides */
+.insta-media-box .modal-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(1);
+  transition: opacity 0.3s ease;
+}
+
+.insta-media-box .modal-slide.active {
+  opacity: 1;
+  z-index: 10;
+}
+
+.insta-media-box .modal-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Nav arrows */
+.insta-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  padding: 6px;
+  background-color: rgba(26, 26, 26, 0.8);
+  border: none;
+  color: #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.insta-nav-btn:hover {
+  transform: translateY(-50%) scale(1.05);
+}
+
+.insta-nav-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.insta-dots-row {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 20;
+}
+
+.insta-dots-row .slider-dot {
+  height: 6px;
+  width: 6px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.insta-dots-row .slider-dot.active {
+  background-color: #0095f6;
+  width: 6px;
+}
+
+/* Sponsored CTA banner */
+.insta-cta-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background-color: #121212;
+  border-bottom: 1px solid #262626;
+}
+
+.insta-cta-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.insta-cta-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #f5f5f5;
+}
+
+.insta-cta-subtitle {
+  font-size: 10px;
+  color: #a8a8a8;
+}
+
+.insta-cta-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.insta-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.insta-cta-btn:hover {
+  opacity: 0.9;
+}
+
+.blue-btn {
+  background-color: #0095f6;
+  color: #ffffff;
+}
+
+.purple-btn {
+  background-color: #7c3aed;
+  color: #ffffff;
+}
+
+/* Actions Row */
+.insta-actions-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px 8px 16px;
+  background-color: #000000;
+}
+
+.insta-actions-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+}
+
+.insta-icon-btn {
+  background: none;
+  border: none;
+  color: #f5f5f5;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease;
+}
+
+.insta-icon-btn:active {
+  transform: scale(0.9);
+}
+
+.insta-icon-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* Like Heart Animation styles */
+.insta-heart {
+  transition: fill 0.2s, color 0.2s;
+}
+
+.insta-heart.liked {
+  fill: #ff3040;
+  color: #ff3040;
+  animation: pulse-heart 0.3s linear;
+}
+
+@keyframes pulse-heart {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.insta-save-icon.saved {
+  fill: #ffffff;
+  color: #ffffff;
+}
+
+.share-tooltip {
+  position: absolute;
+  top: -30px;
+  left: 64px;
+  background-color: #262626;
+  color: #ffffff;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 30;
+}
+
+/* Likes Row */
+.insta-likes-row {
+  padding: 0 16px 6px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #f5f5f5;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.insta-likes-row b {
+  font-weight: 700;
+}
+
+/* Comments area */
+.insta-comments-area {
+  padding: 4px 16px 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 240px;
+  overflow-y: auto;
+  border-bottom: 1px solid #262626;
+  scrollbar-width: none;
+}
+
+.insta-comments-area::-webkit-scrollbar {
+  display: none;
+}
+
+.insta-comment-item {
+  font-size: 13.5px;
+  line-height: 1.5;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.insta-comment-user {
+  font-weight: 700;
+  color: #f5f5f5;
+  margin-right: 6px;
+  cursor: pointer;
+}
+
+.insta-comment-user:hover {
+  opacity: 0.8;
+}
+
+.insta-comment-text {
+  color: #e5e5e5;
+}
+
+.insta-hashtags-box {
+  font-size: 13.5px;
+}
+
+.insta-hashtags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  color: #e0f1ff;
+}
+
+.insta-comment-tag {
+  color: #0095f6;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.insta-comment-tag:hover {
+  text-decoration: underline;
+}
+
+.insta-comments-divider {
+  font-size: 12px;
+  color: #737373;
+  font-weight: 600;
+  margin-top: 4px;
+  border-top: 1px solid #1a1a1a;
+  padding-top: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.insta-comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Comment Bar footer */
+.insta-comment-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-top: 1px solid #262626;
+  background-color: #000000;
+}
+
+.insta-comment-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-grow: 1;
+}
+
+/* ==========================================================================
+   Responsive Overrides
+   ========================================================================== */
+@media (max-width: 640px) {
+  .minimalist-modal-card {
+    width: 98%;
+    max-height: 95vh;
+  }
+
+  .modal-header {
+    height: auto;
+    padding: 12px 16px;
+    gap: 8px;
+  }
+
+  .modal-header-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    max-width: 75%;
+  }
+
+  .modal-title-text {
+    font-size: 15px;
+    line-height: 1.2;
+  }
+
+  .modal-badge {
+    padding: 2px 6px;
+    font-size: 9px;
+  }
+
+  .modal-close-btn {
+    padding: 6px;
+  }
+
+  .modal-details-grid {
+    padding: 12px;
+    gap: 16px;
+  }
+
+  .modal-desc-section,
+  .modal-meta-section {
+    padding: 12px;
+  }
+
+  .slider-nav-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 10px;
+  }
+}
+
+/* ==========================================================================
+   Hiring Interest Terminal Console UI
+   ========================================================================== */
+/* ==========================================================================
+   Hiring Interest Modern Floating Card UI (Dark Theme)
+   ========================================================================== */
+.new-hire-hud-card {
+  max-width: 680px !important;
+  width: 100% !important;
+  background: #141416 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
+  padding: 32px 28px !important;
+  border-radius: 24px !important;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.new-hire-hud-card .hud-header {
+  border-bottom: none !important;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-bottom: 0;
+  margin-bottom: 6px;
+  position: relative;
+}
+
+.new-hire-hud-card .hud-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.new-hire-hud-card .hud-title-group .badge-emoji {
+  display: none;
+}
+
+.new-hire-hud-card .hud-title {
+  color: #ffffff !important;
+  font-family: var(--font-sans), 'Inter', sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  letter-spacing: -0.02em !important;
+  text-shadow: none !important;
+}
+
+.new-hire-hud-card .hud-close-btn {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: none !important;
+  color: #94a3b8 !important;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.new-hire-hud-card .hud-close-btn:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+}
+
+.new-hire-hud-card .hud-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+}
+
+.new-hire-hud-card .passcode-instruction {
+  font-family: var(--font-sans), 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  color: #94a3b8 !important;
+  letter-spacing: normal !important;
+  text-align: left;
+  opacity: 1 !important;
+  margin: 0 !important;
+  line-height: 1.5;
+}
+
+.new-hire-hud-card .hud-sub-instruction {
+  font-family: var(--font-sans), 'Inter', sans-serif !important;
+  font-size: 12px !important;
+  color: #64748b !important;
+  line-height: 1.5;
+  margin: -12px 0 6px 0 !important;
+}
+
+.hud-input-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hud-inputs-row {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  width: 100%;
+}
+
+.hud-inputs-row .hud-input-group {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 600px) {
+  .hud-inputs-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+
+
+.hud-input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: rgba(26, 26, 32, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 12px !important;
+  padding: 10px 14px !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  gap: 2px;
+}
+
+.hud-input-group:focus-within {
+  border-color: #38bdf8 !important;
+  background: rgba(20, 20, 24, 0.8) !important;
+  box-shadow:
+    0 0 20px rgba(56, 189, 248, 0.15),
+    inset 0 0 10px rgba(56, 189, 248, 0.05) !important;
+  transform: translateY(-1px);
+}
+
+.hud-input-prompt {
+  display: none !important;
+}
+
+.hud-input-label {
+  color: #38bdf8 !important;
+  font-family: var(--font-mono), monospace !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.08em !important;
+  margin-right: 0 !important;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.hud-input-group input,
+.hud-input-group textarea {
+  width: 100% !important;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  color: #f8fafc !important;
+  font-family: var(--font-sans), 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  padding: 2px 0 !important;
+  resize: none;
+}
+
+.hud-input-group input::placeholder {
+  color: #475569 !important;
+}
+
+.hud-form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.hud-btn-action {
+  width: 100% !important;
+  height: 44px !important;
+  border-radius: 12px !important;
+  font-family: var(--font-sans), 'Inter', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hud-btn-action.submit-btn {
+  background: linear-gradient(135deg, #2563eb 0%, #38bdf8 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(56, 189, 248, 0.2) !important;
+  box-shadow: 0 4px 20px rgba(37, 99, 235, 0.25) !important;
+  font-family: var(--font-mono), monospace !important;
+  letter-spacing: 0.08em !important;
+  font-weight: 700 !important;
+  text-transform: uppercase;
+}
+
+.hud-btn-action.submit-btn:hover {
+  background: linear-gradient(135deg, #1d4ed8 0%, #0ea5e9 100%) !important;
+  box-shadow: 0 0 25px rgba(56, 189, 248, 0.45) !important;
+  border-color: #38bdf8 !important;
+  transform: translateY(-1.5px);
+}
+
+.hud-btn-action.submit-btn:active {
+  transform: scale(0.98) translateY(-0.5px);
+}
+
+.hud-btn-action.cancel-btn {
+  background: transparent !important;
+  color: #64748b !important;
+  border: none !important;
+  height: 36px !important;
+  font-family: var(--font-mono), monospace !important;
+  font-size: 11px !important;
+  letter-spacing: 0.05em !important;
+}
+
+.hud-btn-action.cancel-btn:hover {
+  color: #cbd5e1 !important;
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+@media (max-width: 600px) {
+  .new-hire-hud-card {
+    padding: 24px 20px !important;
+    border-radius: 16px !important;
+  }
+
+  .hud-btn-action {
+    height: 40px !important;
+    font-size: 12px !important;
+  }
+
+  .cyber-btn-secondary {
+    height: 38px !important;
+    font-size: 10px !important;
+  }
+
+  .new-hire-hud-card .hud-title {
+    font-size: 12px !important;
+  }
+}
+
+.new-hire-hud-card .passcode-error {
+  font-family: var(--font-sans), 'Inter', sans-serif;
+  font-size: 12px;
+  color: #f87171;
+  text-align: center;
+  margin-top: 4px;
+  text-shadow: none;
+}
+
