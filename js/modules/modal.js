@@ -434,11 +434,32 @@ window.initModalModule = function () {
     const emailVal = hireEmailInput ? hireEmailInput.value.trim() : "";
     const linkVal = hireLinkInput ? hireLinkInput.value.trim() : "";
     const messageVal = hireMessageInput ? hireMessageInput.value.trim() : "";
+    
     if (!val) {
-      if (hireErrorMsg) hireErrorMsg.classList.remove("hidden");
+      if (hireErrorMsg) {
+        hireErrorMsg.textContent = "❌ VALUE INGESTION ERROR: INVALID NAME";
+        hireErrorMsg.classList.remove("hidden");
+      }
       return;
     }
 
+    // Temporarily disable submit button to show loading state
+    if (hireSubmitBtn) {
+      hireSubmitBtn.disabled = true;
+      hireSubmitBtn.textContent = "[ UPLOADING... ]";
+    }
+    if (hireErrorMsg) {
+      hireErrorMsg.classList.add("hidden");
+    }
+
+    const resetSubmitBtn = () => {
+      if (hireSubmitBtn) {
+        hireSubmitBtn.disabled = false;
+        hireSubmitBtn.textContent = "[ INITIATE UPLOAD ]";
+      }
+    };
+
+    // Save to local Telemetry database/session immediately
     if (window.Telemetry && typeof window.Telemetry.addHiringLead === 'function') {
       window.Telemetry.addHiringLead(val, emailVal, linkVal, messageVal);
       window.updateDashboardHiringUI();
@@ -464,23 +485,53 @@ window.initModalModule = function () {
       })
         .then(response => response.json())
         .then(data => {
-          console.log("Web3Forms Success:", data);
+          if (data.success) {
+            console.log("Web3Forms Success:", data);
+            closeHireModal();
+            resetSubmitBtn();
+            
+            // Trigger Success Toast
+            const successToast = document.getElementById("success-toast");
+            if (successToast) {
+              const bodyEl = successToast.querySelector(".cyber-toast-body");
+              if (bodyEl) {
+                bodyEl.textContent = "Your details were uploaded to Database and Email successfully!";
+              }
+              successToast.classList.add("show");
+              if (window.successToastTimeout) clearTimeout(window.successToastTimeout);
+              window.successToastTimeout = setTimeout(() => {
+                successToast.classList.remove("show");
+              }, 5000);
+            }
+          } else {
+            console.error("Web3Forms Error Response:", data);
+            if (hireErrorMsg) {
+              hireErrorMsg.textContent = `❌ UPLOAD ERROR: ${data.message || "Invalid Key or Submission Limit Exceeded"}`;
+              hireErrorMsg.classList.remove("hidden");
+            }
+            resetSubmitBtn();
+          }
         })
         .catch(error => {
-          console.error("Web3Forms Error:", error);
+          console.error("Web3Forms Network Error:", error);
+          if (hireErrorMsg) {
+            hireErrorMsg.textContent = "❌ NETWORK ERROR: Failed to reach Web3Forms server";
+            hireErrorMsg.classList.remove("hidden");
+          }
+          resetSubmitBtn();
         });
-    }
-
-    closeHireModal();
-
-    // Trigger Success Toast
-    const successToast = document.getElementById("success-toast");
-    if (successToast) {
-      successToast.classList.add("show");
-      if (window.successToastTimeout) clearTimeout(window.successToastTimeout);
-      window.successToastTimeout = setTimeout(() => {
-        successToast.classList.remove("show");
-      }, 5000);
+    } else {
+      // Key not configured, just do success toast immediately
+      closeHireModal();
+      resetSubmitBtn();
+      const successToast = document.getElementById("success-toast");
+      if (successToast) {
+        successToast.classList.add("show");
+        if (window.successToastTimeout) clearTimeout(window.successToastTimeout);
+        window.successToastTimeout = setTimeout(() => {
+          successToast.classList.remove("show");
+        }, 5000);
+      }
     }
   };
 
