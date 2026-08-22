@@ -688,9 +688,11 @@ body.dark-theme .profile-avatar-container {
    ========================================================================== */
 @media (max-width: 768px) {
   .main-content {
-    gap: 64px;
+    gap: 32px;
     padding-top: 80px;
-    padding-bottom: 64px;
+    padding-bottom: 40px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
   .scroll-mt {
@@ -699,50 +701,98 @@ body.dark-theme .profile-avatar-container {
 }
 
 @media (max-width: 640px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
   .about-header-group {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    text-align: center;
+    text-align: left;
     gap: 16px;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+
+  .pixel-avatar-img {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    border-radius: 8px;
   }
 
   .about-header-text {
-    align-items: center;
+    align-items: flex-start;
   }
 
   .profile-name {
-    font-size: 28px;
-    text-align: center;
+    font-size: 22px;
+    text-align: left;
+    margin-top: 0;
   }
 
   .about-tagline {
-    font-size: 18px;
-    text-align: center;
+    font-size: 15px;
+    text-align: left;
+    margin-bottom: 16px;
+  }
+
+  .profile-details-new {
+    gap: 10px;
+    margin-bottom: 20px;
   }
 
   .about-desc {
-    font-size: 14px;
-    text-align: center;
+    font-size: 13.5px;
+    text-align: left;
+    line-height: 1.5;
+  }
+
+  .education-cyber-card {
+    padding: 12px;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+
+  .edu-gpa-stat-box {
+    padding: 6px 12px;
+  }
+
+  .edu-degree-title {
+    font-size: 13px;
+  }
+
+  .edu-univ-name {
+    font-size: 11px;
   }
 
   .primary-ctas {
-    justify-content: center;
+    justify-content: flex-start;
     width: 100%;
+    gap: 8px;
+    margin-bottom: 16px;
   }
 
   .primary-ctas .cta-btn {
-    width: 100%;
-    max-width: 320px;
+    flex: 1;
+    height: 40px;
+    padding: 0 12px;
+    font-size: 11px;
   }
 
   .secondary-socials {
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 8px;
   }
 
-  .profile-avatar-container {
-    width: 100%;
-    max-width: 240px;
-    aspect-ratio: 3 / 4;
+  .social-badge {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+
+  .about-profile {
+    display: none; /* Hide large canvas on small mobile screens to save massive vertical space */
   }
 }
 
