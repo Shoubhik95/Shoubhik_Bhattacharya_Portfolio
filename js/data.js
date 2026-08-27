@@ -1,133 +1,76 @@
 const skillsData = [
   {
-    name: "Unity",
-    group: "game-design",
-    status: "Active",
-    statusClass: "border-emerald-text",
-    bulletClass: "emerald",
-    style: {
-      from: "rgba(16, 185, 129, 0.1)",
-      to: "rgba(6, 78, 59, 0.3)",
-      border: "rgba(16, 185, 129, 0.2)",
-      text: "#6ee7b7"
-    },
-    subskills: ["C# Programming", "2.5D/3D Gameplay & VR/AR", "Environment & Level Design"]
-  },
-  {
-    name: "Unreal Engine 5",
-    group: "game-design",
-    status: "Active",
-    statusClass: "border-amber-text",
-    bulletClass: "amber",
-    style: {
-      from: "rgba(245, 158, 11, 0.1)",
-      to: "rgba(120, 53, 4, 0.3)",
-      border: "rgba(245, 158, 11, 0.2)",
-      text: "#fde047"
-    },
-    subskills: ["Blueprint Scripting", "VR/AR & OpenXR Integration", "Environment & Lighting Design", "Niagara VFX & MetaHuman"]
-  },
-  {
-    name: "Blender",
-    group: "game-design",
-    status: "Active",
-    statusClass: "border-indigo-text",
-    bulletClass: "indigo",
-    style: {
-      from: "rgba(99, 102, 241, 0.1)",
-      to: "rgba(49, 46, 129, 0.3)",
-      border: "rgba(99, 102, 241, 0.2)",
-      text: "#c7d2fe"
-    },
-    subskills: [
-      "3D Modelling & Asset Sculpting",
-      "Skeletal Rigging (IK/FK & Weighting)",
-      "Keyframe Animation & Blendshapes"
+    category: "Game Development",
+    icon: "🎮",
+    themeColor: "var(--accent-green)",
+    themeRgb: "34, 197, 94",
+    skills: [
+      { name: "Unreal Engine 5", rating: 4 },
+      { name: "Unity 6", rating: 4 },
+      { name: "Blueprint Scripting", rating: 4 },
+      { name: "VR/AR Integration", rating: 3 }
     ]
   },
   {
-    name: "Python",
-    group: "programming",
-    status: "Active",
-    statusClass: "border-yellow-text",
-    bulletClass: "yellow",
-    style: {
-      from: "rgba(234, 179, 8, 0.1)",
-      to: "rgba(113, 63, 4, 0.3)",
-      border: "rgba(234, 179, 8, 0.2)",
-      text: "#fef08a"
-    },
-    subskills: ["Pipeline Automation", "Utility Tools"]
+    category: "Programming",
+    icon: "💻",
+    themeColor: "var(--accent-blue)",
+    themeRgb: "2, 132, 199",
+    skills: [
+      { name: "C++", rating: 4 },
+      { name: "C#", rating: 4 },
+      { name: "Python", rating: 3 },
+      { name: "Data Structures & OOP", rating: 4 }
+    ]
   },
   {
-    name: "C++",
-    group: "programming",
-    status: "Active",
-    statusClass: "border-blue-text",
-    bulletClass: "blue",
-    style: {
-      from: "rgba(59, 130, 246, 0.1)",
-      to: "rgba(30, 58, 138, 0.3)",
-      border: "rgba(59, 130, 246, 0.2)",
-      text: "#bfdbfe"
-    },
-    subskills: ["OOP Fundamentals", "Unreal API Programming", "Data Structures"]
+    category: "Game Design",
+    icon: "🕹️",
+    themeColor: "#eab308",
+    themeRgb: "234, 179, 8",
+    skills: [
+      { name: "Gameplay Systems", rating: 4 },
+      { name: "Game Mechanics", rating: 4 },
+      { name: "Level Design", rating: 4 },
+      { name: "Player Experience", rating: 3 },
+      { name: "Visual Storytelling", rating: 3 }
+    ]
   },
   {
-    name: "C#",
-    group: "programming",
-    status: "Active",
-    statusClass: "border-violet-text",
-    bulletClass: "violet",
-    style: {
-      from: "rgba(139, 92, 246, 0.1)",
-      to: "rgba(76, 29, 149, 0.3)",
-      border: "rgba(139, 92, 246, 0.2)",
-      text: "#ddd6fe"
-    },
-    subskills: ["Unity API Scripting", "Design Patterns", "DotNet Architecture"]
+    category: "Technical Art & 3D",
+    icon: "🎨",
+    themeColor: "#ff81df",
+    themeRgb: "255, 129, 223",
+    skills: [
+      { name: "Blender 3D", rating: 4 },
+      { name: "Skeletal Rigging & Animation", rating: 3 },
+      { name: "Environment Art & Lighting", rating: 4 },
+      { name: "Asset Optimization", rating: 3 }
+    ]
   },
   {
-    name: "HTML+CSS",
-    group: "web",
-    status: "Active",
-    statusClass: "border-orange-text",
-    bulletClass: "orange",
-    style: {
-      from: "rgba(249, 115, 22, 0.1)",
-      to: "rgba(124, 45, 18, 0.3)",
-      border: "rgba(249, 115, 22, 0.2)",
-      text: "#fed7aa"
-    },
-    subskills: ["Modern Layouts", "Aesthetic UI Design", "Responsive Sites"]
+    category: "Web Development",
+    icon: "🌐",
+    themeColor: "#38bdf8",
+    themeRgb: "56, 189, 248",
+    skills: [
+      { name: "HTML5 & CSS3", rating: 4 },
+      { name: "JavaScript", rating: 3 },
+      { name: "Figma UI/UX", rating: 4 },
+      { name: "Firebase", rating: 3 }
+    ]
   },
   {
-    name: "Figma",
-    group: "web",
-    status: "Active",
-    statusClass: "border-pink-text",
-    bulletClass: "pink",
-    style: {
-      from: "rgba(236, 72, 153, 0.1)",
-      to: "rgba(131, 24, 67, 0.3)",
-      border: "rgba(236, 72, 153, 0.25)",
-      text: "#fbcfe8"
-    },
-    subskills: ["Interface Design", "High-Fidelity Prototyping", "UI/UX Layouts"]
-  },
-  {
-    name: "Firebase & APIs",
-    group: "web",
-    status: "Active",
-    statusClass: "border-sky-text",
-    bulletClass: "sky",
-    style: {
-      from: "rgba(14, 165, 233, 0.1)",
-      to: "rgba(8, 47, 73, 0.3)",
-      border: "rgba(14, 165, 233, 0.2)",
-      text: "#7dd3fc"
-    },
-    subskills: ["Realtime Database", "API Integration", "Authentication Systems"]
+    category: "Tools & Workflow",
+    icon: "⚙️",
+    themeColor: "#8b5cf6",
+    themeRgb: "139, 92, 246",
+    skills: [
+      { name: "Git / GitHub", rating: 4 },
+      { name: "VS Code", rating: 4 },
+      { name: "Unity / Unreal Editor", rating: 4 },
+      { name: "Real-Time Rendering", rating: 3 }
+    ]
   }
 ];
 
@@ -194,6 +137,7 @@ const gameProjectsData = [
       { val: "1:1 blueprints", lbl: "Spatial Fidelity" }
     ]
   },
+  // for adding new project (here)
   {
     id: "the-royal-king",
     category: "game-design",
@@ -228,6 +172,7 @@ const gameProjectsData = [
       { val: "Stylized", lbl: "Visual Aesthetic" }
     ]
   },
+  // for adding new project (end)
   {
     id: "axe-man",
     category: "game-art",

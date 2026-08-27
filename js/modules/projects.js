@@ -131,6 +131,40 @@ window.initProjectsModule = function() {
       });
     }
 
+    // Touch swipe support for mobile/tablet drag gesture
+    const track = document.getElementById("projects-grid");
+    const trackContainer = document.querySelector(".projects-carousel-track-container");
+    if (trackContainer && track) {
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      trackContainer.addEventListener("touchstart", (e) => {
+        stopProjectAutoSlide();
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      trackContainer.addEventListener("touchend", (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        let itemsPerView = 1;
+        if (window.innerWidth >= 992) itemsPerView = 3;
+        else if (window.innerWidth >= 640) itemsPerView = 2;
+
+        const maxIndex = Math.max(0, currentFilteredProjects.length - itemsPerView);
+        const diffX = touchStartX - touchEndX;
+
+        // Minimum swipe distance threshold (50px)
+        if (Math.abs(diffX) > 50) {
+          if (diffX > 0 && currentCarouselIndex < maxIndex) {
+            currentCarouselIndex++;
+          } else if (diffX < 0 && currentCarouselIndex > 0) {
+            currentCarouselIndex--;
+          }
+          updateCarouselTrack();
+        }
+        startProjectAutoSlide();
+      }, { passive: true });
+    }
+
     window.addEventListener("resize", () => {
       updateCarouselTrack();
     });
