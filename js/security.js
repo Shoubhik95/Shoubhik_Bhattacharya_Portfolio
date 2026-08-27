@@ -1191,13 +1191,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const timeStr = sess.timestamp ? (sess.timestamp.includes(',') ? sess.timestamp.split(',')[1].trim() : sess.timestamp) : "N/A";
         const metrics = sess.metrics || { totalClicks: 0, skillsFlipped: 0, projectsOpened: 0, resumeDownloads: 0, externalClicks: 0 };
         const interactionsText = `Clicks: ${metrics.totalClicks || 0} | Skills: ${metrics.skillsFlipped || 0} | Projects: ${metrics.projectsOpened || 0} | Download: ${metrics.resumeDownloads || 0}`;
+        const os = sess.os || "Unknown";
+        const isMobile = os.toLowerCase().includes("android") || os.toLowerCase().includes("ios") || os.toLowerCase().includes("iphone") || os.toLowerCase().includes("ipad");
+        const deviceBadge = isMobile 
+          ? `<span style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; margin-right: 6px; display: inline-flex; align-items: center; gap: 4px;">📱 Mobile</span>` 
+          : `<span style="background: rgba(34, 197, 94, 0.15); color: #22c55e; border: 1px solid rgba(34, 197, 94, 0.3); padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 700; margin-right: 6px; display: inline-flex; align-items: center; gap: 4px;">💻 Laptop/PC</span>`;
+        
         return `
                     <tr style="border-bottom: 1px solid rgba(255,255,255,0.03); transition: background 0.2s;" onmouseover="this.style.background='rgba(239, 68, 68, 0.03)'" onmouseout="this.style.background='transparent'">
                       <td style="padding: 12px 16px; font-family: var(--font-mono); font-weight: 700; color: var(--primary);">${sess.ip || "Unknown"}</td>
                       <td style="padding: 12px 16px; font-family: var(--font-mono); color: #94a3b8;">${timeStr}</td>
                       <td style="padding: 12px 16px; color: #f1f5f9; font-weight: 600;">📍 ${sess.region || "Unknown Region"}</td>
                       <td style="padding: 12px 16px; color: var(--primary); font-weight: 600; font-family: var(--font-mono); font-size: 11px;">${sess.referrer || "Direct"}</td>
-                      <td style="padding: 12px 16px; color: #cbd5e1;">🖥️ ${sess.browser || "Unknown"} on ${sess.os || "Unknown"}</td>
+                      <td style="padding: 12px 16px; color: #cbd5e1; display: flex; align-items: center;">${deviceBadge} ${sess.browser || "Unknown"} on ${os}</td>
                       <td style="padding: 12px 16px; text-align: right; font-family: var(--font-mono); font-weight: 700; color: var(--success); font-size: 11px;">${interactionsText}</td>
                       <td style="padding: 12px 16px; text-align: right;">
                         <button class="delete-session-btn" data-key="${sess.key || ''}" title="Delete Log" style="background: transparent; border: none; cursor: pointer; color: var(--danger); font-size: 13px; padding: 4px; border-radius: 4px; transition: all 0.2s;" onmouseover="this.style.backgroundColor='var(--danger-glow)'" onmouseout="this.style.backgroundColor='transparent'">
