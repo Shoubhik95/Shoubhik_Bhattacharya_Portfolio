@@ -1877,10 +1877,11 @@ body.dark-theme .tab-btn.active {
 }
 
 /* Responsive category tabs switcher overrides */
+/* Responsive category tabs switcher overrides */
 @media (max-width: 768px) {
   .projects-tabs-container {
-    padding: 0 12px;
-    margin: 20px 0 28px;
+    padding: 0 16px;
+    margin: 16px 0 24px 0;
   }
 
   .projects-tabs {
@@ -1904,9 +1905,12 @@ body.dark-theme .tab-btn.active {
     overflow-x: auto;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    mask-image: linear-gradient(to right, transparent, white 24px, white calc(100% - 24px), transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, white 24px, white calc(100% - 24px), transparent);
-    width: auto;
+    padding: 12px 20px;
+    margin: 12px 0 20px 0;
+    width: 100%;
+    /* Subtle fade gradient only at the very edges to show scrollability without cutting off text */
+    mask-image: linear-gradient(to right, transparent, white 12px, white calc(100% - 12px), transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, white 12px, white calc(100% - 12px), transparent);
   }
 
   .projects-tabs-container::-webkit-scrollbar {
@@ -1914,11 +1918,11 @@ body.dark-theme .tab-btn.active {
   }
 
   .projects-tabs {
-    display: flex;
+    display: inline-flex;
     white-space: nowrap;
     border-radius: 30px;
-    padding: 4px 8px;
-    margin: 0 auto;
+    padding: 4px 6px;
+    margin: 0;
   }
 
   .tab-btn {
