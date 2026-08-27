@@ -8,38 +8,6 @@
 }
 
 @media (max-width: 640px) {
-  .projects-tabs-container {
-    position: relative;
-    justify-content: flex-start;
-    padding: 0 16px;
-    margin: 20px 0 28px;
-    width: auto;
-    overflow: hidden;
-    /* Edge fade mask for horizontal scroll indicator */
-    mask-image: linear-gradient(to right, transparent, white 20px, white calc(100% - 20px), transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, white 20px, white calc(100% - 20px), transparent);
-  }
-
-  .projects-tabs {
-    width: 100%;
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    gap: 4px;
-    border-radius: 24px;
-    padding: 6px 12px;
-  }
-
-  .projects-tabs::-webkit-scrollbar {
-    display: none;
-  }
-
-  .tab-btn {
-    flex-shrink: 0;
-    padding: 8px 14px;
-    font-size: 10.5px;
-  }
 
   .showcase-hud-header {
     flex-direction: column;
