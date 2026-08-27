@@ -1122,7 +1122,31 @@ document.addEventListener("DOMContentLoaded", () => {
     sessions.forEach(sess => {
       let dateStr = "Unknown Date";
       if (sess.timestamp) {
-        dateStr = sess.timestamp.split(',')[0].trim();
+        const rawDate = sess.timestamp.split(',')[0].trim();
+        const parts = rawDate.split('/');
+        if (parts.length === 3) {
+          const p0 = parseInt(parts[0]);
+          const p1 = parseInt(parts[1]);
+          const p2 = parseInt(parts[2]);
+          let day, month;
+          const year = p2;
+          
+          if (p0 > 12) {
+            day = p0;
+            month = p1;
+          } else if (p1 > 12) {
+            month = p0;
+            day = p1;
+          } else {
+            month = p0;
+            day = p1;
+          }
+          const dd = String(day).padStart(2, '0');
+          const mm = String(month).padStart(2, '0');
+          dateStr = `${mm}/${dd}/${year}`;
+        } else {
+          dateStr = rawDate;
+        }
       }
       if (!grouped[dateStr]) {
         grouped[dateStr] = [];
