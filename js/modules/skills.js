@@ -13,18 +13,9 @@ window.initSkillsModule = function() {
           </div>
           <ul class="skill-items-list-new">
             ${group.skills.map(skill => {
-              // Generate dots (out of 4)
-              let dotsHtml = "";
-              for (let i = 1; i <= 4; i++) {
-                const activeClass = i <= skill.rating ? "active" : "";
-                dotsHtml += `<span class="rating-dot ${activeClass}"></span>`;
-              }
               return `
                 <li class="skill-item-row-new">
                   <span class="skill-item-name-new">${skill.name}</span>
-                  <div class="dots-rating-bar">
-                    ${dotsHtml}
-                  </div>
                 </li>
               `;
             }).join('')}

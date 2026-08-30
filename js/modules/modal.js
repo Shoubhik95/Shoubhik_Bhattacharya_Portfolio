@@ -62,6 +62,46 @@ window.initModalModule = function () {
     updateSliderView();
   };
 
+  const showLogDetailPopup = (topic, details) => {
+    const modalContainer = document.querySelector(".minimalist-modal-card");
+    if (!modalContainer) return;
+
+    let popup = document.getElementById("log-detail-popup");
+    if (!popup) {
+      popup = document.createElement("div");
+      popup.id = "log-detail-popup";
+      popup.className = "log-detail-popup";
+      popup.style.pointerEvents = "none";
+      popup.innerHTML = `
+        <div class="log-detail-content">
+          <button id="log-detail-close" class="log-detail-close">&times;</button>
+          <h4 id="log-detail-title" class="log-detail-title"></h4>
+          <p id="log-detail-body" class="log-detail-body"></p>
+        </div>
+      `;
+      modalContainer.appendChild(popup);
+
+      const closeBtn = popup.querySelector("#log-detail-close");
+      if (closeBtn) {
+        closeBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          popup.classList.add("hidden");
+        });
+      }
+
+      popup.addEventListener("click", (e) => {
+        e.stopPropagation();
+      });
+    }
+
+    const titleEl = popup.querySelector("#log-detail-title");
+    const bodyEl = popup.querySelector("#log-detail-body");
+    if (titleEl) titleEl.textContent = topic;
+    if (bodyEl) bodyEl.textContent = details;
+
+    popup.classList.remove("hidden");
+  };
+
   // Event delegation on the projects grid for project card clicks
   document.body.addEventListener("click", (e) => {
     const card = e.target.closest(".project-card-wrapper");
@@ -98,56 +138,182 @@ window.initModalModule = function () {
     if (modalStatStage) modalStatStage.textContent = stage;
     if (modalStatTools) modalStatTools.textContent = tools;
 
-    // Populate Dynamic Expert Designer Review Breakdown
+    // Populate Dynamic System Architecture Diagram
     const modalExpertSection = document.getElementById("modal-expert-section");
     if (modalExpertSection) {
-      const projId = card.getAttribute("data-id");
-      const allProjects = [...gameProjectsData, ...webProjectsData];
-      const projectObj = allProjects.find(p => p.id === projId);
+      // Parse topics from logs
+      const topics = logs.map(log => {
+        const colonIdx = log.indexOf(":");
+        return colonIdx !== -1 ? log.slice(0, colonIdx).trim() : log;
+      });
 
-      let expertHtml = "";
-      if (projectObj && projectObj.expertPillars && projectObj.expertMetrics) {
-        const titleText = category === "game-design" ? "Design Philosophy & Production Quality"
-          : category === "game-art" ? "Art Direction & Asset Production"
-            : "Frontend Design & Architectural Quality";
+      let architectureHtml = "";
+      if (category === "game-design") {
+        architectureHtml = `
+          <h5 class="modal-section-title">Game Design Architecture & Logic Flow</h5>
+          <div class="game-flowchart">
+            <!-- Row 1: Core Concept -->
+            <div class="flowchart-row">
+              <div class="flowchart-node root-node">${title}</div>
+            </div>
+            
+            <!-- Connector Row -->
+            <div class="flowchart-row">
+              <div class="flowchart-connector-down">▼</div>
+            </div>
 
-        expertHtml = `
-          <h5 class="modal-section-title">${titleText}</h5>
-          <div class="expert-block">
-            ${projectObj.expertPillars.map(p => `
-              <div class="expert-pillar-item">
-                <span class="expert-pillar-icon">${p.icon}</span>
-                <div>
-                  <strong class="expert-pillar-title">${p.title}</strong>
-                  <p class="expert-pillar-desc">${p.desc}</p>
+            <!-- Row 2: Major Systems Split -->
+            <div class="flowchart-row-split">
+              <!-- Left Column: Wave System & Difficulty -->
+              <div class="flowchart-col" style="flex: 1.2;">
+                <div class="flowchart-node system-node">${topics[0] || 'Wave System'}</div>
+                <div class="flowchart-connector-down">▼</div>
+                <div class="flowchart-node system-node">${topics[1] || 'Difficulty Progression'}</div>
+                <div class="flowchart-connector-down">▼</div>
+                <div class="flowchart-split">
+                  <div class="flowchart-col">
+                    <div class="flowchart-node attr-node">❤️ HEALTH</div>
+                    <div class="flowchart-node attr-node">⚡ SPEED</div>
+                    <div class="flowchart-node attr-node">⚔️ DAMAGE</div>
+                  </div>
                 </div>
               </div>
-            `).join('')}
-            <div class="expert-metrics-row">
-              ${projectObj.expertMetrics.map(m => `
-                <div class="expert-metric-badge">
-                  <span class="metric-val">${m.val}</span>
-                  <span class="metric-lbl">${m.lbl}</span>
+
+              <!-- Middle Column: Entities (Player & Enemies) -->
+              <div class="flowchart-col" style="flex: 2.2;">
+                <div class="flowchart-node entity-node">Entities & Logic</div>
+                <div class="flowchart-connector-down">▼</div>
+                <div class="flowchart-split">
+                  <!-- Player Branch -->
+                  <div class="flowchart-col">
+                    <div class="flowchart-node player-node">Player</div>
+                    <div class="flowchart-connector-down">▼</div>
+                    <div class="flowchart-node state-node circle">${topics[2] || 'States (animator)'}</div>
+                    <div class="flowchart-connector-down">▼</div>
+                    <div class="flowchart-diamond-grid">
+                      <div class="flowchart-node diamond-node">Walk/Jump</div>
+                      <div class="flowchart-node diamond-node">Dash</div>
+                      <div class="flowchart-node diamond-node">Attack</div>
+                      <div class="flowchart-node diamond-node">Slam</div>
+                    </div>
+                  </div>
+
+                  <!-- Enemies Branch -->
+                  <div class="flowchart-col">
+                    <div class="flowchart-node enemy-node">Enemies</div>
+                    <div class="flowchart-connector-down">▼</div>
+                    <div class="flowchart-split">
+                      <div class="flowchart-col">
+                        <div class="flowchart-node behavior-node">Base Structure</div>
+                        <div class="flowchart-connector-down">▼</div>
+                        <div class="flowchart-node attr-node">Health</div>
+                        <div class="flowchart-node attr-node">Damage</div>
+                        <div class="flowchart-node attr-node">Speed</div>
+                      </div>
+                      <div class="flowchart-col">
+                        <div class="flowchart-node behavior-node">Unique Behaviour</div>
+                        <div class="flowchart-connector-down">▼</div>
+                        <div class="flowchart-node attr-node">Attack type</div>
+                        <div class="flowchart-node attr-node">Hitbox</div>
+                        <div class="flowchart-node attr-node">Weapon</div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              `).join('')}
+              </div>
+
+              <!-- Right Column: Score System -->
+              <div class="flowchart-col" style="flex: 1.2;">
+                <div class="flowchart-node system-node">${topics[3] || 'Score System'}</div>
+                <div class="flowchart-connector-down">▼</div>
+                <div class="flowchart-node attr-node" style="font-size: 9px; line-height: 1.2;">${topics[4] || 'Score value varies by enemy type'}</div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (category === "game-art") {
+        architectureHtml = `
+          <h5 class="modal-section-title">3D Production Pipeline Architecture</h5>
+          <div class="game-flowchart">
+            <div class="flowchart-row">
+              <div class="flowchart-node root-node">${title}</div>
+            </div>
+            <div class="flowchart-row"><div class="flowchart-connector-down">▼</div></div>
+            <div class="flowchart-row">
+              <div class="flowchart-node system-node">🎨 ${topics[0] || 'Concept Reference'}</div>
+            </div>
+            <div class="flowchart-row"><div class="flowchart-connector-down">▼</div></div>
+            <div class="flowchart-row">
+              <div class="flowchart-node entity-node">📐 ${topics[1] || 'Modeling'}</div>
+            </div>
+            <div class="flowchart-row"><div class="flowchart-connector-down">▼</div></div>
+            <div class="flowchart-row">
+              <div class="flowchart-node player-node">🗺️ ${topics[2] || 'UV / Texturing'}</div>
+            </div>
+            <div class="flowchart-row"><div class="flowchart-connector-down">▼</div></div>
+            <div class="flowchart-row">
+              <div class="flowchart-node enemy-node">🦴 ${topics[3] || 'Rigging & Export'}</div>
+            </div>
+          </div>
+        `;
+      } else {
+        architectureHtml = `
+          <h5 class="modal-section-title">System Web Architecture</h5>
+          <div class="game-flowchart">
+            <div class="flowchart-row">
+              <div class="flowchart-node root-node">${title}</div>
+            </div>
+            <div class="flowchart-row"><div class="flowchart-connector-down">▼</div></div>
+            <div class="flowchart-row">
+              <div class="flowchart-node system-node">📱 ${topics[0] || 'Frontend UI'}</div>
+            </div>
+            <div class="flowchart-row"><div class="flowchart-connector-down">▲▼</div></div>
+            <div class="flowchart-row">
+              <div class="flowchart-node entity-node">⚙️ ${topics[1] || 'State / Controls'}</div>
+            </div>
+            <div class="flowchart-row"><div class="flowchart-connector-down">▲▼</div></div>
+            <div class="flowchart-row">
+              <div class="flowchart-node player-node">🔥 ${topics[2] || 'Logic & Integration'}</div>
+            </div>
+            <div class="flowchart-row"><div class="flowchart-connector-down">▲▼</div></div>
+            <div class="flowchart-row">
+              <div class="flowchart-node enemy-node">🚀 ${topics[3] || 'Deployment'}</div>
             </div>
           </div>
         `;
       }
-      modalExpertSection.innerHTML = expertHtml;
+      modalExpertSection.innerHTML = architectureHtml;
     }
 
     // Populate Logs
     if (modalLogTimeline) {
       modalLogTimeline.innerHTML = "";
       logs.forEach(log => {
+        const colonIdx = log.indexOf(":");
+        const topic = colonIdx !== -1 ? log.slice(0, colonIdx).trim() : log;
+        const details = colonIdx !== -1 ? log.slice(colonIdx + 1).trim() : log;
+
         const item = document.createElement("div");
         item.className = "hud-log-item";
-        item.innerHTML = `<div class="hud-log-dot"></div><div class="hud-log-text">${log}</div>`;
+        item.innerHTML = `<div class="hud-log-dot"></div><div class="hud-log-text">${topic}</div>`;
+        
+        item.addEventListener("mouseenter", (e) => {
+          e.stopPropagation();
+          showLogDetailPopup(topic, details);
+        });
+
+        item.addEventListener("mouseleave", (e) => {
+          e.stopPropagation();
+          const logPopup = document.getElementById("log-detail-popup");
+          if (logPopup) {
+            logPopup.classList.add("hidden");
+          }
+        });
+
         modalLogTimeline.appendChild(item);
       });
       if (logs.length === 0) {
-        modalLogTimeline.innerHTML = `<div class="hud-log-text" style="font-style:italic">No logs available for this file.</div>`;
+        modalLogTimeline.innerHTML = `<div class="hud-log-text" style="font-style:italic">No logs available for this project.</div>`;
       }
     }
 
@@ -245,6 +411,10 @@ window.initModalModule = function () {
   const closeModal = () => {
     if (projectModal) {
       projectModal.classList.add("hidden");
+    }
+    const logPopup = document.getElementById("log-detail-popup");
+    if (logPopup) {
+      logPopup.classList.add("hidden");
     }
     document.body.style.overflow = "unset"; // Thaw scroll
   };
@@ -362,10 +532,12 @@ window.initModalModule = function () {
     }
   };
 
-  // Play sound on every click
+  // Play sound on every click (DISABLED)
+  /*
   document.body.addEventListener('click', () => {
     playSound(clickBuffer, 0.5);
   });
+  */
 
   /*
   // Play sound on flat skill card hover with stability check
@@ -421,12 +593,24 @@ window.initModalModule = function () {
       if (hireLinkInput) hireLinkInput.value = "";
       if (hireMessageInput) hireMessageInput.value = "";
       if (hireErrorMsg) hireErrorMsg.classList.add("hidden");
+      
+      // Slide in Trevor (left character)
+      const charLeft = document.getElementById("gta-char-left");
+      if (charLeft) charLeft.classList.add("active");
+      const charRight = document.getElementById("gta-char-right");
+      if (charRight) charRight.classList.remove("active");
     }
   };
 
   const closeHireModal = () => {
     if (hireInterestModal) hireInterestModal.classList.add("hidden");
     document.body.style.overflow = "unset";
+    
+    // Slide out both characters
+    const charLeft = document.getElementById("gta-char-left");
+    if (charLeft) charLeft.classList.remove("active");
+    const charRight = document.getElementById("gta-char-right");
+    if (charRight) charRight.classList.remove("active");
   };
 
   const submitHiringLead = () => {
@@ -487,8 +671,32 @@ window.initModalModule = function () {
         .then(data => {
           if (data.success) {
             console.log("Web3Forms Success:", data);
-            closeHireModal();
-            resetSubmitBtn();
+            
+            // Slide in the 2nd character (Michael)
+            const charRight = document.getElementById("gta-char-right");
+            if (charRight) {
+              charRight.classList.add("active");
+            }
+            
+            // Change submit button to gamified GTA Mission Passed feedback
+            if (hireSubmitBtn) {
+              hireSubmitBtn.textContent = "👍 MISSION PASSED!";
+              hireSubmitBtn.style.background = "#ffea00";
+              hireSubmitBtn.style.color = "#12051a";
+              hireSubmitBtn.style.boxShadow = "0 0 25px #ffea00";
+            }
+            
+            // Delay closing the modal to allow animations to show
+            setTimeout(() => {
+              closeHireModal();
+              resetSubmitBtn();
+              // Reset submit button inline overrides
+              if (hireSubmitBtn) {
+                hireSubmitBtn.style.background = "";
+                hireSubmitBtn.style.color = "";
+                hireSubmitBtn.style.boxShadow = "";
+              }
+            }, 3500);
             
             // Trigger Success Toast
             const successToast = document.getElementById("success-toast");
@@ -588,7 +796,17 @@ window.initModalModule = function () {
     hireCancelBtn.addEventListener("click", closeHireModal);
   }
   if (hireSubmitBtn) {
-    hireSubmitBtn.addEventListener("click", submitHiringLead);
+    hireSubmitBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      submitHiringLead();
+    });
+  }
+  const hireForm = document.getElementById("hire-form");
+  if (hireForm) {
+    hireForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      submitHiringLead();
+    });
   }
   if (hireNameInput) {
     hireNameInput.addEventListener("keydown", (e) => {

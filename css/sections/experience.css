@@ -6,10 +6,9 @@
   width: 100%;
   overflow: hidden;
   padding: 40px 0;
-  background-color: rgba(255, 255, 255, 0.01);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 24px;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 
 .fade-overlay {
@@ -370,11 +369,7 @@ body.dark-theme .main-footer {
   opacity: 0.8;
 }
 
-.ticker-wrapper {
-  background-color: var(--card-bg) !important;
-  border: var(--border-primary) !important;
-  box-shadow: var(--neo-shadow);
-}
+
 
 .left-fade,
 .right-fade {

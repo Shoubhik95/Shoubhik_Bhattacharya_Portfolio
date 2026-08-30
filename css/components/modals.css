@@ -861,3 +861,249 @@
   text-shadow: none;
 }
 
+/* ==========================================================================
+   Custom Sliding Uiverse Contact Form
+   ========================================================================== */
+.hire-gta-modal {
+  background: rgba(18, 5, 26, 0.95);
+  border: 2px solid #ff007f !important;
+  border-radius: 20px;
+  padding: 32px;
+  width: 90%;
+  max-width: 700px;
+  box-shadow: 0 0 30px rgba(255, 0, 127, 0.3), inset 0 0 20px rgba(0, 255, 255, 0.1);
+  color: #ffffff;
+  font-family: var(--font-sans);
+  position: relative;
+  box-sizing: border-box;
+}
+
+.hud-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: #ff007f;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.hud-close-btn:hover {
+  color: #00ffff;
+  transform: scale(1.1);
+}
+
+.modal-header {
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 900;
+  color: #ffea00;
+  text-shadow: 2px 2px 0px #ff007f, 0 0 10px rgba(255, 234, 0, 0.5);
+  margin-bottom: 24px;
+  letter-spacing: 0.05em;
+}
+
+.modal-body-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.section-subtitle {
+  display: block;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #00ffff;
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+  margin-bottom: 12px;
+}
+
+.email-direct-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  background: transparent;
+  border: 2px solid #00ffff !important;
+  border-radius: 8px;
+  color: #00ffff !important;
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  margin: 0 auto;
+  width: fit-content;
+  padding: 0 32px;
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.email-direct-btn:hover {
+  background: #00ffff !important;
+  color: #12051a !important;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.divider-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 0, 127, 0.3), transparent);
+  margin: 24px 0;
+}
+
+.section-desc {
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 20px;
+}
+
+.inputs-row {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 600px) {
+  .inputs-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+.input-field-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-field-group label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: #ff007f;
+}
+
+.input-field-group input {
+  background: rgba(255, 0, 127, 0.05);
+  border: 1px solid rgba(255, 0, 127, 0.3) !important;
+  border-radius: 6px;
+  height: 40px;
+  padding: 0 12px;
+  color: #ffffff;
+  font-size: 13px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.input-field-group input:focus {
+  border-color: #00ffff !important;
+  background: rgba(0, 255, 255, 0.05);
+  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+}
+
+.gta-submit-btn {
+  width: 100%;
+  height: 48px;
+  background: #ff007f !important;
+  border: none !important;
+  border-radius: 8px;
+  color: #ffffff !important;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
+  transition: all 0.3s ease;
+  margin-bottom: 16px;
+}
+
+.gta-submit-btn:hover {
+  background: #ffea00 !important;
+  color: #12051a !important;
+  box-shadow: 0 0 20px #ffea00;
+  transform: translateY(-2px);
+}
+
+.abort-container {
+  text-align: center;
+}
+
+.gta-abort-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.gta-abort-btn:hover {
+  color: #ff007f;
+}
+
+/* GTA Characters Slide-in Animations */
+.gta-character-left {
+  position: absolute;
+  bottom: 0;
+  left: -320px; /* Hidden off-screen left */
+  height: 85%;
+  max-height: 600px;
+  z-index: 1999;
+  transition: all 0.9s cubic-bezier(0.19, 1, 0.22, 1);
+  pointer-events: none;
+}
+
+.gta-character-left img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 15px rgba(255, 0, 127, 0.4));
+}
+
+.gta-character-left.active {
+  left: 3%; /* Slide in */
+}
+
+.gta-character-right {
+  position: absolute;
+  bottom: 0;
+  right: -320px; /* Hidden off-screen right */
+  height: 85%;
+  max-height: 600px;
+  z-index: 1999;
+  transition: all 0.9s cubic-bezier(0.19, 1, 0.22, 1);
+  pointer-events: none;
+}
+
+.gta-character-right img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.4));
+}
+
+.gta-character-right.active {
+  right: 3%; /* Slide in */
+}
+
+/* responsive safety: hide characters on smaller tablet/mobile viewports to prevent modal blockage */
+@media (max-width: 1100px) {
+  .gta-character-left,
+  .gta-character-right {
+    display: none !important;
+  }
+}
+

@@ -44,12 +44,13 @@ body.light-theme .skill-cyber-card {
 
 .skill-cyber-card:hover {
   transform: translateY(-4px);
-  border-color: var(--theme-color);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(var(--theme-rgb), 0.1);
+  border-color: var(--accent-blue) !important;
+  box-shadow: var(--neo-shadow-large) !important;
 }
 
 body.light-theme .skill-cyber-card:hover {
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.06);
+  border-color: var(--accent-blue) !important;
+  box-shadow: var(--neo-shadow-large) !important;
 }
 
 .skill-card-header-new {
@@ -92,7 +93,7 @@ body.light-theme .skill-card-title-new {
 
 .skill-item-row-new {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   gap: 16px;
 }

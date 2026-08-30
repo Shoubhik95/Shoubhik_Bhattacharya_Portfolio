@@ -92,10 +92,10 @@ const gameProjectsData = [
     stage: "Playable Build",
     tools: "Unity 3D, C#, ProBuilder",
     logEntries: [
-      "Initial level layout and environment block-out designed.",
-      "Custom C# player controller and inventory scripting complete.",
-      "Integrated 2D/3D dynamic lighting and dark ambient audio.",
-      "Final game compilation and publishing live on Itch.io."
+      "Level Design: Initial level layout and environment block-out designed.",
+      "Player Controller: Custom C# player controller and inventory scripting complete.",
+      "Atmosphere: Integrated 2D/3D dynamic lighting and dark ambient audio.",
+      "Publishing: Final game compilation and publishing live on Itch.io."
     ],
     expertPillars: [
       { icon: "🎯", title: "Survival Systems & Loop Balance", desc: "Balanced real-time survival variables (health, stamina, hunger) against enemy spawning parameters to create a challenging gameplay loop." },
@@ -122,10 +122,10 @@ const gameProjectsData = [
     stage: "VR Demonstration",
     tools: "UE5, VR Interaction Toolkit, 3D Models",
     logEntries: [
-      "Stitched campus blueprints into layout reference grids.",
-      "High-poly mesh modeling of main buildings directly inside Unreal Engine using built-in modeling tools.",
-      "Configured Lumen lighting environment for outdoor and indoor consistency.",
-      "Coded smooth teleport locomotion controls and interactive nodes."
+      "Blueprints Layout: Stitched campus blueprints into layout reference grids.",
+      "High-poly Modeling: High-poly mesh modeling of main buildings directly inside Unreal Engine using built-in modeling tools.",
+      "Lumen GI: Configured Lumen lighting environment for outdoor and indoor consistency.",
+      "Locomotion Setup: Coded smooth teleport locomotion controls and interactive nodes."
     ],
     expertPillars: [
       { icon: "🕶️", title: "Locomotion Comfort Mechanics", desc: "Programmed precise teleport navigation interfaces inside VR Interaction Toolkit to eliminate simulator sickness." },
@@ -188,10 +188,10 @@ const gameProjectsData = [
     stage: "Complete Character Rig",
     tools: "Blender",
     logEntries: [
-      "Created character design sheets and reference alignment setups.",
-      "Modeled low-poly meshes keeping clean edge loop topology.",
-      "Unwrapped UV map projections and painted detailed color maps.",
-      "Constructed complete armature bones with IK/FK constraints."
+      "Concept Art: Created character design sheets and reference alignment setups.",
+      "Low-poly Topology: Modeled low-poly meshes keeping clean edge loop topology.",
+      "UV Texturing: Unwrapped UV map projections and painted detailed color maps.",
+      "Skeleton Rigging: Constructed complete armature bones with IK/FK constraints."
     ],
     expertPillars: [
       { icon: "🎨", title: "Stylized Deformation Topology", desc: "Sculpted clean model geometry inside Blender, organizing edge loops to support rig movements and joints." },
@@ -220,10 +220,10 @@ const gameProjectsData = [
     stage: "Finished Model & Textures",
     tools: "Blender,Rigging",
     logEntries: [
-      "Sketched digital profile blueprints and reference setup grids.",
-      "Sculpted clean stylized character mesh within Blender viewport.",
-      "Generated detailed texture overlays inside Substance Painter.",
-      "Assembled skeleton armature constraints and compiled final render shots."
+      "Reference Grids: Sketched digital profile blueprints and reference setup grids.",
+      "Stylized Sculpt: Sculpted clean stylized character mesh within Blender viewport.",
+      "Substance Painter: Generated detailed texture overlays inside Substance Painter.",
+      "Armature Setup: Assembled skeleton armature constraints and compiled final render shots."
     ],
     expertPillars: [
       { icon: "🐰", title: "Charming Character Design", desc: "Created whimsical asset outlines emphasizing clean facial and body features optimized for layout reads." },
@@ -252,10 +252,10 @@ const gameProjectsData = [
     stage: "Fully Textured Rig",
     tools: "Blender,Rigging , Cycles",
     logEntries: [
-      "Sculpted base mesh and refined anatomical details.",
-      "Painted hand-crafted textures in Substance Painter.",
-      "Rigged facial expressions and body mechanics.",
-      "Rendered final beauty shots in Blender Cycles."
+      "Base Sculpting: Sculpted base mesh and refined anatomical details.",
+      "Substance Texturing: Painted hand-crafted textures in Substance Painter.",
+      "Face Rigging: Rigged facial expressions and body mechanics.",
+      "Cycles Renders: Rendered final beauty shots in Blender Cycles."
     ],
     expertPillars: [
       { icon: "👹", title: "Character Design & Appeals", desc: "Structured visual curves with squash-and-stretch capabilities to deliver dynamic expressions." },
@@ -282,10 +282,10 @@ const gameProjectsData = [
     stage: "Rendered Model",
     tools: "Blender Sculpting, Cycles renderer",
     logEntries: [
-      "Sculpted magic baby head and body outlines dynamically.",
-      "Re-topologized meshes for production-ready model limits.",
-      "Crafted procedural glowing shader networks in Blender Node Editor.",
-      "Set up dynamic studio cameras and Cycles rendering pipelines."
+      "Proportions Sculpt: Sculpted magic baby head and body outlines dynamically.",
+      "Mesh Optimization: Re-topologized meshes for production-ready model limits.",
+      "Shader Nodes: Crafted procedural glowing shader networks in Blender Node Editor.",
+      "Cycles Pipeline: Set up dynamic studio cameras and Cycles rendering pipelines."
     ],
     expertPillars: [
       { icon: "✨", title: "Emissive Shader Workflows", desc: "Programmed specialized pulsing emission nodes to illuminate baby visual elements organically." },
@@ -315,10 +315,10 @@ const gameProjectsData = [
     stage: "Playable Build",
     tools: "HTML5, CSS3, JavaScript",
     logEntries: [
-      "Designed pixelated 2.5D environment assets and road simulation graphics.",
-      "Developed keyboard arrow control mapping for responsive car steering.",
-      "Implemented coin spawning, score calculations, and collision mechanics.",
-      "Deployed project repository to GitHub and live build to Vercel."
+      "Road Simulation: Designed pixelated 2.5D environment assets and road simulation graphics.",
+      "Arrow Controls: Developed keyboard arrow control mapping for responsive car steering.",
+      "Score Mechanics: Implemented coin spawning, score calculations, and collision mechanics.",
+      "Vercel Deployment: Deployed project repository to GitHub and live build to Vercel."
     ],
     expertPillars: [
       { icon: "🏎️", title: "Lightweight Game Loop", desc: "Built dynamic animation framing loops managing velocity thresholds and coin collection triggers." },
@@ -351,11 +351,11 @@ const webProjectsData = [
     stage: "Live Production App",
     tools: "HTML5, CSS3, Vanilla JS, Netlify",
     logEntries: [
-      "Co-created by Shoubhik Bhattacharya and Aman Kumar Prabhat.",
-      "Designed dynamic grid-based community dashboard with modern gamified HUD theme.",
-      "Developed secure authorization panel and coordinator contact portal.",
-      "Implemented live event seating tracker and dynamic entry pass generation.",
-      "Successfully integrated Git version control and hosted on Netlify."
+      "Collaborators: Co-created by Shoubhik Bhattacharya and Aman Kumar Prabhat.",
+      "UI Dashboard: Designed dynamic grid-based community dashboard with modern gamified HUD theme.",
+      "Access Portals: Developed secure authorization panel and coordinator contact portal.",
+      "Tracker: Implemented live event seating tracker and dynamic entry pass generation.",
+      "Deployments: Successfully integrated Git version control and hosted on Netlify."
     ],
     expertPillars: [
       { icon: "💼", title: "Complex Campus Telemetry", desc: "Built comprehensive hub components displaying club details, seating limits, and dynamic pass generation." },
@@ -384,10 +384,10 @@ const webProjectsData = [
     stage: "Live Production App",
     tools: "HTML5, CSS3, Vanilla JS, Pannellum API",
     logEntries: [
-      "Stitched panorama photo sets into projection maps.",
-      "Built semantic core web structure supporting desktop/mobile viewports.",
-      "Coded click hotspot coordinates to load spatial context cards.",
-      "Hosted production builds via Netlify CI/CD pipeline integrations."
+      "Stitch Panoramas: Stitched panorama photo sets into projection maps.",
+      "Semantic markup: Built semantic core web structure supporting desktop/mobile viewports.",
+      "Coordinate Mapping: Coded click hotspot coordinates to load spatial context cards.",
+      "Deployments: Hosted production builds via Netlify CI/CD pipeline integrations."
     ],
     expertPillars: [
       { icon: "🌐", title: "Pannellum Alignments", desc: "Structured seamless panoramic coordinate maps using the Pannellum API for full interactive views." },
@@ -417,10 +417,10 @@ const webProjectsData = [
     stage: "Live Production App",
     tools: "HTML5, CSS3, Vanilla JS",
     logEntries: [
-      "Created responsive layout structures and color schemes for tourism assets.",
-      "Implemented interactive navigation and destination search system.",
-      "Optimized image assets and UI transitions for smooth browsing.",
-      "Deployed to Netlify and performed cross-device testing."
+      "Color Themes: Created responsive layout structures and color schemes for tourism assets.",
+      "Search Engine: Implemented interactive navigation and destination search system.",
+      "Transitions: Optimized image assets and UI transitions for smooth browsing.",
+      "Deployments: Deployed to Netlify and performed cross-device testing."
     ],
     expertPillars: [
       { icon: "🕌", title: "Responsive Destination Grids", desc: "Developed intuitive filter-enabled menus matching user searches to locations." },
@@ -449,10 +449,10 @@ const webProjectsData = [
     stage: "Live Portfolio",
     tools: "HTML5, CSS3, JS, Web Audio API, Firebase",
     logEntries: [
-      "Designed futuristic gamified HUD and theme variables.",
-      "Configured dynamic project cards and details modal with image sliders.",
-      "Implemented custom Web Audio sound system and typing effect animations.",
-      "Integrated telemetry logger dashboard with real-time analytics tracking."
+      "HUD Styling: Designed futuristic gamified HUD and theme variables.",
+      "Sliders Layouts: Configured dynamic project cards and details modal with image sliders.",
+      "Web Audio: Implemented custom Web Audio sound system and typing effect animations.",
+      "Session Loggers: Integrated telemetry logger dashboard with real-time analytics tracking."
     ],
     expertPillars: [
       { icon: "🎮", title: "Interactive UI Modules", desc: "Constructed custom audio-feedback engines and gamified HUD grids for responsive player actions." },

@@ -32,6 +32,34 @@
 </head>
 
 <body>
+  <!-- GTA V Style Preloader -->
+  <div id="gta-preloader">
+    <div class="loader-bg-neon"></div>
+    <div class="loader-character-container">
+      <img src="public/gta_char1.png" class="loader-slide slide-left" alt="Trevor">
+      <img src="public/gta_char2.png" class="loader-slide slide-right" alt="Michael">
+      <img src="public/wukong.png" class="loader-slide slide-left-wukong" alt="Wukong">
+      <img src="public/joel.png" class="loader-slide slide-right-joel" alt="Joel">
+      <img src="public/ezio.png" class="loader-slide slide-center-ezio" alt="Ezio">
+      <img src="public/lara.png" class="loader-slide slide-right-lara" alt="Lara Croft">
+      <img src="public/gta_group.png" class="loader-slide slide-center" alt="GTA Trio">
+    </div>
+    
+    <div class="loader-text-container">
+      <div class="loader-title">INITIALIZING STORY MODE</div>
+      <div class="loader-subtitle">Loading Shoubhik's Portfolio...</div>
+    </div>
+    
+    <!-- GTA style spinner -->
+    <div class="gta-spinner-container">
+      <div class="gta-spinner"></div>
+    </div>
+  </div>
+
+
+
+  <!-- Professional High-Tech Grid Background -->
+  <div class="grid-bg-overlay"></div>
 
   <!-- High-Tech Cyber Navbar -->
   <header class="cyber-header">
@@ -47,6 +75,7 @@
         <a href="#projects" class="nav-link">Projects</a>
         <a href="#experience" class="nav-link">Experience</a>
         <a href="#education" class="nav-link">Education</a>
+        <a href="#showreel" class="nav-link">Show Reel</a>
         <a href="#certificates" class="nav-link">Credentials</a>
       </nav>
 
@@ -56,7 +85,7 @@
         <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle Theme">
           <span class="toggle-icon">🌙</span>
         </button>
-        <button id="nav-hire-btn" class="nav-cta-btn">HIRE ME</button>
+        <a href="public/Shoubhik_Bhattacharya_Resume.pdf" target="_blank" download class="nav-cta-btn">RESUME</a>
 
         <!-- Hamburger Menu Button -->
         <button class="hamburger-menu-btn" id="hamburger-btn" aria-label="Toggle menu">
@@ -75,8 +104,9 @@
         <a href="#projects" class="mobile-nav-link">Projects</a>
         <a href="#experience" class="mobile-nav-link">Experience</a>
         <a href="#education" class="mobile-nav-link">Education</a>
+        <a href="#showreel" class="mobile-nav-link">Show Reel</a>
         <a href="#certificates" class="mobile-nav-link">Credentials</a>
-        <button id="mobile-nav-hire-btn" class="nav-cta-btn">HIRE ME</button>
+        <a href="public/Shoubhik_Bhattacharya_Resume.pdf" target="_blank" download class="nav-cta-btn">RESUME</a>
       </div>
     </div>
   </header>
@@ -89,12 +119,10 @@
   <main class="main-content">
 
     <!-- About Section -->
-    <section id="about" class="scroll-mt">
+    <section id="about" class="scroll-mt reveal-on-scroll">
       <h3 class="section-title">About</h3>
+
       <div class="about-card">
-        <video class="about-video-bg" autoplay loop muted playsinline>
-          <source src="public/SHOUBHIK.mp4" type="video/mp4">
-        </video>
         <div class="about-grid">
           <div class="about-info">
             <div class="about-header-group">
@@ -119,21 +147,20 @@
 
 
             <!-- Primary CTAs -->
-            <div class="primary-ctas" style="display: flex; flex-wrap: wrap; gap: 12px;">
+            <div class="primary-ctas" style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
               <a href="#projects" class="cta-btn btn-blue">
                 PROJECTS
               </a>
-              <button id="hire-interest-btn" class="cta-btn btn-dark btn-outline-green">
+              <button id="hire-interest-btn" class="cta-btn btn-pink">
                 CONTACT / HIRE
               </button>
+              <a href="public/Shoubhik_Bhattacharya_Resume.pdf" target="_blank" download class="cta-btn btn-green-resume" title="Download Resume">
+                📥 Download Resume
+              </a>
             </div>
 
             <!-- Secondary Social Badges -->
             <div class="secondary-socials">
-              <a href="public/Shoubhik_Bhattacharya_Resume.pdf" target="_blank" download class="social-badge"
-                title="Download Resume">
-                Resume
-              </a>
               <a href="https://www.artstation.com/gamedev_shoubhik2" target="_blank" rel="noopener noreferrer"
                 class="social-badge" title="ArtStation">
                 ArtStation
@@ -164,7 +191,7 @@
     </section>
 
     <!-- Core Skills Section -->
-    <section id="skills" class="scroll-mt border-divider">
+    <section id="skills" class="scroll-mt border-divider reveal-on-scroll">
       <h3 class="section-title">Core Skills</h3>
       <div class="skills-grid-new">
         <!-- Dynamically populated from js/modules/skills.js -->
@@ -174,7 +201,7 @@
 
 
     <!-- Project Portfolio Section -->
-    <section id="projects" class="scroll-mt border-divider">
+    <section id="projects" class="scroll-mt border-divider reveal-on-scroll">
       <h3 class="section-title">Portfolio Projects</h3>
 
       <!-- Premium Category Switcher Tabs -->
@@ -209,7 +236,7 @@
     </section>
 
     <!-- Work & Project Experience Section -->
-    <section id="experience" class="scroll-mt border-divider">
+    <section id="experience" class="scroll-mt border-divider reveal-on-scroll">
       <div class="exp-section-header">
         <h3 class="section-title">Work & Project Experience</h3>
       </div>
@@ -243,7 +270,7 @@
     </section>
 
     <!-- Education Section (Academic Foundation) -->
-    <section id="education" class="scroll-mt border-divider">
+    <section id="education" class="scroll-mt border-divider reveal-on-scroll">
       <h3 class="section-title">Academic Foundation</h3>
 
       <div class="education-grid">
@@ -315,8 +342,18 @@
       </div>
     </section>
 
+    <!-- Show Reel Section -->
+    <section id="showreel" class="scroll-mt border-divider reveal-on-scroll">
+      <h3 class="section-title">Show Reel</h3>
+      <div class="showreel-video-container">
+        <video class="showreel-video" controls autoplay loop muted playsinline>
+          <source src="public/SHOUBHIK.mp4" type="video/mp4">
+        </video>
+      </div>
+    </section>
+
     <!-- Certificates & Achievements Section -->
-    <section id="certificates" class="scroll-mt border-divider">
+    <section id="certificates" class="scroll-mt border-divider reveal-on-scroll">
       <h3 class="section-title">Certificates & Achievements</h3>
 
       <div class="ticker-wrapper mt-12">
@@ -331,7 +368,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="main-footer-new">
+    <footer class="main-footer-new reveal-on-scroll">
       <div class="footer-glow-new"></div>
 
       <div class="footer-grid-new">
@@ -444,10 +481,6 @@
             <div id="modal-dots-container" class="slider-dots-row"></div>
           </div>
 
-          <div class="modal-desc-section">
-            <h5 class="modal-section-title">Briefing</h5>
-            <p id="modal-description" class="modal-desc-text">Description goes here</p>
-          </div>
           <div id="modal-expert-section" class="expert-analysis-container">
             <!-- Dynamic Expert Analysis injected via JS -->
           </div>
@@ -506,69 +539,66 @@
   <!-- Hidden Owner Button -->
   <button id="owner-secret-btn" class="owner-secret-btn" aria-label="Owner Access">🔒</button>
 
-  <!-- Custom Hire Interest Modal -->
   <div id="hire-interest-modal" class="modal-overlay hidden">
-    <div class="gamer-hud-card passcode-card new-hire-hud-card" onclick="event.stopPropagation()">
-      <div class="hud-header">
-        <div class="hud-header-left">
-          <span class="badge-emoji">💼</span>
-          <h4 class="hud-title">[ SYSTEM INGESTION: CONTACT & HIRE ]</h4>
-        </div>
-        <button id="hire-close-btn" class="hud-close-btn" aria-label="Close modal">&times;</button>
+    <!-- GTA Characters -->
+    <div class="gta-character-left" id="gta-char-left">
+      <img src="public/gta_char1.png" alt="Trevor" />
+    </div>
+    
+    <div class="gta-character-right" id="gta-char-right">
+      <img src="public/gta_char2.png" alt="Michael" />
+    </div>
+
+    <div class="hire-gta-modal" onclick="event.stopPropagation()">
+      <!-- Close Button -->
+      <button id="hire-close-btn" class="hud-close-btn" type="button" aria-label="Close modal">&times;</button>
+      
+      <div class="modal-header">
+        <span>💼 [ SYSTEM INGESTION: CONTACT & HIRE ]</span>
       </div>
-      <div class="hud-body passcode-body">
-
-        <!-- Direct Contact Actions -->
-        <div class="direct-email-section"
-          style="margin-bottom: 20px; text-align: center; border-bottom: 1px dashed rgba(255,255,255,0.15); padding-bottom: 20px;">
-          <p class="passcode-instruction" style="margin-bottom: 12px; font-weight: 700;">DIRECT CONTACT</p>
-          <a href="mailto:shoubhikbhattacharya100@gmail.com" class="cta-btn btn-blue"
-            style="font-size: 11px; height: 38px; padding: 0 20px; text-decoration: none; width: 100%; box-sizing: border-box; display: inline-flex;">
-            📧 EMAIL SHOUBHIK DIRECTLY
-          </a>
-        </div>
-
-        <p class="passcode-instruction" style="font-weight: 700; margin-bottom: 4px;">OR REGISTER HIRING PARAMETERS</p>
-        <p class="hud-sub-instruction">Alternatively, you can also reach out to me directly by entering your details
-          below.</p>
-
-        <div class="hud-input-fields">
-          <div class="hud-inputs-row">
-            <div class="hud-input-group">
-              <span class="hud-input-prompt">&gt;</span>
-              <span class="hud-input-label">/NAME:</span>
-              <input type="text" id="hire-name-input" placeholder="e.g. Google HR" autocomplete="off">
-            </div>
-
-            <div class="hud-input-group">
-              <span class="hud-input-prompt">&gt;</span>
-              <span class="hud-input-label">/EMAIL:</span>
-              <input type="email" id="hire-email-input" placeholder="e.g. recruiter@google.com" autocomplete="off">
-            </div>
-
-            <div class="hud-input-group">
-              <span class="hud-input-prompt">&gt;</span>
-              <span class="hud-input-label">/LINK:</span>
-              <input type="text" id="hire-link-input" placeholder="e.g. google.com" autocomplete="off">
-            </div>
+      
+      <div class="modal-body-section">
+        <span class="section-subtitle">DIRECT CONTACT</span>
+        <a href="mailto:shoubhikbhattacharya100@gmail.com" class="email-direct-btn">
+          ✉️ EMAIL SHOUBHIK DIRECTLY
+        </a>
+      </div>
+      
+      <div class="divider-line"></div>
+      
+      <form id="hire-form" class="gta-hire-form">
+        <span class="section-subtitle">OR REGISTER HIRING PARAMETERS</span>
+        <p class="section-desc">Alternatively, you can also reach out to me directly by entering your details below.</p>
+        
+        <div class="inputs-row">
+          <div class="input-field-group">
+            <label>/NAME:</label>
+            <input placeholder="e.g. Google HR" id="hire-name-input" type="text" autocomplete="off" />
           </div>
-
-
-
-          <div class="hud-form-actions">
-            <button id="hire-submit-btn" class="hud-btn-action submit-btn">
-              [ INITIATE UPLOAD ]
-            </button>
-            <button id="hire-cancel-btn" class="hud-btn-action cancel-btn">
-              [ ABORT ]
-            </button>
+          <div class="input-field-group">
+            <label>/EMAIL:</label>
+            <input placeholder="e.g. recruiter@google.com" id="hire-email-input" type="email" autocomplete="off" />
+          </div>
+          <div class="input-field-group">
+            <label>/LINK:</label>
+            <input placeholder="e.g. google.com" id="hire-link-input" type="text" autocomplete="off" />
           </div>
         </div>
-
-        <p id="hire-error-msg" class="passcode-error hidden">❌ VALUE INGESTION ERROR: INVALID NAME</p>
-      </div>
+        
+        <button type="submit" id="hire-submit-btn" class="gta-submit-btn">[ INITIATE UPLOAD ]</button>
+        
+        <div class="abort-container">
+          <button type="button" id="hire-cancel-btn" class="gta-abort-btn">[ ABORT ]</button>
+        </div>
+        
+        <p id="hire-error-msg" class="passcode-error hidden"
+          style="position: relative; z-index: 3; font-size: 10px; color: #ff007f; text-align: center; margin-top: 8px; font-weight: bold; text-shadow: 0 0 5px #ff007f;">
+          ❌ VALUE INGESTION ERROR: INVALID NAME</p>
+      </form>
     </div>
   </div>
+
+
 
   <!-- Cyber Security Toast Notification -->
   <div id="cyber-security-toast" class="cyber-toast">
