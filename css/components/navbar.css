@@ -262,15 +262,58 @@ body.light-theme .mobile-nav-link.active {
 
 /* Responsiveness for Navbar */
 @media (max-width: 768px) {
+  .cyber-header {
+    top: 10px;
+    height: 48px;
+    width: calc(100% - 20px);
+    border-radius: 24px;
+  }
+
+  .nav-container {
+    padding: 0 12px;
+  }
+
+  .nav-logo {
+    font-size: 12.5px;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+    gap: 4px;
+    max-width: 55%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .nav-links-desktop {
     display: none;
+  }
+
+  .nav-actions {
+    gap: 6px;
   }
 
   .nav-actions #nav-hire-btn {
     display: none;
   }
 
+  .nav-cta-btn {
+    height: 28px;
+    padding: 0 10px;
+    font-size: 10px;
+    letter-spacing: 0.02em;
+  }
+
+  .cyber-header .theme-toggle-btn {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 13px !important;
+  }
+
   .hamburger-menu-btn {
     display: flex;
+  }
+
+  .mobile-nav-overlay {
+    top: 60px;
+    height: calc(100vh - 60px);
   }
 }

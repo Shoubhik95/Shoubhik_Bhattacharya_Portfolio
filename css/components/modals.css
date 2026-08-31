@@ -1157,46 +1157,68 @@ body.light-theme .dash-repo-btn {
    Custom Sliding Uiverse Contact Form
    ========================================================================== */
 .hire-gta-modal {
-  background: rgba(18, 5, 26, 0.95);
-  border: 2px solid #ff007f !important;
-  border-radius: 20px;
+  background: rgba(11, 15, 25, 0.95);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(56, 189, 248, 0.35) !important;
+  border-radius: 24px;
   padding: 32px;
   width: 90%;
   max-width: 700px;
-  box-shadow: 0 0 30px rgba(255, 0, 127, 0.3), inset 0 0 20px rgba(0, 255, 255, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.15);
   color: #ffffff;
   font-family: var(--font-sans);
   position: relative;
   box-sizing: border-box;
 }
 
+body.light-theme .hire-gta-modal {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(2, 132, 199, 0.3) !important;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+  color: #0f172a;
+}
+
 .hud-close-btn {
   position: absolute;
-  top: 16px;
+  top: 18px;
   right: 20px;
-  background: transparent;
-  border: none;
-  color: #ff007f;
-  font-size: 24px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  color: #94a3b8;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   z-index: 10;
 }
 
 .hud-close-btn:hover {
-  color: #00ffff;
-  transform: scale(1.1);
+  color: #ffffff;
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  transform: scale(1.06);
 }
 
 .hire-gta-modal .modal-header {
   text-align: center;
-  font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 900;
-  color: #ffea00;
-  text-shadow: 2px 2px 0px #ff007f, 0 0 10px rgba(255, 234, 0, 0.5);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 800;
+  color: #38bdf8;
+  letter-spacing: 0.08em;
   margin-bottom: 24px;
-  letter-spacing: 0.05em;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.3);
+}
+
+body.light-theme .hire-gta-modal .modal-header {
+  color: #0284c7;
+  text-shadow: none;
 }
 
 .modal-body-section {
@@ -1210,12 +1232,15 @@ body.light-theme .dash-repo-btn {
   display: block;
   text-align: center;
   font-family: var(--font-mono);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
-  color: #00ffff;
-  text-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
+  color: #38bdf8;
   margin-bottom: 12px;
+}
+
+body.light-theme .section-subtitle {
+  color: #0284c7;
 }
 
 .email-direct-btn {
@@ -1223,40 +1248,44 @@ body.light-theme .dash-repo-btn {
   align-items: center;
   justify-content: center;
   height: 44px;
-  background: transparent;
-  border: 2px solid #00ffff !important;
-  border-radius: 8px;
-  color: #00ffff !important;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.4) !important;
+  border-radius: 10px;
+  color: #38bdf8 !important;
   text-decoration: none;
   font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 800;
+  font-size: 12.5px;
+  font-weight: 700;
   letter-spacing: 0.05em;
   margin: 0 auto;
   width: fit-content;
-  padding: 0 32px;
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
-  transition: all 0.3s ease;
+  padding: 0 28px;
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.15);
+  transition: all 0.25s ease;
 }
 
 .email-direct-btn:hover {
-  background: #00ffff !important;
-  color: #12051a !important;
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  background: #38bdf8 !important;
+  color: #080c14 !important;
+  box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
   transform: translateY(-2px);
 }
 
 .divider-line {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 0, 127, 0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.25), transparent);
   margin: 24px 0;
 }
 
 .section-desc {
   text-align: center;
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.6);
+  color: #94a3b8;
   margin-bottom: 20px;
+}
+
+body.light-theme .section-desc {
+  color: #64748b;
 }
 
 .inputs-row {
@@ -1281,50 +1310,61 @@ body.light-theme .dash-repo-btn {
 
 .input-field-group label {
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
-  color: #ff007f;
+  color: #38bdf8;
+  letter-spacing: 0.06em;
+}
+
+body.light-theme .input-field-group label {
+  color: #0284c7;
 }
 
 .input-field-group input {
-  background: rgba(255, 0, 127, 0.05);
-  border: 1px solid rgba(255, 0, 127, 0.3) !important;
-  border-radius: 6px;
-  height: 40px;
-  padding: 0 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 10px;
+  height: 42px;
+  padding: 0 14px;
   color: #ffffff;
+  font-family: var(--font-sans);
   font-size: 13px;
   outline: none;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
+}
+
+body.light-theme .input-field-group input {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #0f172a;
 }
 
 .input-field-group input:focus {
-  border-color: #00ffff !important;
-  background: rgba(0, 255, 255, 0.05);
-  box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
+  border-color: #38bdf8 !important;
+  background: rgba(56, 189, 248, 0.06);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
 }
 
 .gta-submit-btn {
   width: 100%;
-  height: 48px;
-  background: #ff007f !important;
-  border: none !important;
-  border-radius: 8px;
+  height: 46px;
+  background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%) !important;
+  border: 1px solid rgba(56, 189, 248, 0.3) !important;
+  border-radius: 10px;
   color: #ffffff !important;
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 800;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
-  transition: all 0.3s ease;
-  margin-bottom: 16px;
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.3);
+  transition: all 0.25s ease;
+  margin-bottom: 14px;
 }
 
 .gta-submit-btn:hover {
-  background: #ffea00 !important;
-  color: #12051a !important;
-  box-shadow: 0 0 20px #ffea00;
+  background: linear-gradient(135deg, #0369a1 0%, #0284c7 100%) !important;
+  box-shadow: 0 8px 25px rgba(2, 132, 199, 0.5);
   transform: translateY(-2px);
 }
 
@@ -1335,15 +1375,16 @@ body.light-theme .dash-repo-btn {
 .gta-abort-btn {
   background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.5);
+  color: #64748b;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11px;
+  letter-spacing: 0.05em;
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: color 0.25s ease;
 }
 
 .gta-abort-btn:hover {
-  color: #ff007f;
+  color: #38bdf8;
 }
 
 /* GTA Characters Slide-in Animations */

@@ -522,3 +522,29 @@ body.light-theme .profile-photo-frame {
   object-fit: cover;
   display: block;
 }
+
+@media (max-width: 600px) {
+  .about-card {
+    padding: 20px 16px !important;
+    border-radius: 18px !important;
+  }
+
+  .about-header-group {
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .profile-name {
+    font-size: 22px !important;
+    line-height: 1.2 !important;
+  }
+
+  .profile-role-sub {
+    font-size: 14px !important;
+  }
+
+  .role-pill {
+    font-size: 11px !important;
+    padding: 3px 8px !important;
+  }
+}

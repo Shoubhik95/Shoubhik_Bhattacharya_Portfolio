@@ -899,8 +899,17 @@ body.light-theme .showreel-video-container {
 @media (max-width: 767px) {
   .main-content {
     width: 100%;
-    padding: 76px 14px 40px 14px;
+    padding: 84px 14px 40px 14px !important;
     gap: 32px;
+  }
+
+  .scroll-mt {
+    scroll-margin-top: 75px !important;
+  }
+
+  .profile-name {
+    font-size: clamp(20px, 5.5vw, 30px) !important;
+    line-height: 1.25 !important;
   }
 
   .section-title {
@@ -935,22 +944,35 @@ body.light-theme .showreel-video-container {
   .projects-controls-bar {
     flex-direction: column;
     align-items: stretch;
-    gap: 14px;
+    gap: 12px;
+    margin: 16px 0 24px 0;
   }
 
   .projects-tabs-container {
     width: 100%;
     overflow-x: auto;
+    white-space: nowrap;
     -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
   }
 
   .projects-tabs {
+    display: flex;
+    flex-wrap: nowrap !important;
+    gap: 8px;
     width: max-content;
+  }
+
+  .tab-btn {
+    font-size: 11px !important;
+    padding: 8px 14px !important;
+    white-space: nowrap !important;
   }
 
   .projects-sort-dock {
     width: 100%;
     justify-content: space-between;
+    box-sizing: border-box;
   }
 }
 
