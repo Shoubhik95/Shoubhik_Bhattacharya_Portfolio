@@ -32,34 +32,15 @@
 </head>
 
 <body>
-  <!-- GTA V Style Preloader -->
-  <div id="gta-preloader">
-    <div class="loader-bg-neon"></div>
-    <div class="loader-character-container">
-      <img src="public/gta_char1.png" class="loader-slide slide-left" alt="Trevor">
-      <img src="public/gta_char2.png" class="loader-slide slide-right" alt="Michael">
-      <img src="public/wukong.png" class="loader-slide slide-left-wukong" alt="Wukong">
-      <img src="public/joel.png" class="loader-slide slide-right-joel" alt="Joel">
-      <img src="public/ezio.png" class="loader-slide slide-center-ezio" alt="Ezio">
-      <img src="public/lara.png" class="loader-slide slide-right-lara" alt="Lara Croft">
-      <img src="public/gta_group.png" class="loader-slide slide-center" alt="GTA Trio">
-    </div>
-    
-    <div class="loader-text-container">
-      <div class="loader-title">INITIALIZING STORY MODE</div>
-      <div class="loader-subtitle">Loading Shoubhik's Portfolio...</div>
-    </div>
-    
-    <!-- GTA style spinner -->
-    <div class="gta-spinner-container">
-      <div class="gta-spinner"></div>
-    </div>
-  </div>
 
 
-
-  <!-- Professional High-Tech Grid Background -->
+  <!-- Atmospheric Ambient Background & Mesh Glows -->
   <div class="grid-bg-overlay"></div>
+  <div class="cursor-spotlight-bg"></div>
+  <div class="glow-blob glow-1"></div>
+  <div class="glow-blob glow-2"></div>
+  <div class="glow-blob glow-3"></div>
+  <div class="glow-blob glow-4"></div>
 
   <!-- High-Tech Cyber Navbar -->
   <header class="cyber-header">
@@ -85,7 +66,7 @@
         <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle Theme">
           <span class="toggle-icon">🌙</span>
         </button>
-        <a href="public/Shoubhik_Bhattacharya_Resume.pdf" target="_blank" download class="nav-cta-btn">RESUME</a>
+        <a href="#footer-resume-btn" class="nav-cta-btn resume-scroll-btn">RESUME</a>
 
         <!-- Hamburger Menu Button -->
         <button class="hamburger-menu-btn" id="hamburger-btn" aria-label="Toggle menu">
@@ -120,69 +101,79 @@
 
     <!-- About Section -->
     <section id="about" class="scroll-mt reveal-on-scroll">
-      <h3 class="section-title">About</h3>
+      <h2 class="section-title">About</h2>
 
       <div class="about-card">
         <div class="about-grid">
           <div class="about-info">
+
+            <!-- Profile Header -->
             <div class="about-header-group">
-              <img src="public/my photos/pixel_avatar.webp" alt="Pixel Avatar" class="pixel-avatar-img">
+              <div class="pixel-avatar-wrapper">
+                <img src="public/my photos/pixel_avatar.webp" alt="Shoubhik" class="pixel-avatar-img">
+              </div>
               <div class="about-header-text">
-                <span class="hi-badge">Hi, this is</span>
-                <h1 class="profile-name"><span class="highlight-green">SHOUBHIK BHATTACHARYA</span></h1>
+                <div class="hi-tag-pill">
+                  <span class="hi-tag-text">// HI, THIS IS</span>
+                </div>
+                <h1 class="profile-name name-highlight">SHOUBHIK BHATTACHARYA</h1>
+                <h3 class="profile-role-sub">Game Designer &amp; Technical Artist</h3>
               </div>
             </div>
 
-            <div class="about-tagline">Game Designer & Technical Artist</div>
 
+
+            <!-- Professional Bio Details -->
             <div class="profile-details-new">
               <p class="about-desc">
-                B.Tech CSE @ VIT Bhopal (CGPA 8.28) &amp; Founder of <a href="#experience"
-                  class="about-studio-link">Astrayuga Interactive</a>. Specializing in Unreal Engine 5, Unity 6, and
-                Blender to design and script immersive gameplay. Eager to contribute as a Game Designer &amp; Technical
-                Artist.
+                Hi, I'm a <strong class="highlight-text">Game Designer &amp; Technical Artist</strong> who loves turning
+                ideas into playable worlds. Currently studying <strong class="highlight-text">Computer Science at VIT
+                  Bhopal</strong> and running <a href="#experience" class="about-studio-link">Astrayuga Interactive</a>
+                on the side, I work across <strong class="highlight-text">Unreal Engine 5, Unity 6, and Blender</strong>
+                to design and script gameplay that actually feels good to play.
               </p>
             </div>
 
 
 
-            <!-- Primary CTAs -->
-            <div class="primary-ctas" style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
+            <!-- Highly Visible Primary Action Buttons -->
+            <div class="primary-ctas">
               <a href="#projects" class="cta-btn btn-blue">
-                PROJECTS
+                <span class="btn-icon">🎮</span> View Projects
               </a>
-              <button id="hire-interest-btn" class="cta-btn btn-pink">
-                CONTACT / HIRE
+              <button id="hire-interest-btn" class="cta-btn btn-emerald">
+                <span class="btn-icon">🚀</span> Contact &amp; Hire
               </button>
-              <a href="public/Shoubhik_Bhattacharya_Resume.pdf" target="_blank" download class="cta-btn btn-green-resume" title="Download Resume">
-                📥 Download Resume
+              <a href="#footer-resume-btn" class="cta-btn btn-amber resume-scroll-btn"
+                title="Go to Resume Download">
+                <span class="btn-icon">📥</span> Resume (PDF)
               </a>
             </div>
 
-            <!-- Secondary Social Badges -->
+            <!-- High Contrast Social Badges -->
             <div class="secondary-socials">
               <a href="https://www.artstation.com/gamedev_shoubhik2" target="_blank" rel="noopener noreferrer"
-                class="social-badge" title="ArtStation">
-                ArtStation
+                class="social-badge artstation" title="ArtStation">
+                <span class="soc-icon">🎨</span> ArtStation
               </a>
               <a href="https://shoubhik-bhattacharya.itch.io/" target="_blank" rel="noopener noreferrer"
-                class="social-badge" title="Itch.io">
-                Itch.io
+                class="social-badge itch" title="Itch.io">
+                <span class="soc-icon">🕹️</span> Itch.io
               </a>
-              <a href="https://github.com/Shoubhik95" target="_blank" rel="noopener noreferrer" class="social-badge"
-                title="GitHub">
-                GitHub
+              <a href="https://github.com/Shoubhik95" target="_blank" rel="noopener noreferrer"
+                class="social-badge github" title="GitHub">
+                <span class="soc-icon">💻</span> GitHub
               </a>
               <a href="https://www.linkedin.com/in/shoubhik-bhattacharya-8b4099324" target="_blank"
-                rel="noopener noreferrer" class="social-badge" title="LinkedIn">
-                LinkedIn
+                rel="noopener noreferrer" class="social-badge linkedin" title="LinkedIn">
+                <span class="soc-icon">💼</span> LinkedIn
               </a>
             </div>
           </div>
 
-          <!-- Canvas Spotlight / 3D Card Deck -->
+          <!-- Clean Portrait Photo Card -->
           <div class="about-profile">
-            <div class="profile-avatar-container">
+            <div class="profile-avatar-container profile-photo-frame">
               <canvas id="profile-canvas" class="profile-canvas"></canvas>
             </div>
           </div>
@@ -204,13 +195,30 @@
     <section id="projects" class="scroll-mt border-divider reveal-on-scroll">
       <h3 class="section-title">Portfolio Projects</h3>
 
-      <!-- Premium Category Switcher Tabs -->
-      <div class="projects-tabs-container">
-        <div class="projects-tabs">
-          <button class="tab-btn active" data-category="game-design">Game Dev & Design</button>
-          <button class="tab-btn" data-category="game-art">3D Art & Animation</button>
-          <button class="tab-btn" data-category="web-projects">Web Projects</button>
-          <div class="tab-slider-indicator"></div>
+      <!-- Premium Category Switcher Tabs & Sort Option -->
+      <div class="projects-controls-bar">
+        <div class="projects-tabs-container">
+          <div class="projects-tabs">
+            <button class="tab-btn active" data-category="game-design">Game Dev &amp; Design</button>
+            <button class="tab-btn" data-category="game-art">3D Art &amp; Animation</button>
+            <button class="tab-btn" data-category="web-projects">Web Projects</button>
+            <div class="tab-slider-indicator"></div>
+          </div>
+        </div>
+
+        <!-- Sort Control -->
+        <div class="projects-sort-dock">
+          <span class="sort-icon-tag">⚡</span>
+          <span class="sort-title-label">SORT:</span>
+          <div class="sort-buttons-group">
+            <button class="sort-btn active" data-sort="newest" id="sort-newest-btn"
+              title="Show latest added projects first">
+              NEWEST FIRST
+            </button>
+            <button class="sort-btn" data-sort="oldest" id="sort-oldest-btn" title="Show oldest projects first">
+              OLDEST FIRST
+            </button>
+          </div>
         </div>
       </div>
 
@@ -346,7 +354,7 @@
     <section id="showreel" class="scroll-mt border-divider reveal-on-scroll">
       <h3 class="section-title">Show Reel</h3>
       <div class="showreel-video-container">
-        <video class="showreel-video" controls autoplay loop muted playsinline>
+        <video id="showreel-player" class="showreel-video" controls loop playsinline preload="metadata">
           <source src="public/SHOUBHIK.mp4" type="video/mp4">
         </video>
       </div>
@@ -387,7 +395,7 @@
             <span class="arrow-right-new">&rarr;</span>
           </a>
 
-          <a href="public/Shoubhik_Bhattacharya_Resume.pdf" target="_blank" download class="footer-resume-btn-new">
+          <a id="footer-resume-btn" href="public/Shoubhik_Bhattacharya_Resume.pdf" target="_blank" download class="footer-resume-btn-new">
             <span class="download-icon-new">📥</span> Download Resume
           </a>
         </div>
@@ -447,15 +455,18 @@
 
   </main>
 
-  <!-- Interactive Project Modal (Minimalist Style) -->
+  <!-- Interactive Project Operations Dashboard Modal -->
   <div id="project-modal" class="modal-overlay hidden">
-    <div class="minimalist-modal-card" onclick="event.stopPropagation()">
+    <div class="minimalist-modal-card project-dashboard-card" onclick="event.stopPropagation()">
 
-      <!-- Modal Header -->
-      <div class="modal-header">
+      <!-- Dashboard Top Header Bar -->
+      <div class="modal-header project-dashboard-header">
         <div class="modal-header-left">
+          <div class="dashboard-tag-bar">
+            <span class="dash-badge">SYSTEM // PROJECT DASHBOARD</span>
+            <span id="modal-subtitle" class="modal-badge">Category Tag</span>
+          </div>
           <h4 id="modal-title" class="modal-title-text">Project Title</h4>
-          <span id="modal-subtitle" class="modal-badge">Category Tag</span>
         </div>
         <button id="modal-close-btn" class="modal-close-btn" aria-label="Close modal">
           <svg class="close-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -464,10 +475,35 @@
         </button>
       </div>
 
-      <!-- Modal Body (Two columns) -->
-      <div class="modal-details-grid">
+      <!-- Dashboard Metrics Telemetry Bar (3 Stats) -->
+      <div class="dashboard-telemetry-bar">
+        <div class="dash-metric-card">
+          <span class="dash-metric-icon">⚙️</span>
+          <div class="dash-metric-meta">
+            <span class="dash-metric-lbl">ENGINE &amp; PLATFORM</span>
+            <span id="modal-stat-engine" class="dash-metric-val">Unity 6</span>
+          </div>
+        </div>
+        <div class="dash-metric-card">
+          <span class="dash-metric-icon">⚡</span>
+          <div class="dash-metric-meta">
+            <span class="dash-metric-lbl">PRODUCTION STAGE</span>
+            <span id="modal-stat-stage" class="dash-metric-val">PLAYABLE BUILD</span>
+          </div>
+        </div>
+        <div class="dash-metric-card">
+          <span class="dash-metric-icon">🛠️</span>
+          <div class="dash-metric-meta">
+            <span class="dash-metric-lbl">TECH &amp; TOOLS</span>
+            <span id="modal-stat-tools" class="dash-metric-val">C#, Unity 6, ProBuilder</span>
+          </div>
+        </div>
+      </div>
 
-        <!-- Left: Image Viewer Column -->
+      <!-- Dashboard Body (Two Columns) -->
+      <div class="modal-details-grid project-dashboard-grid">
+
+        <!-- Left: Image Viewer, Clean Description & System Architecture Toggle -->
         <div class="modal-desc-col">
           <div class="modal-slider-box">
             <div id="modal-slides-wrapper" class="modal-slides-wrapper">
@@ -481,40 +517,40 @@
             <div id="modal-dots-container" class="slider-dots-row"></div>
           </div>
 
-          <div id="modal-expert-section" class="expert-analysis-container">
+          <!-- Clean Project Description (No extra box headers) -->
+          <p id="modal-description" class="project-desc-clean">Project overview description goes here.</p>
+
+          <!-- System Architecture & Logic Flowchart (Collapsible) -->
+          <div id="modal-expert-section" class="expert-analysis-container hidden">
             <!-- Dynamic Expert Analysis injected via JS -->
           </div>
         </div>
 
-        <!-- Right: Config Details Column -->
+        <!-- Right: Control Operations & Milestone Dev Logs -->
         <div class="modal-meta-col">
-          <div class="modal-meta-section">
-            <h5 class="meta-label">Project Specs</h5>
-            <div class="meta-stats-list" style="display: flex; flex-direction: column; gap: 12px; font-size: 14px;">
-              <div><strong>Engine:</strong> <span id="modal-stat-engine">Unity</span></div>
-              <div><strong>Status:</strong> <span id="modal-stat-stage">Completed</span></div>
-              <div><strong>Tools:</strong> <span id="modal-stat-tools">Blender, C#</span></div>
+          <!-- Control Operations Station (CTAs) -->
+          <div id="modal-ctas-container" class="dashboard-control-station">
+            <h5 class="meta-label">🚀 Launch Operations Station</h5>
+            <div class="dash-cta-row">
+              <a id="modal-visit-btn" href="#" target="_blank" rel="noopener noreferrer"
+                class="cta-btn btn-blue dash-launch-btn">
+                LAUNCH BUILD
+              </a>
+              <button id="toggle-architecture-btn" class="architecture-toggle-btn" type="button">
+                📐 SYSTEM ARCHITECTURE
+              </button>
+              <a id="modal-github-btn" href="#" target="_blank" rel="noopener noreferrer"
+                class="cta-btn btn-dark dash-repo-btn">
+                VIEW REPOSITORY
+              </a>
             </div>
           </div>
 
-          <!-- Section 4: CTAs -->
-          <div id="modal-ctas-container" class="modal-meta-section"
-            style="margin-top: 16px; display: flex; flex-direction: column; gap: 8px;">
-            <a id="modal-visit-btn" href="#" target="_blank" rel="noopener noreferrer" class="cta-btn btn-blue"
-              style="height: 40px; padding: 0 16px; font-size: 12px; display: inline-flex; justify-content: center; align-items: center; width: 100%;">
-              LAUNCH BUILD
-            </a>
-            <a id="modal-github-btn" href="#" target="_blank" rel="noopener noreferrer" class="cta-btn btn-dark"
-              style="height: 40px; padding: 0 16px; font-size: 12px; display: inline-flex; justify-content: center; align-items: center; width: 100%; border: 1px solid rgba(255, 255, 255, 0.1);">
-              VIEW REPOSITORY
-            </a>
-          </div>
-
-          <!-- Section 3: Dev logs / steps -->
-          <div class="modal-meta-section" style="margin-top: 16px;">
-            <h5 class="meta-label">Development Logs</h5>
+          <!-- Milestone Dev Logs -->
+          <div class="modal-meta-section dashboard-logs-section">
+            <h5 class="meta-label">📜 Engineering Milestone Logs</h5>
             <div id="modal-log-timeline" class="hud-log-timeline">
-              <!-- Timelines items injected via javascript -->
+              <!-- Timeline items injected via JavaScript -->
             </div>
           </div>
         </div>
@@ -523,6 +559,33 @@
     </div>
   </div>
 
+
+  <!-- Dedicated Architecture & System Blueprint Information Canvas Modal -->
+  <div id="architecture-canvas-modal" class="modal-overlay hidden" style="z-index: 100050;">
+    <div class="minimalist-modal-card arch-canvas-card" onclick="event.stopPropagation()">
+
+      <!-- Canvas Header -->
+      <div class="modal-header arch-canvas-header">
+        <div class="modal-header-left">
+          <span class="dash-badge">SYSTEM DIAGRAM // INFORMATION CANVAS</span>
+          <h4 id="arch-canvas-title" class="modal-title-text">System Architecture Blueprint</h4>
+        </div>
+        <button id="arch-canvas-close-btn" class="modal-close-btn" aria-label="Close architecture canvas">
+          <svg class="close-icon-svg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Canvas Content Container -->
+      <div class="arch-canvas-body">
+        <div id="arch-canvas-flowchart" class="expert-analysis-container">
+          <!-- Flowchart diagram dynamically injected -->
+        </div>
+      </div>
+
+    </div>
+  </div>
 
   <!-- Zoom Lightbox Modal for Certificates -->
   <div id="lightbox-modal" class="modal-overlay hidden">
@@ -544,7 +607,7 @@
     <div class="gta-character-left" id="gta-char-left">
       <img src="public/gta_char1.png" alt="Trevor" />
     </div>
-    
+
     <div class="gta-character-right" id="gta-char-right">
       <img src="public/gta_char2.png" alt="Michael" />
     </div>
@@ -552,24 +615,24 @@
     <div class="hire-gta-modal" onclick="event.stopPropagation()">
       <!-- Close Button -->
       <button id="hire-close-btn" class="hud-close-btn" type="button" aria-label="Close modal">&times;</button>
-      
+
       <div class="modal-header">
         <span>💼 [ SYSTEM INGESTION: CONTACT & HIRE ]</span>
       </div>
-      
+
       <div class="modal-body-section">
         <span class="section-subtitle">DIRECT CONTACT</span>
         <a href="mailto:shoubhikbhattacharya100@gmail.com" class="email-direct-btn">
           ✉️ EMAIL SHOUBHIK DIRECTLY
         </a>
       </div>
-      
+
       <div class="divider-line"></div>
-      
+
       <form id="hire-form" class="gta-hire-form">
         <span class="section-subtitle">OR REGISTER HIRING PARAMETERS</span>
         <p class="section-desc">Alternatively, you can also reach out to me directly by entering your details below.</p>
-        
+
         <div class="inputs-row">
           <div class="input-field-group">
             <label>/NAME:</label>
@@ -584,13 +647,13 @@
             <input placeholder="e.g. google.com" id="hire-link-input" type="text" autocomplete="off" />
           </div>
         </div>
-        
+
         <button type="submit" id="hire-submit-btn" class="gta-submit-btn">[ INITIATE UPLOAD ]</button>
-        
+
         <div class="abort-container">
           <button type="button" id="hire-cancel-btn" class="gta-abort-btn">[ ABORT ]</button>
         </div>
-        
+
         <p id="hire-error-msg" class="passcode-error hidden"
           style="position: relative; z-index: 3; font-size: 10px; color: #ff007f; text-align: center; margin-top: 8px; font-weight: bold; text-shadow: 0 0 5px #ff007f;">
           ❌ VALUE INGESTION ERROR: INVALID NAME</p>

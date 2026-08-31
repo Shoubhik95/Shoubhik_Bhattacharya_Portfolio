@@ -367,39 +367,60 @@ body.dark-theme .modal-header {
 
 .modal-badge {
   font-family: var(--font-mono);
-  font-size: 11px;
-  background-color: var(--accent-green);
-  color: #191a23;
-  border: 1px solid #191a23;
-  padding: 5px 14px;
-  border-radius: 20px;
+  font-size: 11.5px;
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8 !important;
+  border: 1px solid rgba(56, 189, 248, 0.35) !important;
+  padding: 4px 12px;
+  border-radius: 8px;
   text-transform: uppercase;
-  font-weight: 800;
-  letter-spacing: 0.05em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   transition: all 0.3s ease;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  display: inline-flex;
+  align-items: center;
 }
 
 /* Dynamic Badge Colors */
 .modal-overlay[data-theme-category="game-design"] .modal-badge {
-  background-color: var(--accent-green) !important;
-  color: #11151f !important;
-  box-shadow: 2px 2px 0px var(--accent-green);
+  background-color: rgba(34, 197, 94, 0.12) !important;
+  border: 1px solid rgba(34, 197, 94, 0.4) !important;
+  color: #4ade80 !important;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.2) !important;
 }
 
 .modal-overlay[data-theme-category="game-art"] .modal-badge {
-  background-color: #ff81df !important;
-  color: #11151f !important;
-  box-shadow: 2px 2px 0px #ff81df;
+  background-color: rgba(168, 85, 247, 0.12) !important;
+  border: 1px solid rgba(168, 85, 247, 0.4) !important;
+  color: #c084fc !important;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.2) !important;
 }
 
 .modal-overlay[data-theme-category="web-projects"] .modal-badge {
-  background-color: var(--accent-blue) !important;
-  color: #11151f !important;
-  box-shadow: 2px 2px 0px var(--accent-blue);
+  background-color: rgba(56, 189, 248, 0.12) !important;
+  border: 1px solid rgba(56, 189, 248, 0.4) !important;
+  color: #38bdf8 !important;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.2) !important;
 }
 
-body.dark-theme .modal-badge {
-  border: none !important;
+body.light-theme .modal-overlay[data-theme-category="game-design"] .modal-badge {
+  background-color: rgba(22, 163, 74, 0.1) !important;
+  border-color: rgba(22, 163, 74, 0.3) !important;
+  color: #15803d !important;
+}
+
+body.light-theme .modal-overlay[data-theme-category="game-art"] .modal-badge {
+  background-color: rgba(147, 51, 234, 0.1) !important;
+  border-color: rgba(147, 51, 234, 0.3) !important;
+  color: #7e22ce !important;
+}
+
+body.light-theme .modal-overlay[data-theme-category="web-projects"] .modal-badge {
+  background-color: rgba(2, 132, 199, 0.1) !important;
+  border-color: rgba(2, 132, 199, 0.3) !important;
+  color: #0369a1 !important;
 }
 
 .modal-close-btn {
@@ -1474,17 +1495,18 @@ body.dark-theme .project-image-box {
 }
 
 .project-card-title {
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--foreground);
-  margin-bottom: 4px;
+  font-family: var(--font-display) !important;
+  font-size: 18px !important;
+  font-weight: 800 !important;
+  line-height: 1.35 !important;
+  color: var(--foreground) !important;
+  margin-top: 4px;
+  margin-bottom: 6px;
+  padding-bottom: 2px;
   transition: color 0.3s ease;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  height: 24px;
+  overflow: visible !important;
+  height: auto !important;
+  min-height: auto !important;
 }
 
 .project-card-wrapper:hover .project-card-title {
@@ -1493,32 +1515,33 @@ body.dark-theme .project-image-box {
 
 @media (min-width: 640px) {
   .project-card-title {
-    font-size: 16px;
+    font-size: 19px !important;
   }
 
   .project-card-title-lg {
-    font-size: 18px;
+    font-size: 21px !important;
   }
 }
 
 .project-card-subtitle {
-  color: #64748b;
+  color: #38bdf8 !important;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 10.5px !important;
   font-weight: 700;
   margin-bottom: 8px;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   transition: color 0.3s ease;
-  height: 16px;
+  height: auto !important;
+  line-height: 1.3 !important;
 }
 
 body.dark-theme .project-card-subtitle {
-  color: var(--accent-blue);
+  color: var(--accent-blue) !important;
 }
 
 .project-card-wrapper:hover .project-card-subtitle {
-  color: var(--foreground) !important;
+  color: #ffffff !important;
 }
 
 @media (min-width: 640px) {
@@ -1750,15 +1773,122 @@ body.dark-theme .project-learn-more {
 }
 
 /* ==========================================================================
-   Category Switcher Tabs (Futuristic Glowing Cyber Pill Dock)
+   Category Switcher Tabs & Sort Option (Futuristic Glowing Cyber Pill Dock)
    ========================================================================== */
+.projects-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 28px 0 36px 0;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
 .projects-tabs-container {
   display: flex;
-  justify-content: center;
-  margin: 28px 0 36px 0;
-  width: 100%;
+  justify-content: flex-start;
+  margin: 0;
   box-sizing: border-box;
 }
+
+/* Sort Control Dock */
+.projects-sort-dock {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: rgba(10, 16, 28, 0.75);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 30px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+body.light-theme .projects-sort-dock {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(14, 165, 233, 0.25);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.sort-icon-tag {
+  font-size: 13px;
+}
+
+.sort-title-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 800;
+  color: #94a3b8;
+  letter-spacing: 0.08em;
+}
+
+body.light-theme .sort-title-label {
+  color: #475569;
+}
+
+.sort-buttons-group {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.sort-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #94a3b8;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 800;
+  padding: 5px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  transition: all 0.25s ease;
+}
+
+body.light-theme .sort-btn {
+  color: #64748b;
+}
+
+.sort-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+body.light-theme .sort-btn:hover {
+  color: #0f172a;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.sort-btn.active {
+  background: rgba(56, 189, 248, 0.18) !important;
+  border-color: #38bdf8 !important;
+  color: #38bdf8 !important;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.3) !important;
+}
+
+body.light-theme .sort-btn.active {
+  background: rgba(2, 132, 199, 0.12) !important;
+  border-color: #0284c7 !important;
+  color: #0284c7 !important;
+}
+
+@media (max-width: 800px) {
+  .projects-controls-bar {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .projects-tabs-container {
+    justify-content: center;
+    width: 100%;
+  }
+  .projects-sort-dock {
+    justify-content: center;
+  }
+}
+
 
 .projects-tabs {
   position: relative;
@@ -2054,14 +2184,22 @@ body.dark-theme .tab-btn.active {
 }
 
 body.dark-theme .game-flowchart {
-  background: #0f1319;
-  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(11, 15, 25, 0.95);
+  background-image: radial-gradient(rgba(56, 189, 248, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+  border: 1.5px solid rgba(56, 189, 248, 0.25);
+  border-radius: 20px;
+  padding: 28px 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
 }
 
 body.light-theme .game-flowchart {
-  background: #faf7f2;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background-image: radial-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background: rgba(248, 250, 252, 0.95);
+  border: 1.5px solid rgba(2, 132, 199, 0.2);
+  background-image: radial-gradient(rgba(2, 132, 199, 0.1) 1px, transparent 1px);
+  background-size: 24px 24px;
+  border-radius: 20px;
+  padding: 28px 20px;
 }
 
 .flowchart-row {
@@ -2093,150 +2231,126 @@ body.light-theme .game-flowchart {
 }
 
 .flowchart-connector-down {
-  color: var(--accent-green);
-  font-family: var(--font-mono);
-  font-size: 10px;
+  color: #38bdf8;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 800;
   line-height: 1;
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
 }
 
 .flowchart-node {
-  background: var(--card-bg);
-  border: var(--card-border);
-  border-radius: 8px;
-  padding: 6px 10px;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
   text-align: center;
-  color: var(--foreground);
-  box-shadow: var(--neo-shadow);
-  transition: all 0.25s ease;
-  min-width: 80px;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  min-width: 110px;
   box-sizing: border-box;
 }
 
 .flowchart-node:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--neo-shadow-large);
-  border-color: var(--accent-blue) !important;
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6), 0 0 20px rgba(56, 189, 248, 0.3);
+  border-color: #38bdf8 !important;
 }
 
 .root-node {
-  border: 2px solid #e11d48 !important;
-  color: #e11d48 !important;
-  border-radius: 20px;
-  font-weight: 700;
-  max-width: 250px;
-}
-
-body.dark-theme .root-node {
-  background: rgba(225, 29, 72, 0.1);
-}
-
-body.light-theme .root-node {
-  background: rgba(225, 29, 72, 0.05);
+  background: linear-gradient(135deg, rgba(244, 63, 94, 0.25), rgba(15, 23, 42, 0.95)) !important;
+  border: 2px solid #f43f5e !important;
+  color: #ffffff !important;
+  border-radius: 999px !important;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  padding: 12px 24px;
+  box-shadow: 0 0 20px rgba(244, 63, 94, 0.35) !important;
 }
 
 .system-node {
-  border: 1.5px solid #2563eb !important;
-  color: #2563eb !important;
-}
-
-body.dark-theme .system-node {
-  background: rgba(37, 99, 235, 0.1);
-}
-
-body.light-theme .system-node {
-  background: rgba(37, 99, 235, 0.05);
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(15, 23, 42, 0.95)) !important;
+  border: 1.5px solid #38bdf8 !important;
+  color: #e0f2fe !important;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.25) !important;
 }
 
 .entity-node {
-  border: 1.5px solid #7c3aed !important;
-  color: #7c3aed !important;
-  font-weight: 600;
-}
-
-body.dark-theme .entity-node {
-  background: rgba(124, 58, 237, 0.1);
-}
-
-body.light-theme .entity-node {
-  background: rgba(124, 58, 237, 0.05);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(15, 23, 42, 0.95)) !important;
+  border: 1.5px solid #c084fc !important;
+  color: #f3e8ff !important;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.25) !important;
 }
 
 .player-node {
-  border: 1.5px solid #059669 !important;
-  color: #059669 !important;
-  font-weight: 600;
-}
-
-body.dark-theme .player-node {
-  background: rgba(5, 150, 105, 0.1);
-}
-
-body.light-theme .player-node {
-  background: rgba(5, 150, 105, 0.05);
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(15, 23, 42, 0.95)) !important;
+  border: 1.5px solid #4ade80 !important;
+  color: #dcfce7 !important;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(34, 197, 94, 0.25) !important;
 }
 
 .enemy-node {
-  border: 1.5px solid #d97706 !important;
-  color: #d97706 !important;
-  font-weight: 600;
-}
-
-body.dark-theme .enemy-node {
-  background: rgba(217, 119, 6, 0.1);
-}
-
-body.light-theme .enemy-node {
-  background: rgba(217, 119, 6, 0.05);
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(15, 23, 42, 0.95)) !important;
+  border: 1.5px solid #fbbf24 !important;
+  color: #fef3c7 !important;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.25) !important;
 }
 
 .behavior-node {
-  border: 1px solid #0891b2 !important;
-  color: #0891b2 !important;
-  font-size: 9.5px;
-  padding: 4px 8px;
+  background: rgba(14, 165, 233, 0.15) !important;
+  border: 1px solid #38bdf8 !important;
+  color: #bae6fd !important;
+  font-size: 11.5px;
+  padding: 6px 12px;
 }
 
 .state-node.circle {
-  border-radius: 50%;
-  width: 68px;
-  height: 68px;
+  border-radius: 50% !important;
+  width: 80px;
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 9px;
-  border: 1.5px solid #db2777 !important;
-  color: #db2777 !important;
-  line-height: 1.1;
-}
-
-body.dark-theme .state-node.circle {
-  background: rgba(219, 39, 119, 0.08);
-}
-
-body.light-theme .state-node.circle {
-  background: rgba(219, 39, 119, 0.04);
-}
-
-.flowchart-diamond-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(15, 23, 42, 0.95)) !important;
+  border: 2px solid #ec4899 !important;
+  color: #fce7f3 !important;
+  line-height: 1.2;
+  box-shadow: 0 0 18px rgba(236, 72, 153, 0.3) !important;
 }
 
 .diamond-node {
-  border: 1px solid #d97706 !important;
-  color: #d97706 !important;
-  font-size: 9.5px;
-  border-radius: 4px;
+  background: rgba(245, 158, 11, 0.12) !important;
+  border: 1px solid #f59e0b !important;
+  color: #fef3c7 !important;
+  font-size: 11.5px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 6px 10px;
 }
 
 .attr-node {
-  font-size: 9.5px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px dashed rgba(255, 255, 255, 0.12) !important;
-  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  color: #f8fafc;
+  padding: 6px 10px;
+  border-radius: 8px;
 }
 
 body.light-theme .attr-node {

@@ -127,24 +127,6 @@
 /* Projects Tab Switcher styles consolidated in projects.css */
 
 
-/* Neo-Brutalist Headers */
-.section-title {
-  font-family: var(--font-display);
-  font-size: 24px;
-  font-weight: 800;
-  color: #191a23 !important;
-  background-color: var(--accent-green);
-  border: var(--border-primary);
-  display: inline-block;
-  padding: 6px 16px;
-  border-radius: 8px;
-  box-shadow: 3px 3px 0px var(--foreground);
-  margin-bottom: 40px;
-}
-
-.about-desc {
-  color: var(--foreground) !important;
-}
 
 /* Futuristic Glassmorphic HUD Footer */
 .main-footer {

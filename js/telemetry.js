@@ -455,44 +455,8 @@ window.Telemetry = (() => {
         }
       });
     };
+    // Security scan (monitoring only)
     scanURLForThreats();
-
-    document.addEventListener('copy', () => {
-      logEvent("User copied text from page", "alert");
-      const toast = document.getElementById("cyber-security-toast");
-      if (toast) {
-        toast.classList.add("show");
-        if (window.cyberToastTimeout) clearTimeout(window.cyberToastTimeout);
-        window.cyberToastTimeout = setTimeout(() => {
-          toast.classList.remove("show");
-        }, 5000);
-      }
-    });
-
-    let selectTimeout;
-    document.addEventListener('selectionchange', () => {
-      clearTimeout(selectTimeout);
-      selectTimeout = setTimeout(() => {
-        const selectedText = window.getSelection().toString().trim();
-        if (selectedText.length > 3) {
-          logEvent(`User selected text: "${selectedText.substring(0, 30)}..."`, "alert");
-          const toast = document.getElementById("cyber-security-toast");
-          if (toast) {
-            toast.classList.add("show");
-            if (window.cyberToastTimeout) clearTimeout(window.cyberToastTimeout);
-            window.cyberToastTimeout = setTimeout(() => {
-              toast.classList.remove("show");
-            }, 5000);
-          }
-        }
-      }, 700);
-    });
-
-    document.addEventListener('contextmenu', (e) => {
-      if (e.target.closest('input, textarea')) return;
-      e.preventDefault();
-      logEvent("User right-click blocked", "alert");
-    });
 
     document.addEventListener('visibilitychange', () => {
       const visibilityMsg = document.hidden ? "User switched tab (Background)" : "User returned to tab (Active)";

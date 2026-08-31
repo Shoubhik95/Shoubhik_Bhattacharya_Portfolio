@@ -1,36 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Handle GTA V Style Preloader
-  const preloader = document.getElementById("gta-preloader");
-  if (preloader) {
-    const slides = preloader.querySelectorAll(".loader-slide");
-    let currentSlide = 0;
-
-    // Small delay to trigger the slide-in CSS transition
-    setTimeout(() => {
-      preloader.classList.add("loaded");
-      if (slides.length > 0) {
-        slides[0].classList.add("active");
-      }
-    }, 100);
-
-    // Shuffle slides every 2.0 seconds (transitions Trevor -> Michael -> Wukong -> Joel -> Ezio -> Lara -> Trio Group)
-    const slideInterval = setInterval(() => {
-      if (slides.length > 0) {
-        slides[currentSlide].classList.remove("active");
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add("active");
-      }
-    }, 2000);
-
-    // Fade out and remove after 14 seconds (7 slides * 2 seconds)
-    setTimeout(() => {
-      clearInterval(slideInterval);
-      preloader.classList.add("fade-out");
-      setTimeout(() => {
-        preloader.remove();
-      }, 500);
-    }, 14000);
-  }
 
   // Boot modularized portfolio JS subsystems sequentially
   if (typeof window.initThemeModule === "function") {
@@ -52,20 +20,82 @@ document.addEventListener("DOMContentLoaded", () => {
     window.initDashboardModule();
   }
 
-  // Floating Emojis Background Setup
-  initEmojiBackground();
+  // Boot Cursor Spotlight & Ambient Dust System
+  initCursorSpotlight();
+  initAmbientParticles();
 
   // Scroll Reveal Animations
   initScrollReveal();
+
+  // Show Reel Video Auto-play on Viewport Entry & Sound Control
+  initShowreelController();
 });
+
+function initCursorSpotlight() {
+  const spotlight = document.querySelector(".cursor-spotlight-bg");
+  if (!spotlight) return;
+
+  window.addEventListener("mousemove", (e) => {
+    spotlight.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
+  });
+}
+
+function initAmbientParticles() {
+  if (document.querySelector(".particles-container")) return;
+
+  const container = document.createElement("div");
+  container.className = "particles-container";
+  document.body.appendChild(container);
+
+  const numParticles = 24;
+  for (let i = 0; i < numParticles; i++) {
+    const particle = document.createElement("span");
+    particle.className = "ambient-particle";
+    
+    const left = Math.random() * 100;
+    const size = 2 + Math.random() * 4;
+    const delay = Math.random() * 12;
+    const duration = 14 + Math.random() * 14;
+    
+    particle.style.setProperty("--left", `${left}%`);
+    particle.style.setProperty("--size", `${size}px`);
+    particle.style.setProperty("--delay", `${delay}s`);
+    particle.style.animationDuration = `${duration}s`;
+    
+    container.appendChild(particle);
+  }
+}
+
+function initShowreelController() {
+  const showreelVideo = document.getElementById("showreel-player") || document.querySelector(".showreel-video");
+  const soundBtn = document.getElementById("showreel-sound-btn");
+
+  if (!showreelVideo) return;
+
+  // Sound Toggle Button Handler (if present)
+  if (soundBtn) {
+    soundBtn.addEventListener("click", () => {
+      if (showreelVideo.muted) {
+        showreelVideo.muted = false;
+        soundBtn.innerHTML = "🔊 SOUND ON";
+        soundBtn.classList.add("sound-active");
+      } else {
+        showreelVideo.muted = true;
+        soundBtn.innerHTML = "🔇 CLICK FOR SOUND";
+        soundBtn.classList.remove("sound-active");
+      }
+    });
+  }
+}
+
 
 function initScrollReveal() {
   const sections = document.querySelectorAll(".reveal-on-scroll");
   
   const observerOptions = {
     root: null,
-    rootMargin: "0px 0px -80px 0px", // Trigger slightly before the section enters full view
-    threshold: 0.05
+    rootMargin: "0px 0px -60px 0px",
+    threshold: 0.08
   };
 
   const observer = new IntersectionObserver((entries) => {
@@ -81,6 +111,23 @@ function initScrollReveal() {
   sections.forEach(section => {
     observer.observe(section);
   });
+
+  // Smooth Scroll Parallax Shift for Background Grid
+  const gridOverlay = document.querySelector(".grid-bg-overlay");
+  let ticking = false;
+
+  window.addEventListener("scroll", () => {
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        const scrolled = window.pageYOffset;
+        if (gridOverlay) {
+          gridOverlay.style.transform = `translate3d(0, ${scrolled * 0.04}px, 0)`;
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }, { passive: true });
 }
 
 function initEmojiBackground() {

@@ -172,12 +172,33 @@ window.initProjectsModule = function() {
     startProjectAutoSlide();
   };
 
-  const renderProjects = (category = "game-design") => {
+  let currentCategory = "game-design";
+  let currentSortOrder = "newest"; // Default: latest added projects first
+
+  const renderProjects = (category = currentCategory) => {
+    currentCategory = category;
     const projectsGrid = document.getElementById("projects-grid");
     if (!projectsGrid) return;
 
     const allProjects = [...gameProjectsData, ...webProjectsData];
-    currentFilteredProjects = allProjects.filter(proj => proj.category === category);
+    let filtered = allProjects.filter(proj => proj.category === category);
+
+    // Sort projects: Newest first (default) or Oldest first
+    if (currentSortOrder === "newest") {
+      filtered.sort((a, b) => {
+        const dateA = a.date ? new Date(a.date).getTime() : 0;
+        const dateB = b.date ? new Date(b.date).getTime() : 0;
+        return dateB - dateA; // Newest first
+      });
+    } else if (currentSortOrder === "oldest") {
+      filtered.sort((a, b) => {
+        const dateA = a.date ? new Date(a.date).getTime() : 0;
+        const dateB = b.date ? new Date(b.date).getTime() : 0;
+        return dateA - dateB; // Oldest first
+      });
+    }
+
+    currentFilteredProjects = filtered;
     currentCarouselIndex = 0;
 
     const createProjectCard = (proj) => `
@@ -272,6 +293,18 @@ window.initProjectsModule = function() {
     });
   };
 
+  const setupSortControls = () => {
+    const sortButtons = document.querySelectorAll(".sort-btn");
+    sortButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        sortButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        currentSortOrder = btn.getAttribute("data-sort") || "newest";
+        renderProjects(currentCategory);
+      });
+    });
+  };
+
   const renderCertificates = () => {
     const tickerTrack = document.getElementById("ticker-track");
     if (!tickerTrack) return;
@@ -287,6 +320,7 @@ window.initProjectsModule = function() {
   };
   renderProjects("game-design");
   setupProjectsTabs();
+  setupSortControls();
   setupCarouselNav();
   renderCertificates();
 
@@ -419,7 +453,7 @@ window.initProjectsModule = function() {
     let currentScale = 30;
 
     const animate = () => {
-      currentScale -= 1.0;
+      currentScale -= 1.2;
       pixelScale = Math.max(1, currentScale);
       drawProfile(img, pixelScale);
 
@@ -431,8 +465,30 @@ window.initProjectsModule = function() {
     requestAnimationFrame(animate);
   };
 
-  // Run transition cycle every 6 seconds
-  // setInterval(triggerProfileTransition, 6000); // Disabled auto profile transition
+  // Interactive Click & Hover Photo Pixelation Effect
+  if (profileCanvas) {
+    const photoFrame = profileCanvas.closest(".profile-photo-frame");
+    const triggerEl = photoFrame || profileCanvas;
+
+    triggerEl.addEventListener("click", () => {
+      triggerIntroPixelation();
+    });
+
+    let hoverDebounce = false;
+    triggerEl.addEventListener("mouseenter", () => {
+      if (!hoverDebounce) {
+        hoverDebounce = true;
+        triggerIntroPixelation();
+        setTimeout(() => { hoverDebounce = false; }, 1000);
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (preloadedImages.length > 0) {
+        drawProfile(preloadedImages[0], 1);
+      }
+    });
+  }
 
   /* ==========================================================================
      4. Spotlight Card Hover Effect (Event Delegation for Dynamic Cards)

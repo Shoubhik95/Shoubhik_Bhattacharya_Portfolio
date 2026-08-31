@@ -108,6 +108,7 @@ window.initModalModule = function () {
     if (!card) return;
 
     // Pull dataset attributes
+    const id = card.getAttribute("data-id") || "";
     const category = card.getAttribute("data-category") || "";
     const title = card.getAttribute("data-title") || "";
     const subtitle = card.getAttribute("data-subtitle") || "";
@@ -148,85 +149,76 @@ window.initModalModule = function () {
       });
 
       let architectureHtml = "";
-      if (category === "game-design") {
+      if (id === "the-royal-king" || title.toLowerCase().includes("king runner")) {
+        architectureHtml = `
+          <h5 class="modal-section-title">👑 King Runner: Escape the Skies — System Blueprint</h5>
+          <div class="arch-image-canvas-wrapper" style="text-align: center; padding: 12px 0;">
+            <img src="public/architecture_survivor.png" alt="King Runner System Architecture" class="arch-diagram-img" style="max-width: 100%; height: auto; border-radius: 16px; border: 1.5px solid rgba(56, 189, 248, 0.4); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);" />
+          </div>
+        `;
+      } else if (id === "survivor" || title.toLowerCase().includes("survivor")) {
+        architectureHtml = `
+          <h5 class="modal-section-title">🌲 The Endless Survivor: 2.5D Survival Game — System Blueprint</h5>
+          <div class="arch-image-canvas-wrapper" style="text-align: center; padding: 12px 0;">
+            <img src="public/architecture_king_runner.png" alt="Endless Survivor System Architecture" class="arch-diagram-img" style="max-width: 100%; height: auto; border-radius: 16px; border: 1.5px solid rgba(168, 85, 247, 0.4); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);" />
+          </div>
+        `;
+      } else if (id === "car-driving-race" || title.toLowerCase().includes("car")) {
+        architectureHtml = `
+          <h5 class="modal-section-title">🏎️ Car Driving Race — System Architecture Blueprint</h5>
+          <div class="arch-image-canvas-wrapper" style="text-align: center; padding: 12px 0;">
+            <img src="public/architecture_car_race.png" alt="Car Driving Race System Architecture" class="arch-diagram-img" style="max-width: 100%; height: auto; border-radius: 16px; border: 1.5px solid rgba(234, 179, 8, 0.4); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);" />
+          </div>
+        `;
+      } else if (id === "tourism-project" || title.toLowerCase().includes("tourism") || title.toLowerCase().includes("chhattisgarh")) {
+        architectureHtml = `
+          <h5 class="modal-section-title">🏞️ Chhattisgarh Tourism Website — System Blueprint</h5>
+          <div class="arch-image-canvas-wrapper" style="text-align: center; padding: 12px 0;">
+            <img src="public/architecture_chhattisgarh_tourism.jpg" alt="Chhattisgarh Tourism System Blueprint Architecture" class="arch-diagram-img" style="max-width: 100%; height: auto; border-radius: 16px; border: 1.5px solid rgba(245, 158, 11, 0.4); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);" />
+          </div>
+        `;
+      } else if (id === "virtual-tour" || id === "campus-tour" || title.toLowerCase().includes("virtual tour") || title.toLowerCase().includes("campus tour") || title.toLowerCase().includes("360")) {
+        architectureHtml = `
+          <h5 class="modal-section-title">🌐 360 Virtual Campus Tour — System Architecture Blueprint</h5>
+          <div class="arch-image-canvas-wrapper" style="text-align: center; padding: 12px 0;">
+            <img src="public/architecture_vr_campus.png" alt="360 Virtual Campus Tour Architecture" class="arch-diagram-img" style="max-width: 100%; height: auto; border-radius: 16px; border: 1.5px solid rgba(56, 189, 248, 0.4); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);" />
+          </div>
+        `;
+      } else if (id === "portfolio-project" || title.toLowerCase().includes("gamer hud") || title.toLowerCase().includes("portfolio")) {
+        architectureHtml = `
+          <h5 class="modal-section-title">🎮 Gamer HUD Portfolio Website — System Architecture Blueprint</h5>
+          <div class="arch-image-canvas-wrapper" style="text-align: center; padding: 12px 0;">
+            <img src="public/architecture_gamer_hud.png" alt="Gamer HUD Portfolio Architecture" class="arch-diagram-img" style="max-width: 100%; height: auto; border-radius: 16px; border: 1.5px solid rgba(74, 222, 128, 0.4); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);" />
+          </div>
+        `;
+      } else if (id === "littlebits" || title.toLowerCase().includes("littlebits") || title.toLowerCase().includes("club hub")) {
+        architectureHtml = `
+          <h5 class="modal-section-title">🏛️ LittleBits — College Club Hub System Architecture</h5>
+          <div class="arch-image-canvas-wrapper" style="text-align: center; padding: 12px 0;">
+            <img src="public/architecture_littlebits.png" alt="LittleBits College Club Hub Architecture" class="arch-diagram-img" style="max-width: 100%; height: auto; border-radius: 16px; border: 1.5px solid rgba(244, 63, 94, 0.4); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);" />
+          </div>
+        `;
+      } else if (category === "game-design") {
         architectureHtml = `
           <h5 class="modal-section-title">Game Design Architecture & Logic Flow</h5>
           <div class="game-flowchart">
-            <!-- Row 1: Core Concept -->
             <div class="flowchart-row">
               <div class="flowchart-node root-node">${title}</div>
             </div>
-            
-            <!-- Connector Row -->
-            <div class="flowchart-row">
-              <div class="flowchart-connector-down">▼</div>
-            </div>
-
-            <!-- Row 2: Major Systems Split -->
+            <div class="flowchart-row"><div class="flowchart-connector-down">▼</div></div>
             <div class="flowchart-row-split">
-              <!-- Left Column: Wave System & Difficulty -->
               <div class="flowchart-col" style="flex: 1.2;">
-                <div class="flowchart-node system-node">${topics[0] || 'Wave System'}</div>
+                <div class="flowchart-node system-node">${topics[0] || 'Core Mechanics'}</div>
                 <div class="flowchart-connector-down">▼</div>
-                <div class="flowchart-node system-node">${topics[1] || 'Difficulty Progression'}</div>
-                <div class="flowchart-connector-down">▼</div>
-                <div class="flowchart-split">
-                  <div class="flowchart-col">
-                    <div class="flowchart-node attr-node">❤️ HEALTH</div>
-                    <div class="flowchart-node attr-node">⚡ SPEED</div>
-                    <div class="flowchart-node attr-node">⚔️ DAMAGE</div>
-                  </div>
-                </div>
+                <div class="flowchart-node attr-node">${topics[1] || 'State Machine'}</div>
               </div>
-
-              <!-- Middle Column: Entities (Player & Enemies) -->
-              <div class="flowchart-col" style="flex: 2.2;">
-                <div class="flowchart-node entity-node">Entities & Logic</div>
+              <div class="flowchart-col" style="flex: 1.5;">
+                <div class="flowchart-node player-node">${topics[2] || 'Player Entity Controller'}</div>
                 <div class="flowchart-connector-down">▼</div>
-                <div class="flowchart-split">
-                  <!-- Player Branch -->
-                  <div class="flowchart-col">
-                    <div class="flowchart-node player-node">Player</div>
-                    <div class="flowchart-connector-down">▼</div>
-                    <div class="flowchart-node state-node circle">${topics[2] || 'States (animator)'}</div>
-                    <div class="flowchart-connector-down">▼</div>
-                    <div class="flowchart-diamond-grid">
-                      <div class="flowchart-node diamond-node">Walk/Jump</div>
-                      <div class="flowchart-node diamond-node">Dash</div>
-                      <div class="flowchart-node diamond-node">Attack</div>
-                      <div class="flowchart-node diamond-node">Slam</div>
-                    </div>
-                  </div>
-
-                  <!-- Enemies Branch -->
-                  <div class="flowchart-col">
-                    <div class="flowchart-node enemy-node">Enemies</div>
-                    <div class="flowchart-connector-down">▼</div>
-                    <div class="flowchart-split">
-                      <div class="flowchart-col">
-                        <div class="flowchart-node behavior-node">Base Structure</div>
-                        <div class="flowchart-connector-down">▼</div>
-                        <div class="flowchart-node attr-node">Health</div>
-                        <div class="flowchart-node attr-node">Damage</div>
-                        <div class="flowchart-node attr-node">Speed</div>
-                      </div>
-                      <div class="flowchart-col">
-                        <div class="flowchart-node behavior-node">Unique Behaviour</div>
-                        <div class="flowchart-connector-down">▼</div>
-                        <div class="flowchart-node attr-node">Attack type</div>
-                        <div class="flowchart-node attr-node">Hitbox</div>
-                        <div class="flowchart-node attr-node">Weapon</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <div class="flowchart-node attr-node">${topics[3] || 'Physics & Collision System'}</div>
               </div>
-
-              <!-- Right Column: Score System -->
               <div class="flowchart-col" style="flex: 1.2;">
-                <div class="flowchart-node system-node">${topics[3] || 'Score System'}</div>
-                <div class="flowchart-connector-down">▼</div>
-                <div class="flowchart-node attr-node" style="font-size: 9px; line-height: 1.2;">${topics[4] || 'Score value varies by enemy type'}</div>
+                <div class="flowchart-node enemy-node">${topics[4] || 'Level & Audio Engine'}</div>
               </div>
             </div>
           </div>
@@ -282,7 +274,17 @@ window.initModalModule = function () {
           </div>
         `;
       }
-      modalExpertSection.innerHTML = architectureHtml;
+      const archCanvasFlowchart = document.getElementById("arch-canvas-flowchart");
+      const archCanvasTitle = document.getElementById("arch-canvas-title");
+      if (archCanvasFlowchart) {
+        archCanvasFlowchart.innerHTML = architectureHtml;
+      }
+      if (archCanvasTitle) {
+        archCanvasTitle.textContent = `${title} // System Blueprint Canvas`;
+      }
+      if (modalExpertSection) {
+        modalExpertSection.innerHTML = architectureHtml;
+      }
     }
 
     // Populate Logs
@@ -296,7 +298,7 @@ window.initModalModule = function () {
         const item = document.createElement("div");
         item.className = "hud-log-item";
         item.innerHTML = `<div class="hud-log-dot"></div><div class="hud-log-text">${topic}</div>`;
-        
+
         item.addEventListener("mouseenter", (e) => {
           e.stopPropagation();
           showLogDetailPopup(topic, details);
@@ -426,6 +428,32 @@ window.initModalModule = function () {
 
   if (modalNextBtn) modalNextBtn.addEventListener("click", handleNextSlide);
   if (modalPrevBtn) modalPrevBtn.addEventListener("click", handlePrevSlide);
+
+  const toggleArchBtn = document.getElementById("toggle-architecture-btn");
+  const archCanvasModal = document.getElementById("architecture-canvas-modal");
+  const archCanvasCloseBtn = document.getElementById("arch-canvas-close-btn");
+
+  if (toggleArchBtn && archCanvasModal) {
+    toggleArchBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      archCanvasModal.classList.remove("hidden");
+    });
+  }
+
+  if (archCanvasCloseBtn && archCanvasModal) {
+    archCanvasCloseBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      archCanvasModal.classList.add("hidden");
+    });
+  }
+
+  if (archCanvasModal) {
+    archCanvasModal.addEventListener("click", (e) => {
+      if (e.target === archCanvasModal) {
+        archCanvasModal.classList.add("hidden");
+      }
+    });
+  }
 
   /* ==========================================================================
      6. Certificate Ticker Lightbox Zoom
@@ -593,7 +621,7 @@ window.initModalModule = function () {
       if (hireLinkInput) hireLinkInput.value = "";
       if (hireMessageInput) hireMessageInput.value = "";
       if (hireErrorMsg) hireErrorMsg.classList.add("hidden");
-      
+
       // Slide in Trevor (left character)
       const charLeft = document.getElementById("gta-char-left");
       if (charLeft) charLeft.classList.add("active");
@@ -605,7 +633,7 @@ window.initModalModule = function () {
   const closeHireModal = () => {
     if (hireInterestModal) hireInterestModal.classList.add("hidden");
     document.body.style.overflow = "unset";
-    
+
     // Slide out both characters
     const charLeft = document.getElementById("gta-char-left");
     if (charLeft) charLeft.classList.remove("active");
@@ -618,7 +646,7 @@ window.initModalModule = function () {
     const emailVal = hireEmailInput ? hireEmailInput.value.trim() : "";
     const linkVal = hireLinkInput ? hireLinkInput.value.trim() : "";
     const messageVal = hireMessageInput ? hireMessageInput.value.trim() : "";
-    
+
     if (!val) {
       if (hireErrorMsg) {
         hireErrorMsg.textContent = "❌ VALUE INGESTION ERROR: INVALID NAME";
@@ -671,13 +699,13 @@ window.initModalModule = function () {
         .then(data => {
           if (data.success) {
             console.log("Web3Forms Success:", data);
-            
+
             // Slide in the 2nd character (Michael)
             const charRight = document.getElementById("gta-char-right");
             if (charRight) {
               charRight.classList.add("active");
             }
-            
+
             // Change submit button to gamified GTA Mission Passed feedback
             if (hireSubmitBtn) {
               hireSubmitBtn.textContent = "👍 MISSION PASSED!";
@@ -685,7 +713,7 @@ window.initModalModule = function () {
               hireSubmitBtn.style.color = "#12051a";
               hireSubmitBtn.style.boxShadow = "0 0 25px #ffea00";
             }
-            
+
             // Delay closing the modal to allow animations to show
             setTimeout(() => {
               closeHireModal();
@@ -697,7 +725,7 @@ window.initModalModule = function () {
                 hireSubmitBtn.style.boxShadow = "";
               }
             }, 3500);
-            
+
             // Trigger Success Toast
             const successToast = document.getElementById("success-toast");
             if (successToast) {
